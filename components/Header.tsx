@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 const items = [
   { key: 1, label: <Link href="/">Home</Link> },
   { key: 2, label: <Link href="/dashboard">Dashboard</Link> },
-  { key: 3, label: "Home" },
+  { key: 3, label: <Link href="/collections">Collections</Link> },
 ];
 
 const Header = () => {
@@ -16,7 +16,7 @@ const Header = () => {
 
   const onClick: MenuProps["onClick"] = (e) => {
     console.log("click ", e);
-    if (e.key === "3") router.push("/");
+    // if (e.key === "3") router.push("/");
     // setCurrent(e.key);
     // router.push("/dashboard");
   };
