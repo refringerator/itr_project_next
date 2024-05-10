@@ -24,11 +24,19 @@ Full-stack Web-app for personal collection management
 
 TBD
 
+##### DB development cycle
+
+1. Update prisma schema in `prisma/shema.prisma`
+2. Update db schema with `npm run prisma:db-push`
+3. Before deployment create supabase migrations with `npm run supabase:generate-migration {migration_name}`
+4. Push db changes to production env (mb `npm run supabase:push`)
+
 ### Resources
 
 1. [How to Build a Fullstack App with Next.js, Prisma, and Vercel Postgres](https://vercel.com/guides/nextjs-prisma-postgres)
 2. supabase + vercel integration [example 1](https://github.com/vercel/next.js/tree/canary/examples/with-supabase), [exqample 2 full](https://github.com/vercel/nextjs-subscription-payments)
 3. [i18n routing](https://github.com/vercel/next.js/tree/canary/examples/app-dir-i18n-routing), [i18n-next-intl](https://github.com/vercel/next.js/tree/canary/examples/with-i18n-next-intl)
+4. supabase + prisma [v1](https://docs-rog1zs1kv-supabase.vercel.app/docs/guides/integrations/prisma), [v2 prisma docs](https://www.prisma.io/docs/orm/overview/databases/supabase), [v3 supabase docs](https://supabase.com/partners/integrations/prisma), [v4 prisma example](https://github.com/prisma/prisma-examples/tree/latest/databases/postgresql-supabase)
 
 ### Demo
 

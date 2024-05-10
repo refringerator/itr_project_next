@@ -17,10 +17,12 @@
     "supabase:generate-migration": "npx supabase db diff | npx supabase migration new",
     "supabase:generate-seed": "npx supabase db dump --data-only -f supabase/seed.sql",
     "supabase:push": "npx supabase push",
-    "supabase:pull": "npx supabase pull"
+    "supabase:pull": "npx supabase pull",
+    "prisma:db-push": "npx prisma db push"
   },
   "dependencies": {
     "@ant-design/nextjs-registry": "^1.0.0",
+    "@prisma/client": "^5.13.0",
     "@supabase/ssr": "^0.3.0",
     "@supabase/supabase-js": "^2.43.1",
     "antd": "^5.17.0",
@@ -34,6 +36,7 @@
     "@types/react-dom": "^18",
     "eslint": "^8",
     "eslint-config-next": "14.2.3",
+    "prisma": "^5.13.0",
     "supabase": "^1.165.0",
     "typescript": "^5"
   }
