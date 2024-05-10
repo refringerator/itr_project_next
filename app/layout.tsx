@@ -1,10 +1,8 @@
 import type { Metadata } from "next";
 import "@/styles/globals.css";
-import { Header } from "@/components/Header";
-import { Footer } from "@/components/Footer";
+import { Header, Footer, Content } from "@/components/Layout";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
 import { Layout } from "antd";
-import { Content } from "@/components/Content";
 import { Suspense } from "react";
 import { Notification } from "@/components/Notification/Notification";
 import { createClient } from "@/utils/supabase/server";
