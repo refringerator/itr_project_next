@@ -36,6 +36,36 @@ export async function createCollection(data: FieldType) {
   );
 }
 
+export async function updateCollection(id: number, data: FieldType) {
+  const { title, topicId, description } = data;
+
+  const supabase = createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    return redirect("/signin");
+  }
+
+  const collection = await prisma.collection.update({
+    where: { id },
+    data: {
+      title,
+      topicId,
+      description,
+    },
+  });
+
+  redirect(
+    getStatusRedirect(
+      `/collections`,
+      `Collection ${collection.id} updated!`,
+      "You can find it somethere"
+    )
+  );
+}
+
 export async function getCollections() {
   return await prisma.collection.findMany();
 }
@@ -59,4 +89,27 @@ export async function getCollection(id: number) {
     );
 
   return collection;
+}
+
+export async function deleteCollection(id: number) {
+  const supabase = createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    return redirect("/signin");
+  }
+
+  const collection = await prisma.collection.delete({
+    where: { id },
+  });
+
+  redirect(
+    getStatusRedirect(
+      `/collections`,
+      `Collection ${collection.id} deleted!`,
+      "You wont find it anymore"
+    )
+  );
 }

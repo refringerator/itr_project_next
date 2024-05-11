@@ -11,15 +11,21 @@ export type FieldType = {
 };
 
 interface CollectionFormProps {
+  buttonText?: string;
   topics: Topic[];
   onFinish: FormProps<FieldType>["onFinish"];
+  initialValues?: FieldType;
 }
 
 export default function CollectionForm({
   topics,
   onFinish,
+  buttonText = "Create",
+  initialValues,
 }: CollectionFormProps) {
   if (topics.length === 0) return <div>There is no topics!</div>;
+
+  const { title, description, topicId } = initialValues || {};
 
   return (
     <Form
@@ -27,7 +33,7 @@ export default function CollectionForm({
       labelCol={{ span: 8 }}
       wrapperCol={{ span: 16 }}
       style={{ maxWidth: 600 }}
-      initialValues={{ remember: true }}
+      initialValues={{ title, topicId, description }}
       onFinish={onFinish}
       autoComplete="off"
     >
@@ -62,7 +68,7 @@ export default function CollectionForm({
 
       <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
         <Button type="primary" htmlType="submit">
-          Create
+          {buttonText}
         </Button>
       </Form.Item>
     </Form>
