@@ -1,9 +1,24 @@
+"use server";
+
+import { getCollection } from "@/app/collections/actions";
+
 type Props = {
   params: {
-    id: string;
+    id: number;
   };
 };
 
-export default function Collection({ params: { id } }: Props) {
-  return <h2>Collection {id}</h2>;
+export default async function Collection({ params: { id } }: Props) {
+  const collection = await getCollection(Number(id));
+
+  return (
+    <>
+      <h2>Collection {id}</h2>
+      <p>{collection.title}</p>
+      <p>{collection.author.name}</p>
+      <p>{collection.topic.title}</p>
+      <p>p: {collection.published}</p>
+      <p>d: {collection.description}</p>
+    </>
+  );
 }

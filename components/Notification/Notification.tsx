@@ -41,7 +41,7 @@ export function Notification() {
       const redirectPath = `${pathname}?${newSearchParams.toString()}`;
       router.replace(redirectPath, { scroll: false });
     }
-  }, [searchParams]);
+  }, [api, pathname, router, searchParams]);
 
   return <>{contextHolder}</>;
 }

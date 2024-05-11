@@ -1,3 +1,22 @@
-export default function Collections() {
-  return <h2>Put collections here</h2>;
+"use server";
+
+import Link from "next/link";
+import { getCollections } from "./actions";
+
+export default async function Collections() {
+  const collections = await getCollections();
+  return (
+    <>
+      <Link href="/collections/new">Create new collection</Link>
+      <ul>
+        {collections.map((collection) => (
+          <li key={collection.id}>
+            <Link href={`/collections/${collection.id}`}>
+              {collection.title}
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </>
+  );
 }
