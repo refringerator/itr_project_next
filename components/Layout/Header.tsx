@@ -11,8 +11,8 @@ import { usePathname, useRouter } from "next/navigation";
 
 const items = [
   { key: 1, label: <Link href="/">Home</Link> },
-  { key: 2, label: <Link href="/dashboard">Dashboard</Link> },
   { key: 3, label: <Link href="/collections">Collections</Link> },
+  { key: 2, label: <Link href="/items">Items</Link> },
 ];
 interface HeaderProps {
   user?: any;
