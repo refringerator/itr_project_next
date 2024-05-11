@@ -1,6 +1,7 @@
 "use server";
 
 import { getCollection } from "@/app/collections/actions";
+import Link from "next/link";
 
 type Props = {
   params: {
@@ -19,6 +20,7 @@ export default async function Collection({ params: { id } }: Props) {
       <p>{collection.topic.title}</p>
       <p>p: {collection.published}</p>
       <p>d: {collection.description}</p>
+      <Link href={`/collections/${id}/edit`}>Edit</Link>
     </>
   );
 }

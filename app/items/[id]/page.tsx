@@ -1,5 +1,6 @@
 "use server";
 
+import Link from "next/link";
 import { getItem } from "@/app/items/actions";
 
 type Props = {
@@ -18,6 +19,7 @@ export default async function Item({ params: { id } }: Props) {
       <p>{item.author.name}</p>
       <p>{item.collection.title}</p>
       <p>p: {item.published}</p>
+      <Link href={`/items/${id}/edit`}>Edit</Link>
     </>
   );
 }
