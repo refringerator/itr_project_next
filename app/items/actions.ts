@@ -131,6 +131,12 @@ export async function getComments(itemId: number) {
   return await prisma.comment.findMany({
     where: { itemId: itemId },
     orderBy: { createdAt: "asc" },
+    include: {
+      author: { select: { name: true } },
+      _count: {
+        select: { likes: true },
+      },
+    },
   });
 }
 
@@ -151,11 +157,58 @@ export async function addComment(itemId: number, fd: FormData) {
       itemId,
       authorId: user.id,
     },
+    include: {
+      author: { select: { name: true } },
+    },
   });
 
   supabase.channel(`item-${itemId}`).send({
     type: "broadcast",
     event: "new-comment",
     payload: comment,
+  });
+}
+
+export async function getMyLikesOnComments(itemId: number) {
+  const supabase = createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    return [];
+  }
+
+  const likes = await prisma.likeOnComment.findMany({
+    select: {
+      commentId: true,
+      rating: true,
+    },
+    where: {
+      userId: user.id,
+      rating: { gte: 0 },
+      comment: {
+        itemId: itemId,
+      },
+    },
+  });
+
+  return likes.map((i) => i.commentId);
+}
+
+export async function setMyLikeOnComment(commentId: number, rating: number) {
+  const supabase = createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    return;
+  }
+
+  await prisma.likeOnComment.upsert({
+    where: { likeId: { commentId, userId: user.id } },
+    update: { rating },
+    create: { userId: user.id, commentId, rating },
   });
 }

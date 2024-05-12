@@ -68,9 +68,10 @@ model LikeOnComment {
   user      User     @relation(fields: [userId], references: [id])
   commentId Int
   comment   Comment  @relation(fields: [commentId], references: [id])
+  rating    Int
   createdAt DateTime @default(now())
 
-  @@id([userId, commentId])
+  @@id(name: "likeId", [userId, commentId])
 }
 
 model Topic {
