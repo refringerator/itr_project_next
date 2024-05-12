@@ -130,7 +130,7 @@ export async function my_collections() {
 export async function getComments(itemId: number) {
   return await prisma.comment.findMany({
     where: { itemId: itemId },
-    orderBy: { createdAt: "desc" },
+    orderBy: { createdAt: "asc" },
   });
 }
 
@@ -145,11 +145,17 @@ export async function addComment(itemId: number, fd: FormData) {
     return redirect("/signin");
   }
 
-  await prisma.comment.create({
+  const comment = await prisma.comment.create({
     data: {
       text,
       itemId,
       authorId: user.id,
     },
+  });
+
+  supabase.channel(`item-${itemId}`).send({
+    type: "broadcast",
+    event: "new-comment",
+    payload: comment,
   });
 }

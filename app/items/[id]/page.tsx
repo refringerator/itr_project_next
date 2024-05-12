@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { getComments, getItem, addComment } from "@/app/items/actions";
+import { Comments } from "@/components/Comments";
 
 type Props = {
   params: {
@@ -24,13 +25,7 @@ export default async function Item({ params: { id } }: Props) {
       <p>{item.collection.title}</p>
       <p>{item.published ? "published" : "not published"}</p>
       <Link href={`/items/${id}/edit`}>Edit</Link>
-
-      <h4>Comments</h4>
-      <ul>
-        {comments.map((comment) => (
-          <li key={comment.id}>{comment.text}</li>
-        ))}
-      </ul>
+      <Comments itemId={itemId} serverComments={comments} />
       <form action={addComment.bind(null, itemId)}>
         <input type="text" name="text" />
         <button type="submit">Add</button>
