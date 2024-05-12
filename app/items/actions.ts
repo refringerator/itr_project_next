@@ -126,3 +126,30 @@ export async function my_collections() {
     where: { authorId: user.id },
   });
 }
+
+export async function getComments(itemId: number) {
+  return await prisma.comment.findMany({
+    where: { itemId: itemId },
+    orderBy: { createdAt: "desc" },
+  });
+}
+
+export async function addComment(itemId: number, fd: FormData) {
+  const { text } = Object.fromEntries(fd) as { text: string };
+  const supabase = createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    return redirect("/signin");
+  }
+
+  await prisma.comment.create({
+    data: {
+      text,
+      itemId,
+      authorId: user.id,
+    },
+  });
+}
