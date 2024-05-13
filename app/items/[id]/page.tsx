@@ -6,8 +6,10 @@ import {
   getItem,
   addComment,
   getMyLikesOnComments,
+  getTags,
 } from "@/app/items/actions";
 import { Comments } from "@/components/Comments";
+import { Tag } from "antd";
 
 type Props = {
   params: {
@@ -21,6 +23,7 @@ export default async function Item({ params: { id } }: Props) {
   const item = await getItem(itemId);
   const comments = await getComments(itemId);
   const likes = await getMyLikesOnComments(itemId);
+  const tags = (await getTags(itemId))?.tags || [];
 
   return (
     <>
@@ -29,6 +32,11 @@ export default async function Item({ params: { id } }: Props) {
       <p>{item.author.name}</p>
       <p>{item.collection.title}</p>
       <p>{item.published ? "published" : "not published"}</p>
+      <>
+        {tags.map((tag) => (
+          <Tag key={tag.id}>{tag.title}</Tag>
+        ))}
+      </>
       <Link href={`/items/${id}/edit`}>Edit</Link>
 
       <Comments

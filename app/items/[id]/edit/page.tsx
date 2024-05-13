@@ -13,8 +13,8 @@ type Props = {
   };
 };
 
-export default async function EditCollection({ params: { id } }: Props) {
-  const collectionId = parseInt(id);
+export default async function EditItem({ params: { id } }: Props) {
+  const itemId = parseInt(id);
   const supabase = createClient();
   const {
     data: { user },
@@ -24,9 +24,15 @@ export default async function EditCollection({ params: { id } }: Props) {
     return redirect("/signin");
   }
 
-  const updateCollectionWihtId = updateItem.bind(null, collectionId);
   const collections = await prisma.collection.findMany();
-  const item = await getItem(collectionId);
+  const tags = await prisma.tag.findMany();
+  const item = await getItem(itemId);
+
+  const updateItemWihtId = updateItem.bind(
+    null,
+    itemId,
+    item.tags.map((t) => t.title)
+  );
 
   return (
     <>
@@ -34,13 +40,16 @@ export default async function EditCollection({ params: { id } }: Props) {
         Edit item
         <DeleteButton
           buttonText="or delete it"
-          onClick={deleteItem.bind(null, collectionId)}
+          onClick={deleteItem.bind(null, itemId)}
         />
       </h2>
       <ItemForm
         collections={collections}
-        onFinish={updateCollectionWihtId}
-        initialValues={item as ItemFormType}
+        tags={tags}
+        onFinish={updateItemWihtId}
+        initialValues={
+          { ...item, tagsIds: item.tags.map((el) => el.title) } as ItemFormType
+        }
         buttonText="Update"
       />
     </>

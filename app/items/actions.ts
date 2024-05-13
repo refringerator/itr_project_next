@@ -35,8 +35,14 @@ export async function createItem(data: ItemFormType) {
   );
 }
 
-export async function updateItem(id: number, data: ItemFormType) {
-  const { title, collectionId } = data;
+export async function updateItem(
+  id: number,
+  existedTags: string[],
+  data: ItemFormType
+) {
+  const { title, collectionId, tagsIds } = data;
+
+  const tagsRemove = existedTags.filter((t) => !tagsIds.includes(t));
 
   const supabase = createClient();
   const {
@@ -52,6 +58,17 @@ export async function updateItem(id: number, data: ItemFormType) {
     data: {
       title,
       collectionId,
+      tags: {
+        connectOrCreate: tagsIds.map((tag) => ({
+          where: {
+            title: tag,
+          },
+          create: {
+            title: tag,
+          },
+        })),
+        disconnect: tagsRemove.map((tag) => ({ title: tag })),
+      },
     },
   });
 
@@ -74,6 +91,7 @@ export async function getItem(id: number) {
     include: {
       author: { select: { name: true } },
       collection: { select: { title: true } },
+      tags: { select: { id: true, title: true } },
     },
   });
 
@@ -210,5 +228,12 @@ export async function setMyLikeOnComment(commentId: number, rating: number) {
     where: { likeId: { commentId, userId: user.id } },
     update: { rating },
     create: { userId: user.id, commentId, rating },
+  });
+}
+
+export async function getTags(itemId: number) {
+  return await prisma.item.findUnique({
+    where: { id: itemId },
+    select: { tags: true },
   });
 }
