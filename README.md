@@ -40,6 +40,7 @@ TBD
 5. storage [sup](https://supabase.com/docs/guides/getting-started/tutorials/with-nextjs)
 6. supabase [discussions](https://github.com/orgs/supabase/discussions?discussions_q=is%3Aopen+nextjs+)
 7. examples https://www.restack.io/docs/supabase-knowledge-next-auth-supabase-example
+8. supabase cicd [gh app](https://github.com/marketplace/actions/supabase-cli-action), [docs](https://supabase.com/docs/guides/functions/cicd-workflow)
 
 ### Demo
 
