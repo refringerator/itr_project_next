@@ -1,8 +1,13 @@
 "use server";
 
 import ItemForm, { ItemFormType } from "@/components/ItemForm";
-import { prisma } from "@/utils/prisma";
-import { deleteItem, getItem, updateItem } from "@/app/items/actions";
+import {
+  deleteItem,
+  getItem,
+  getUsedTags,
+  my_collections,
+  updateItem,
+} from "@/app/items/actions";
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
 import { DeleteButton } from "@/components/DeleteButton";
@@ -24,8 +29,8 @@ export default async function EditItem({ params: { id } }: Props) {
     return redirect("/signin");
   }
 
-  const collections = await prisma.collection.findMany();
-  const tags = await prisma.tag.findMany();
+  const collections = await my_collections();
+  const tags = await getUsedTags();
   const item = await getItem(itemId);
 
   const updateItemWihtId = updateItem.bind(

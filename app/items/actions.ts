@@ -183,7 +183,7 @@ export async function addComment(itemId: number, fd: FormData) {
   supabase.channel(`item-${itemId}`).send({
     type: "broadcast",
     event: "new-comment",
-    payload: comment,
+    payload: { ...comment, _count: { likes: 0 } },
   });
 }
 
@@ -236,4 +236,8 @@ export async function getTags(itemId: number) {
     where: { id: itemId },
     select: { tags: true },
   });
+}
+
+export async function getUsedTags() {
+  return await prisma.tag.findMany();
 }
