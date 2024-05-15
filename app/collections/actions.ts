@@ -1,24 +1,19 @@
 "use server";
 
+import { redirect } from "next/navigation";
 import { FieldType } from "@/components/CollectionForm";
 import { getSupabaseUserOrRedirect } from "@/utils/auth-helpers/server";
 import { getStatusRedirect } from "@/utils/helpers";
-import { prisma } from "@/utils/prisma";
-import { redirect } from "next/navigation";
+import {
+  createCollection2,
+  deleteCollection2,
+  updateCollection2,
+} from "@/utils/prisma/collections";
 
 export async function createCollection(data: FieldType) {
-  const { title, topicId, description } = data;
-
   const user = await getSupabaseUserOrRedirect("/signin");
 
-  const collection = await prisma.collection.create({
-    data: {
-      title,
-      topicId,
-      description,
-      authorId: user.id,
-    },
-  });
+  const collection = await createCollection2({ ...data, userId: user.id });
 
   redirect(
     getStatusRedirect(
@@ -30,18 +25,9 @@ export async function createCollection(data: FieldType) {
 }
 
 export async function updateCollection(id: number, data: FieldType) {
-  const { title, topicId, description } = data;
-
   await getSupabaseUserOrRedirect("/signin");
 
-  const collection = await prisma.collection.update({
-    where: { id },
-    data: {
-      title,
-      topicId,
-      description,
-    },
-  });
+  const collection = await updateCollection2(id, data);
 
   redirect(
     getStatusRedirect(
@@ -52,37 +38,10 @@ export async function updateCollection(id: number, data: FieldType) {
   );
 }
 
-export async function getCollections() {
-  return await prisma.collection.findMany();
-}
-
-// export async function getCollection(id: number) {
-//   const collection = await prisma.collection.findUnique({
-//     where: { id },
-//     include: {
-//       author: { select: { name: true } },
-//       topic: { select: { title: true } },
-//     },
-//   });
-
-//   if (!collection)
-//     redirect(
-//       getErrorRedirect(
-//         `/collections`,
-//         "Collection not found",
-//         `Cant find collection with id ${id}!`
-//       )
-//     );
-
-//   return collection;
-// }
-
 export async function deleteCollection(id: number) {
   await getSupabaseUserOrRedirect("/signin");
 
-  const collection = await prisma.collection.delete({
-    where: { id },
-  });
+  const collection = await deleteCollection2(id);
 
   redirect(
     getStatusRedirect(
@@ -92,13 +51,3 @@ export async function deleteCollection(id: number) {
     )
   );
 }
-
-// export async function getTopics() {
-//   const locale = "ru_RU";
-//   const topics = await prisma.topic.findMany();
-
-//   return topics.map((topic) => ({
-//     id: topic.id,
-//     title: topic.translation.filter((v) => v.l === locale)[0]?.t || topic.title,
-//   }));
-// }

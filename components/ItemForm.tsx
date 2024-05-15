@@ -69,7 +69,7 @@ export default function ItemForm({
       >
         <Select mode="tags" placeholder="Tags">
           {tags.map((tag) => (
-            <Select.Option key={tag.id} value={tag.title}>
+            <Select.Option key={tag.title} value={tag.title}>
               {tag.title}
             </Select.Option>
           ))}

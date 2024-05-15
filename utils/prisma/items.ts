@@ -1,10 +1,14 @@
 import { prisma } from "@/utils/prisma";
 import { userCollections } from "./collections";
+import { getUsedTags } from "./tags";
+import { getUserLikesOnComments } from "./likes";
+import { ItemFormType } from "@/components/ItemForm";
+import { getComments } from "./comments";
 
 export async function getMyCollectionsTagsItem(userId: string, itemId: number) {
   const [collections, tags, item] = await prisma.$transaction([
     userCollections(userId),
-    usedTags(),
+    getUsedTags(),
     getItem(itemId),
   ]);
 
@@ -15,13 +19,11 @@ export async function getItemCommentsLikes(userId: string, itemId: number) {
   const [item, comments, likes] = await prisma.$transaction([
     getItem(itemId),
     getComments(itemId),
-    getMyLikesOnComments(userId, itemId),
+    getUserLikesOnComments(userId, itemId),
   ]);
 
   return { item, comments, likes: likes.map((i) => i.commentId) };
 }
-
-const usedTags = () => prisma.tag.findMany();
 
 export const getItem = (itemId: number) =>
   prisma.item.findUnique({
@@ -33,29 +35,47 @@ export const getItem = (itemId: number) =>
     },
   });
 
-export const getMyLikesOnComments = (userId: string, itemId: number) =>
-  prisma.likeOnComment.findMany({
-    select: {
-      commentId: true,
-      rating: true,
+export const createNewItem = (data: ItemFormType & { userId: string }) => {
+  const { title, collectionId, userId } = data;
+
+  return prisma.item.create({
+    data: {
+      title,
+      collectionId,
+      authorId: userId,
     },
-    where: {
-      userId: userId,
-      rating: { gte: 0 },
-      comment: {
-        itemId: itemId,
+  });
+};
+
+export const updateItem2 = (
+  id: number,
+  title: string,
+  collectionId: number,
+  tagsRemove: string[],
+  tagsAdd: string[]
+) =>
+  prisma.item.update({
+    where: { id },
+    data: {
+      title,
+      collectionId,
+      tags: {
+        connectOrCreate: tagsAdd.map((tag) => ({
+          where: {
+            title: tag,
+          },
+          create: {
+            title: tag,
+          },
+        })),
+        disconnect: tagsRemove.map((tag) => ({ title: tag })),
       },
     },
   });
 
-export const getComments = (itemId: number) =>
-  prisma.comment.findMany({
-    where: { itemId: itemId },
-    orderBy: { createdAt: "asc" },
-    include: {
-      author: { select: { name: true } },
-      _count: {
-        select: { likes: true },
-      },
-    },
+export const getItems = () => prisma.item.findMany();
+
+export const deleteItem2 = (itemId: number) =>
+  prisma.item.delete({
+    where: { id: itemId },
   });

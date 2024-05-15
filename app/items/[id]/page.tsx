@@ -21,7 +21,7 @@ export default async function Item({ params: { id } }: Props) {
   const user = await getSupabaseUser();
 
   const { item, comments, likes } = await getItemCommentsLikes(
-    user?.id || "not exist",
+    user?.id || "00000000-0000-0000-0000-000000000000",
     itemId
   );
 

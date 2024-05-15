@@ -1,11 +1,14 @@
 "use server";
 
 import ItemForm from "@/components/ItemForm";
-import { createItem, getUsedTags, my_collections } from "@/app/items/actions";
+import { createItem } from "@/app/items/actions";
+import { getSupabaseUserOrRedirect } from "@/utils/auth-helpers/server";
+import { getUserCollectionsTags } from "@/utils/prisma/collections";
 
 export default async function NewCollection() {
-  const collections = await my_collections();
-  const tags = await getUsedTags();
+  const user = await getSupabaseUserOrRedirect("/signin");
+
+  const { collections, tags } = await getUserCollectionsTags(user.id);
 
   return (
     <>

@@ -1,7 +1,7 @@
 "use server";
 
+import { getCollections } from "@/utils/prisma/collections";
 import Link from "next/link";
-import { getCollections } from "./actions";
 
 export default async function Collections() {
   const collections = await getCollections();
