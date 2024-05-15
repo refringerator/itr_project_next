@@ -1,15 +1,11 @@
 "use server";
 
 import ItemForm, { ItemFormType } from "@/components/ItemForm";
-import {
-  deleteItem,
-  getItem,
-  getUsedTags,
-  my_collections,
-  updateItem,
-} from "@/app/items/actions";
+import { deleteItem, updateItem } from "@/app/items/actions";
 import { DeleteButton } from "@/components/DeleteButton";
 import { getSupabaseUserOrRedirect } from "@/utils/auth-helpers/server";
+import { getMyCollectionsTagsItem } from "@/utils/prisma/items";
+import { redirect } from "next/navigation";
 
 type Props = {
   params: {
@@ -19,11 +15,14 @@ type Props = {
 
 export default async function EditItem({ params: { id } }: Props) {
   const itemId = parseInt(id);
-  await getSupabaseUserOrRedirect("/signin");
+  const user = await getSupabaseUserOrRedirect("/signin");
 
-  const collections = await my_collections();
-  const tags = await getUsedTags();
-  const item = await getItem(itemId);
+  const { collections, tags, item } = await getMyCollectionsTagsItem(
+    user.id,
+    itemId
+  );
+
+  if (!item) redirect("/items/new");
 
   const updateItemWihtId = updateItem.bind(
     null,
