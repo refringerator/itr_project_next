@@ -113,3 +113,13 @@ export async function deleteCollection(id: number) {
     )
   );
 }
+
+export async function getTopics() {
+  const locale = "ru_RU";
+  const topics = await prisma.topic.findMany();
+
+  return topics.map((topic) => ({
+    id: topic.id,
+    title: topic.translation.filter((v) => v.l === locale)[0]?.t || topic.title,
+  }));
+}

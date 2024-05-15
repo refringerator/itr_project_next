@@ -1,8 +1,7 @@
 "use server";
 
 import CollectionForm from "@/components/CollectionForm";
-import { prisma } from "@/utils/prisma";
-import { createCollection } from "@/app/collections/actions";
+import { createCollection, getTopics } from "@/app/collections/actions";
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
 
@@ -16,7 +15,7 @@ export default async function NewCollection() {
     return redirect("/signin");
   }
 
-  const topics = await prisma.topic.findMany();
+  const topics = await getTopics();
 
   return (
     <>

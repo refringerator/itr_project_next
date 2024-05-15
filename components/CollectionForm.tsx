@@ -12,7 +12,7 @@ export type FieldType = {
 
 interface CollectionFormProps {
   buttonText?: string;
-  topics: Topic[];
+  topics: Omit<Topic, "translation">[];
   onFinish: FormProps<FieldType>["onFinish"];
   initialValues?: FieldType;
 }

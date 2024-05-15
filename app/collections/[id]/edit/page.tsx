@@ -1,11 +1,11 @@
 "use server";
 
 import CollectionForm, { FieldType } from "@/components/CollectionForm";
-import { prisma } from "@/utils/prisma";
 import {
   getCollection,
   updateCollection,
   deleteCollection,
+  getTopics,
 } from "@/app/collections/actions";
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
@@ -29,7 +29,7 @@ export default async function EditCollection({ params: { id } }: Props) {
   }
 
   const updateCollectionWihtId = updateCollection.bind(null, collectionId);
-  const topics = await prisma.topic.findMany();
+  const topics = await getTopics();
   const collection = await getCollection(collectionId);
 
   return (

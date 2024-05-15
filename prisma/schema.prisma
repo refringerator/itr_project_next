@@ -8,6 +8,10 @@ generator client {
   provider = "prisma-client-js"
 }
 
+generator json {
+  provider = "prisma-json-types-generator"
+}
+
 model User {
   id          String          @id @default(uuid()) @db.Uuid
   name        String?
@@ -78,4 +82,6 @@ model Topic {
   id          Int          @id @default(autoincrement())
   title       String       @unique
   collections Collection[]
+  /// [TranslationType]
+  translation Json         @default("[]")
 }
