@@ -25,7 +25,7 @@ export async function createItem(data: ItemFormType) {
 
   redirect(
     getStatusRedirect(
-      `/items`,
+      `/items/${item.id}`,
       `New item ${item.id} created!`,
       "You can find it somethere"
     )
@@ -64,7 +64,7 @@ export async function updateItem(
 
   redirect(
     getStatusRedirect(
-      `/items`,
+      `/items/${item.id}`,
       `Item ${item.id} updated!`,
       "You can find it somethere"
     )

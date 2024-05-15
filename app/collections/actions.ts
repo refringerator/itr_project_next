@@ -22,7 +22,7 @@ export async function createCollection(data: FieldType) {
 
   redirect(
     getStatusRedirect(
-      `/collections`,
+      `/collections/${collection.id}`,
       `New collection ${collection.id} created!`,
       "You can find it somethere"
     )
@@ -45,7 +45,7 @@ export async function updateCollection(id: number, data: FieldType) {
 
   redirect(
     getStatusRedirect(
-      `/collections`,
+      `/collections/${collection.id}`,
       `Collection ${collection.id} updated!`,
       "You can find it somethere"
     )
