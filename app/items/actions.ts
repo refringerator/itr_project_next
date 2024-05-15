@@ -75,27 +75,27 @@ export async function getItems() {
   return await prisma.item.findMany();
 }
 
-export async function getItem(id: number) {
-  const item = await prisma.item.findUnique({
-    where: { id },
-    include: {
-      author: { select: { name: true } },
-      collection: { select: { title: true } },
-      tags: { select: { id: true, title: true } },
-    },
-  });
+// export async function getItem(id: number) {
+//   const item = await prisma.item.findUnique({
+//     where: { id },
+//     include: {
+//       author: { select: { name: true } },
+//       collection: { select: { title: true } },
+//       tags: { select: { id: true, title: true } },
+//     },
+//   });
 
-  if (!item)
-    redirect(
-      getErrorRedirect(
-        `/items`,
-        "Item not found",
-        `Cant find item with id ${id}!`
-      )
-    );
+//   if (!item)
+//     redirect(
+//       getErrorRedirect(
+//         `/items`,
+//         "Item not found",
+//         `Cant find item with id ${id}!`
+//       )
+//     );
 
-  return item;
-}
+//   return item;
+// }
 
 export async function deleteItem(id: number) {
   await getSupabaseUserOrRedirect("/signin");

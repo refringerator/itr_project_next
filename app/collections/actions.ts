@@ -2,7 +2,7 @@
 
 import { FieldType } from "@/components/CollectionForm";
 import { getSupabaseUserOrRedirect } from "@/utils/auth-helpers/server";
-import { getErrorRedirect, getStatusRedirect } from "@/utils/helpers";
+import { getStatusRedirect } from "@/utils/helpers";
 import { prisma } from "@/utils/prisma";
 import { redirect } from "next/navigation";
 
@@ -56,26 +56,26 @@ export async function getCollections() {
   return await prisma.collection.findMany();
 }
 
-export async function getCollection(id: number) {
-  const collection = await prisma.collection.findUnique({
-    where: { id },
-    include: {
-      author: { select: { name: true } },
-      topic: { select: { title: true } },
-    },
-  });
+// export async function getCollection(id: number) {
+//   const collection = await prisma.collection.findUnique({
+//     where: { id },
+//     include: {
+//       author: { select: { name: true } },
+//       topic: { select: { title: true } },
+//     },
+//   });
 
-  if (!collection)
-    redirect(
-      getErrorRedirect(
-        `/collections`,
-        "Collection not found",
-        `Cant find collection with id ${id}!`
-      )
-    );
+//   if (!collection)
+//     redirect(
+//       getErrorRedirect(
+//         `/collections`,
+//         "Collection not found",
+//         `Cant find collection with id ${id}!`
+//       )
+//     );
 
-  return collection;
-}
+//   return collection;
+// }
 
 export async function deleteCollection(id: number) {
   await getSupabaseUserOrRedirect("/signin");
@@ -93,12 +93,12 @@ export async function deleteCollection(id: number) {
   );
 }
 
-export async function getTopics() {
-  const locale = "ru_RU";
-  const topics = await prisma.topic.findMany();
+// export async function getTopics() {
+//   const locale = "ru_RU";
+//   const topics = await prisma.topic.findMany();
 
-  return topics.map((topic) => ({
-    id: topic.id,
-    title: topic.translation.filter((v) => v.l === locale)[0]?.t || topic.title,
-  }));
-}
+//   return topics.map((topic) => ({
+//     id: topic.id,
+//     title: topic.translation.filter((v) => v.l === locale)[0]?.t || topic.title,
+//   }));
+// }

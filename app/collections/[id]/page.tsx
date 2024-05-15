@@ -1,7 +1,8 @@
 "use server";
 
-import { getCollection } from "@/app/collections/actions";
+import { getCollection } from "@/utils/prisma/collections";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 
 type Props = {
   params: {
@@ -11,6 +12,8 @@ type Props = {
 
 export default async function Collection({ params: { id } }: Props) {
   const collection = await getCollection(Number(id));
+
+  if (!collection) redirect("/collections");
 
   return (
     <>

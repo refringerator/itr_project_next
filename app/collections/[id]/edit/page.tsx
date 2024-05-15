@@ -1,15 +1,12 @@
 "use server";
 
 import CollectionForm, { FieldType } from "@/components/CollectionForm";
-import {
-  getCollection,
-  updateCollection,
-  deleteCollection,
-  getTopics,
-} from "@/app/collections/actions";
+import { updateCollection, deleteCollection } from "@/app/collections/actions";
 
 import { DeleteButton } from "@/components/DeleteButton";
 import { getSupabaseUserOrRedirect } from "@/utils/auth-helpers/server";
+import { getTopicsCollection } from "@/utils/prisma/collections";
+import { redirect } from "next/navigation";
 
 type Props = {
   params: {
@@ -22,8 +19,9 @@ export default async function EditCollection({ params: { id } }: Props) {
   await getSupabaseUserOrRedirect("/signin");
 
   const updateCollectionWihtId = updateCollection.bind(null, collectionId);
-  const topics = await getTopics();
-  const collection = await getCollection(collectionId);
+  const { topics, collection } = await getTopicsCollection(collectionId);
+
+  if (!collection) redirect("/collections/new");
 
   return (
     <>

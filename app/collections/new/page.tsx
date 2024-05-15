@@ -1,8 +1,9 @@
 "use server";
 
 import CollectionForm from "@/components/CollectionForm";
-import { createCollection, getTopics } from "@/app/collections/actions";
+import { createCollection } from "@/app/collections/actions";
 import { getSupabaseUserOrRedirect } from "@/utils/auth-helpers/server";
+import { getTopics } from "@/utils/prisma/topics";
 
 export default async function NewCollection() {
   await getSupabaseUserOrRedirect("/signin");
