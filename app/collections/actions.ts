@@ -1,22 +1,15 @@
 "use server";
 
 import { FieldType } from "@/components/CollectionForm";
+import { getSupabaseUserOrRedirect } from "@/utils/auth-helpers/server";
 import { getErrorRedirect, getStatusRedirect } from "@/utils/helpers";
 import { prisma } from "@/utils/prisma";
-import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
 
 export async function createCollection(data: FieldType) {
   const { title, topicId, description } = data;
 
-  const supabase = createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  if (!user) {
-    return redirect("/signin");
-  }
+  const user = await getSupabaseUserOrRedirect("/signin");
 
   const collection = await prisma.collection.create({
     data: {
@@ -39,14 +32,7 @@ export async function createCollection(data: FieldType) {
 export async function updateCollection(id: number, data: FieldType) {
   const { title, topicId, description } = data;
 
-  const supabase = createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  if (!user) {
-    return redirect("/signin");
-  }
+  await getSupabaseUserOrRedirect("/signin");
 
   const collection = await prisma.collection.update({
     where: { id },
@@ -92,14 +78,7 @@ export async function getCollection(id: number) {
 }
 
 export async function deleteCollection(id: number) {
-  const supabase = createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  if (!user) {
-    return redirect("/signin");
-  }
+  await getSupabaseUserOrRedirect("/signin");
 
   const collection = await prisma.collection.delete({
     where: { id },

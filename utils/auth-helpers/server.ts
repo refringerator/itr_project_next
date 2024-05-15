@@ -336,3 +336,22 @@ export async function updateName(formData: FormData) {
     );
   }
 }
+
+export async function getSupabaseUserOrRedirect(path = "/") {
+  const user = await getSupabaseUser();
+
+  if (!user) {
+    return redirect(path);
+  }
+
+  return user;
+}
+
+export async function getSupabaseUser() {
+  const supabase = createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  return user;
+}

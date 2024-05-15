@@ -8,9 +8,8 @@ import {
   my_collections,
   updateItem,
 } from "@/app/items/actions";
-import { createClient } from "@/utils/supabase/server";
-import { redirect } from "next/navigation";
 import { DeleteButton } from "@/components/DeleteButton";
+import { getSupabaseUserOrRedirect } from "@/utils/auth-helpers/server";
 
 type Props = {
   params: {
@@ -20,14 +19,7 @@ type Props = {
 
 export default async function EditItem({ params: { id } }: Props) {
   const itemId = parseInt(id);
-  const supabase = createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  if (!user) {
-    return redirect("/signin");
-  }
+  await getSupabaseUserOrRedirect("/signin");
 
   const collections = await my_collections();
   const tags = await getUsedTags();

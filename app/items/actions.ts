@@ -1,6 +1,10 @@
 "use server";
 
 import { ItemFormType } from "@/components/ItemForm";
+import {
+  getSupabaseUser,
+  getSupabaseUserOrRedirect,
+} from "@/utils/auth-helpers/server";
 import { getErrorRedirect, getStatusRedirect } from "@/utils/helpers";
 import { prisma } from "@/utils/prisma";
 import { createClient } from "@/utils/supabase/server";
@@ -9,14 +13,7 @@ import { redirect } from "next/navigation";
 export async function createItem(data: ItemFormType) {
   const { title, collectionId } = data;
 
-  const supabase = createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  if (!user) {
-    return redirect("/signin");
-  }
+  const user = await getSupabaseUserOrRedirect("/signin");
 
   const item = await prisma.item.create({
     data: {
@@ -44,14 +41,7 @@ export async function updateItem(
 
   const tagsRemove = existedTags.filter((t) => !tagsIds.includes(t));
 
-  const supabase = createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  if (!user) {
-    return redirect("/signin");
-  }
+  await getSupabaseUserOrRedirect("/signin");
 
   const item = await prisma.item.update({
     where: { id },
@@ -108,14 +98,7 @@ export async function getItem(id: number) {
 }
 
 export async function deleteItem(id: number) {
-  const supabase = createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  if (!user) {
-    return redirect("/signin");
-  }
+  await getSupabaseUserOrRedirect("/signin");
 
   const item = await prisma.item.delete({
     where: { id },
@@ -131,14 +114,7 @@ export async function deleteItem(id: number) {
 }
 
 export async function my_collections() {
-  const supabase = createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  if (!user) {
-    return redirect("/signin");
-  }
+  const user = await getSupabaseUserOrRedirect("/signin");
 
   return await prisma.collection.findMany({
     where: { authorId: user.id },
@@ -160,14 +136,7 @@ export async function getComments(itemId: number) {
 
 export async function addComment(itemId: number, fd: FormData) {
   const { text } = Object.fromEntries(fd) as { text: string };
-  const supabase = createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  if (!user) {
-    return redirect("/signin");
-  }
+  const user = await getSupabaseUserOrRedirect("/signin");
 
   const comment = await prisma.comment.create({
     data: {
@@ -180,6 +149,7 @@ export async function addComment(itemId: number, fd: FormData) {
     },
   });
 
+  const supabase = createClient();
   supabase.channel(`item-${itemId}`).send({
     type: "broadcast",
     event: "new-comment",
@@ -215,10 +185,7 @@ export async function getMyLikesOnComments(itemId: number) {
 }
 
 export async function setMyLikeOnComment(commentId: number, rating: number) {
-  const supabase = createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = await getSupabaseUser();
 
   if (!user) {
     return;

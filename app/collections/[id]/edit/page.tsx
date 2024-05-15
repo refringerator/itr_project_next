@@ -7,9 +7,9 @@ import {
   deleteCollection,
   getTopics,
 } from "@/app/collections/actions";
-import { createClient } from "@/utils/supabase/server";
-import { redirect } from "next/navigation";
+
 import { DeleteButton } from "@/components/DeleteButton";
+import { getSupabaseUserOrRedirect } from "@/utils/auth-helpers/server";
 
 type Props = {
   params: {
@@ -19,14 +19,7 @@ type Props = {
 
 export default async function EditCollection({ params: { id } }: Props) {
   const collectionId = parseInt(id);
-  const supabase = createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  if (!user) {
-    return redirect("/signin");
-  }
+  await getSupabaseUserOrRedirect("/signin");
 
   const updateCollectionWihtId = updateCollection.bind(null, collectionId);
   const topics = await getTopics();
