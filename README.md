@@ -42,7 +42,7 @@ TBD
 6. supabase [discussions](https://github.com/orgs/supabase/discussions?discussions_q=is%3Aopen+nextjs+)
 7. examples https://www.restack.io/docs/supabase-knowledge-next-auth-supabase-example
 8. supabase cicd [gh app](https://github.com/marketplace/actions/supabase-cli-action), [docs](https://supabase.com/docs/guides/functions/cicd-workflow)
-9. [playwright](https://playwright.dev/docs/intro), [next doc](https://nextjs.org/docs/pages/building-your-application/testing/playwright)
+9. [playwright](https://playwright.dev/docs/intro), [next doc](https://nextjs.org/docs/pages/building-your-application/testing/playwright), [prisma](https://www.prisma.io/blog/testing-series-4-OVXtDis201)
 
 ### Demo
 
