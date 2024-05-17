@@ -20,7 +20,10 @@
     "supabase:db-reset": "npx supabase db reset",
     "supabase:push": "npx supabase push",
     "supabase:pull": "npx supabase pull",
-    "prisma:db-push": "npx prisma db push"
+    "prisma:db-push": "npx prisma db push",
+    "test:ui": "npx playwright test --ui --project=chromium",
+    "test:report": "npx playwright show-report",
+    "test": "npx playwright test --project=chromium"
   },
   "dependencies": {
     "@ant-design/nextjs-registry": "^1.0.0",
