@@ -54,53 +54,53 @@ export default async function SignIn({
   }
 
   return (
-    //     <Card
-    //       title={
-    //         viewProp === "forgot_password"
-    //           ? "Reset Password"
-    //           : viewProp === "update_password"
-    //           ? "Update Password"
-    //           : viewProp === "signup"
-    //           ? "Sign Up"
-    //           : "Sign In"
-    //       }
-    //     >
-    <div>
-      {viewProp === "password_signin" && (
-        <PasswordSignIn
-          allowEmail={allowEmail}
-          redirectMethod={redirectMethod}
-        />
-      )}
-      {viewProp === "signup" && (
-        <SignUp allowEmail={allowEmail} redirectMethod={redirectMethod} />
-      )}
-      {viewProp === "email_signin" && (
-        <EmailSignIn
-          allowPassword={allowPassword}
-          redirectMethod={redirectMethod}
-          disableButton={searchParams.disable_button}
-        />
-      )}
-      {viewProp === "forgot_password" && (
-        <ForgotPassword
-          allowEmail={allowEmail}
-          redirectMethod={redirectMethod}
-          disableButton={searchParams.disable_button}
-        />
-      )}
-      {viewProp === "update_password" && (
-        <UpdatePassword redirectMethod={redirectMethod} />
-      )}
-    </div>
-    //       {viewProp !== "update_password" &&
-    //         viewProp !== "signup" &&
-    //         allowOauth && (
-    //           <>
-    //             <Separator text="Third-party sign-in" />
-    //             <OauthSignIn />
-    //           </>
-    //         )}
-    //     </Card>
+    <>
+      <h3>Auth page</h3>
+      <h3>
+        {viewProp === "forgot_password"
+          ? "Reset Password"
+          : viewProp === "update_password"
+          ? "Update Password"
+          : viewProp === "signup"
+          ? "Sign Up"
+          : "Sign In"}
+      </h3>
+      <div>
+        {viewProp === "password_signin" && (
+          <PasswordSignIn
+            allowEmail={allowEmail}
+            redirectMethod={redirectMethod}
+          />
+        )}
+        {viewProp === "signup" && (
+          <SignUp allowEmail={allowEmail} redirectMethod={redirectMethod} />
+        )}
+        {viewProp === "email_signin" && (
+          <EmailSignIn
+            allowPassword={allowPassword}
+            redirectMethod={redirectMethod}
+            disableButton={searchParams.disable_button}
+          />
+        )}
+        {viewProp === "forgot_password" && (
+          <ForgotPassword
+            allowEmail={allowEmail}
+            redirectMethod={redirectMethod}
+            disableButton={searchParams.disable_button}
+          />
+        )}
+        {viewProp === "update_password" && (
+          <UpdatePassword redirectMethod={redirectMethod} />
+        )}
+      </div>
+    </>
   );
+  //       {viewProp !== "update_password" &&
+  //         viewProp !== "signup" &&
+  //         allowOauth && (
+  //           <>
+  //             <Separator text="Third-party sign-in" />
+  //             <OauthSignIn />
+  //           </>
+  //         )}
 }
