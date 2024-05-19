@@ -20,8 +20,8 @@ const Header = ({ user }: HeaderProps) => {
   const router = useRouter();
   const path = usePathname();
 
-  const onPressEnter = () => {
-    console.log("123");
+  const onPressEnter = (value: string) => {
+    if (value.length > 1) router.push(`/search?q=${value}`);
   };
 
   return (
