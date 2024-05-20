@@ -22,7 +22,7 @@ export default async function EditItem({ params: { id } }: Props) {
     itemId
   );
 
-  if (!item) redirect("/items/new");
+  if (!item) return redirect("/items/new");
 
   const updateItemWihtId = updateItem.bind(
     null,

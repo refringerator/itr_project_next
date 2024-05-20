@@ -26,7 +26,7 @@ export default async function Item({ params: { id } }: Props) {
   );
 
   if (!item)
-    redirect(
+    return redirect(
       getErrorRedirect(
         `/items`,
         "Item not found",

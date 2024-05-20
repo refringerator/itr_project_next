@@ -13,7 +13,7 @@ type Props = {
 export default async function Collection({ params: { id } }: Props) {
   const collection = await getCollection(Number(id));
 
-  if (!collection) redirect("/collections");
+  if (!collection) return redirect("/collections");
 
   return (
     <>
