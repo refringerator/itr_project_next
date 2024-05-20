@@ -28,7 +28,7 @@ export default async function EditCollection({ params: { id } }: Props) {
     collection?.customFields
   );
 
-  if (!collection) redirect("/collections/new");
+  if (!collection) return redirect("/collections/new");
 
   return (
     <>
