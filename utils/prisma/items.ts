@@ -57,13 +57,15 @@ export const updateItem2 = (
   title: string,
   collectionId: number,
   tagsRemove: string[],
-  tagsAdd: string[]
+  tagsAdd: string[],
+  customFields: PrismaJson.CustomValuesType
 ) =>
   prisma.item.update({
     where: { id },
     data: {
       title,
       collectionId,
+      customValues: customFields,
       tags: {
         connectOrCreate: tagsAdd.map((tag) => ({
           where: {

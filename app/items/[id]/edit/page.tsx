@@ -44,7 +44,11 @@ export default async function EditItem({ params: { id } }: Props) {
         tags={tags}
         onFinish={updateItemWihtId}
         initialValues={
-          { ...item, tagsIds: item.tags.map((el) => el.title) } as ItemFormType
+          {
+            ...item,
+            ...item.customValues,
+            tagsIds: item.tags.map((el) => el.title),
+          } as ItemFormType
         }
         buttonText="Update"
       />

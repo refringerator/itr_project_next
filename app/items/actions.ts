@@ -38,7 +38,17 @@ export async function updateItem(
 
   await getSupabaseUserOrRedirect("/signin");
 
-  const item = await updateItem2(id, title, collectionId, tagsRemove, tagsIds);
+  const json = Object.fromEntries(
+    Object.entries(data).filter(([key]) => key.startsWith("cf_"))
+  );
+  const item = await updateItem2(
+    id,
+    title,
+    collectionId,
+    tagsRemove,
+    tagsIds,
+    json as PrismaJson.CustomValuesType
+  );
 
   redirect(
     getStatusRedirect(

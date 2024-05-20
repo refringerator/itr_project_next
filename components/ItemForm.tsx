@@ -22,6 +22,14 @@ interface CollectionFormProps {
   initialValues?: ItemFormType;
 }
 
+const getCustomFields = (
+  collections: UserCollectionType[],
+  collectionId: number
+) => {
+  const c = collections.find((c) => c.id === collectionId);
+  return c?.customFields || [];
+};
+
 export default function ItemForm({
   collections,
   tags,
@@ -29,15 +37,16 @@ export default function ItemForm({
   buttonText = "Create",
   initialValues,
 }: CollectionFormProps) {
-  const [fields, setFields] = useState<UserCollectionType["customFields"]>([]);
+  const [fields, setFields] = useState<UserCollectionType["customFields"]>(
+    getCustomFields(collections, initialValues?.collectionId || -1)
+  );
 
   if (collections.length === 0) return <div>There is no collections!</div>;
 
-  const { title, collectionId, tagsIds } = initialValues || {};
+  // const { title, collectionId, tagsIds } = initialValues || {};
 
-  const collectionOnChange = (selectedId: Number) => {
-    const c = collections.find((c) => c.id === selectedId);
-    c && setFields(c.customFields);
+  const collectionOnChange = (selectedId: number) => {
+    setFields(getCustomFields(collections, selectedId));
   };
 
   return (
@@ -46,14 +55,7 @@ export default function ItemForm({
       labelCol={{ span: 8 }}
       wrapperCol={{ span: 16 }}
       style={{ maxWidth: 600 }}
-      initialValues={{
-        title,
-        collectionId,
-        tagsIds,
-        // cf_2: false,
-        // cf_3: 0,
-        // cf_4: "",
-      }}
+      initialValues={initialValues}
       onFinish={
         // (v) => console.log(v)
         onFinish
