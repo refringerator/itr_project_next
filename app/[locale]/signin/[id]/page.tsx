@@ -21,7 +21,7 @@ export default async function SignIn({
   searchParams,
 }: {
   params: { id: string };
-  searchParams: { disable_button: boolean };
+  searchParams: { disable_button: string };
 }) {
   const { allowOauth, allowEmail, allowPassword } = getAuthTypes();
   const viewTypes = getViewTypes();
@@ -29,6 +29,7 @@ export default async function SignIn({
 
   // Declare 'viewProp' and initialize with the default value
   let viewProp: string;
+  const disableButton = /^true$/i.test(searchParams.disable_button);
 
   // Assign url id to 'viewProp' if it's a valid string and ViewTypes includes it
   if (typeof params.id === "string" && viewTypes.includes(params.id)) {
@@ -79,14 +80,14 @@ export default async function SignIn({
           <EmailSignIn
             allowPassword={allowPassword}
             redirectMethod={redirectMethod}
-            disableButton={searchParams.disable_button}
+            disableButton={disableButton}
           />
         )}
         {viewProp === "forgot_password" && (
           <ForgotPassword
             allowEmail={allowEmail}
             redirectMethod={redirectMethod}
-            disableButton={searchParams.disable_button}
+            disableButton={disableButton}
           />
         )}
         {viewProp === "update_password" && (
