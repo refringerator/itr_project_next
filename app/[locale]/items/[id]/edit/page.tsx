@@ -1,7 +1,7 @@
 "use server";
 
 import ItemForm, { ItemFormType } from "@/components/ItemForm";
-import { deleteItem, updateItem } from "@/app/items/actions";
+import { deleteItem, updateItem } from "@/app/[locale]/items/actions";
 import { DeleteButton } from "@/components/DeleteButton";
 import { getSupabaseUserOrRedirect } from "@/utils/auth-helpers/server";
 import { getMyCollectionsTagsItem } from "@/utils/prisma/items";

@@ -1,7 +1,7 @@
 "use server";
 
 import ItemForm from "@/components/ItemForm";
-import { createItem } from "@/app/items/actions";
+import { createItem } from "@/app/[locale]/items/actions";
 import { getSupabaseUserOrRedirect } from "@/utils/auth-helpers/server";
 import { getUserCollectionsTagsCFs } from "@/utils/prisma/collections";
 

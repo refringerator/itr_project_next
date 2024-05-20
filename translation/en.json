@@ -1,0 +1,9 @@
+{
+  "Header": {
+    "home": "Home",
+    "collecions": "Collections",
+    "items": "Items",
+    "signout": "Sign out",
+    "signin": "Sign In"
+  }
+}

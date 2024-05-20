@@ -32,6 +32,7 @@
     "@supabase/supabase-js": "^2.43.1",
     "antd": "^5.17.0",
     "next": "14.2.3",
+    "next-intl": "^3.14.0",
     "prisma-json-types-generator": "^3.0.4",
     "react": "^18",
     "react-dom": "^18",

@@ -6,6 +6,8 @@ import { Layout } from "antd";
 import { Suspense } from "react";
 import { Notification } from "@/components/Notification/Notification";
 import { createClient } from "@/utils/supabase/server";
+import { NextIntlClientProvider } from "next-intl";
+import { getMessages } from "next-intl/server";
 
 export const metadata: Metadata = {
   title: "Collection management",
@@ -14,8 +16,10 @@ export const metadata: Metadata = {
 
 export default async function RootLayout({
   children,
+  params: { locale },
 }: Readonly<{
   children: React.ReactNode;
+  params: { locale: string };
 }>) {
   const supabase = createClient();
 
@@ -23,19 +27,25 @@ export default async function RootLayout({
     data: { user },
   } = await supabase.auth.getUser();
 
+  // Providing all messages to the client
+  // side is the easiest way to get started
+  const messages = await getMessages();
+
   return (
-    <html lang="en">
+    <html lang={locale}>
       <body>
-        <AntdRegistry>
-          <Layout>
-            <Header user={user} />
-            <Content>{children}</Content>
-            <Footer />
-          </Layout>
-          <Suspense>
-            <Notification />
-          </Suspense>
-        </AntdRegistry>
+        <NextIntlClientProvider messages={messages}>
+          <AntdRegistry>
+            <Layout>
+              <Header user={user} />
+              <Content>{children}</Content>
+              <Footer />
+            </Layout>
+            <Suspense>
+              <Notification />
+            </Suspense>
+          </AntdRegistry>
+        </NextIntlClientProvider>
       </body>
     </html>
   );

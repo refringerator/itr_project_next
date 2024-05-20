@@ -1,7 +1,7 @@
 "use server";
 
 import CollectionForm from "@/components/CollectionForm";
-import { createCollection } from "@/app/collections/actions";
+import { createCollection } from "@/app/[locale]/collections/actions";
 import { getSupabaseUserOrRedirect } from "@/utils/auth-helpers/server";
 import { getTopics } from "@/utils/prisma/topics";
 

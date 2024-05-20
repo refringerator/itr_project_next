@@ -1,13 +1,13 @@
 import { createServerClient, type CookieOptions } from "@supabase/ssr";
 import { type NextRequest, NextResponse } from "next/server";
 
-export const createClient = (request: NextRequest) => {
+export const createClient = (request: NextRequest, response: NextResponse) => {
   // Create an unmodified response
-  let response = NextResponse.next({
-    request: {
-      headers: request.headers,
-    },
-  });
+  // let response = NextResponse.next({
+  //   request: {
+  //     headers: request.headers,
+  //   },
+  // });
 
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -24,11 +24,11 @@ export const createClient = (request: NextRequest) => {
             value,
             ...options,
           });
-          response = NextResponse.next({
-            request: {
-              headers: request.headers,
-            },
-          });
+          // response = NextResponse.next({
+          //   request: {
+          //     headers: request.headers,
+          //   },
+          // });
           response.cookies.set({
             name,
             value,
@@ -42,11 +42,11 @@ export const createClient = (request: NextRequest) => {
             value: "",
             ...options,
           });
-          response = NextResponse.next({
-            request: {
-              headers: request.headers,
-            },
-          });
+          // response = NextResponse.next({
+          //   request: {
+          //     headers: request.headers,
+          //   },
+          // });
           response.cookies.set({
             name,
             value: "",
@@ -60,8 +60,11 @@ export const createClient = (request: NextRequest) => {
   return { supabase, response };
 };
 
-export const updateSession = async (request: NextRequest) => {
-  const { supabase, response } = createClient(request);
+export const updateSession = async (
+  request: NextRequest,
+  resp: NextResponse
+) => {
+  const { supabase, response } = createClient(request, resp);
 
   // This will refresh session if expired - required for Server Components
   // https://supabase.com/docs/guides/auth/server-side/nextjs

@@ -1,7 +1,10 @@
 "use server";
 
 import CollectionForm, { FieldType } from "@/components/CollectionForm";
-import { updateCollection, deleteCollection } from "@/app/collections/actions";
+import {
+  updateCollection,
+  deleteCollection,
+} from "@/app/[locale]/collections/actions";
 
 import { DeleteButton } from "@/components/DeleteButton";
 import { getSupabaseUserOrRedirect } from "@/utils/auth-helpers/server";

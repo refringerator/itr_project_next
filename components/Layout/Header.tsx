@@ -11,6 +11,7 @@ import { SignOut } from "@/utils/auth-helpers/server";
 import { getRedirectMethod } from "@/utils/auth-helpers/settings";
 import { handleRequest } from "@/utils/auth-helpers/client";
 import { usePathname, useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 
 interface HeaderProps {
   user?: any;
@@ -19,6 +20,7 @@ interface HeaderProps {
 const Header = ({ user }: HeaderProps) => {
   const router = useRouter();
   const path = usePathname();
+  const t = useTranslations("Header");
 
   const onPressEnter = (value: string) => {
     if (value.length > 1) router.push(`/search?q=${value}`);
@@ -27,9 +29,9 @@ const Header = ({ user }: HeaderProps) => {
   return (
     <AntdHeader style={{ display: "flex" }}>
       <Flex align="center" justify="space-between" style={{ width: "100%" }}>
-        <Link href="/">Home</Link>
-        <Link href="/collections">Collections</Link>
-        <Link href="/items">Items</Link>
+        <Link href="/">{t("home")}</Link>
+        <Link href="/collections">{t("collecions")}</Link>
+        <Link href="/items">{t("items")}</Link>
         <Search
           style={{ maxWidth: "400px" }}
           placeholder="input search"
@@ -48,7 +50,7 @@ const Header = ({ user }: HeaderProps) => {
               );
             }}
           >
-            Sign out
+            {t("signout")}
           </button>
         ) : (
           <Link href="/signin">Sign In</Link>

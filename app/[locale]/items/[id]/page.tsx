@@ -1,7 +1,7 @@
 "use server";
 
 import Link from "next/link";
-import { addComment } from "@/app/items/actions";
+import { addComment } from "@/app/[locale]/items/actions";
 import { Comments } from "@/components/Comments";
 import { Tag } from "antd";
 import { getItemCommentsLikes } from "@/utils/prisma/items";
