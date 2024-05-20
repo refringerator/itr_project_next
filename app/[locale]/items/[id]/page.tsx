@@ -1,12 +1,12 @@
 "use server";
 
-import Link from "next/link";
+import { Link } from "@/navigation";
 import { addComment } from "@/app/[locale]/items/actions";
 import { Comments } from "@/components/Comments";
 import { Tag } from "antd";
 import { getItemCommentsLikes } from "@/utils/prisma/items";
 import { getSupabaseUser } from "@/utils/auth-helpers/server";
-import { redirect } from "next/navigation";
+import { redirect } from "@/navigation";
 import { getErrorRedirect } from "@/utils/helpers";
 
 type Props = {

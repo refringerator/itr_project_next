@@ -5,7 +5,7 @@ import { deleteItem, updateItem } from "@/app/[locale]/items/actions";
 import { DeleteButton } from "@/components/DeleteButton";
 import { getSupabaseUserOrRedirect } from "@/utils/auth-helpers/server";
 import { getMyCollectionsTagsItem } from "@/utils/prisma/items";
-import { redirect } from "next/navigation";
+import { redirect } from "@/navigation";
 
 type Props = {
   params: {

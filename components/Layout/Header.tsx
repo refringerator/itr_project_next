@@ -1,7 +1,7 @@
 "use client";
 
 import { Layout, Flex } from "antd";
-import Link from "next/link";
+import { Link } from "@/navigation";
 import { Input } from "antd";
 
 const { Header: AntdHeader } = Layout;
@@ -10,7 +10,7 @@ const { Search } = Input;
 import { SignOut } from "@/utils/auth-helpers/server";
 import { getRedirectMethod } from "@/utils/auth-helpers/settings";
 import { handleRequest } from "@/utils/auth-helpers/client";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter } from "@/navigation";
 import { useTranslations } from "next-intl";
 
 interface HeaderProps {
@@ -53,7 +53,7 @@ const Header = ({ user }: HeaderProps) => {
             {t("signout")}
           </button>
         ) : (
-          <Link href="/signin">Sign In</Link>
+          <Link href="/signin">{t("signin")}</Link>
         )}
       </Flex>
     </AntdHeader>

@@ -9,7 +9,7 @@ import {
 import { DeleteButton } from "@/components/DeleteButton";
 import { getSupabaseUserOrRedirect } from "@/utils/auth-helpers/server";
 import { getTopicsCollection } from "@/utils/prisma/collections";
-import { redirect } from "next/navigation";
+import { redirect } from "@/navigation";
 
 type Props = {
   params: {

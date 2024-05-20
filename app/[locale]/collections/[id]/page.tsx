@@ -1,8 +1,8 @@
 "use server";
 
 import { getCollection } from "@/utils/prisma/collections";
-import Link from "next/link";
-import { redirect } from "next/navigation";
+import { Link } from "@/navigation";
+import { redirect } from "@/navigation";
 
 type Props = {
   params: {

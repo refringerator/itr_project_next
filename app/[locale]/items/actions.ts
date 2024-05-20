@@ -11,7 +11,7 @@ import { createNewItem, deleteItem2, updateItem2 } from "@/utils/prisma/items";
 import { setLike } from "@/utils/prisma/likes";
 import { pubComment } from "@/utils/supabase/s-helpers";
 
-import { redirect } from "next/navigation";
+import { redirect } from "@/navigation";
 
 export async function createItem(data: ItemFormType) {
   const user = await getSupabaseUserOrRedirect("/signin");

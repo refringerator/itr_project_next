@@ -1,6 +1,6 @@
 "use server";
 
-import { redirect } from "next/navigation";
+import { redirect } from "@/navigation";
 import { FieldType } from "@/components/CollectionForm";
 import { getSupabaseUserOrRedirect } from "@/utils/auth-helpers/server";
 import { getStatusRedirect } from "@/utils/helpers";
