@@ -4,6 +4,9 @@ import { Select, Button, Form, Input } from "antd";
 import type { FormProps } from "antd";
 
 import { Collection, Tag } from "@prisma/client";
+import { useState } from "react";
+import { UserCollectionType } from "@/utils/prisma/collections";
+import CustomFormField from "./CustomFormField";
 
 export type ItemFormType = {
   title: string;
@@ -13,7 +16,7 @@ export type ItemFormType = {
 
 interface CollectionFormProps {
   buttonText?: string;
-  collections: Collection[];
+  collections: UserCollectionType[];
   tags: Tag[];
   onFinish: FormProps<ItemFormType>["onFinish"];
   initialValues?: ItemFormType;
@@ -26,9 +29,16 @@ export default function ItemForm({
   buttonText = "Create",
   initialValues,
 }: CollectionFormProps) {
+  const [fields, setFields] = useState<UserCollectionType["customFields"]>([]);
+
   if (collections.length === 0) return <div>There is no collections!</div>;
 
   const { title, collectionId, tagsIds } = initialValues || {};
+
+  const collectionOnChange = (selectedId: Number) => {
+    const c = collections.find((c) => c.id === selectedId);
+    c && setFields(c.customFields);
+  };
 
   return (
     <Form
@@ -36,8 +46,18 @@ export default function ItemForm({
       labelCol={{ span: 8 }}
       wrapperCol={{ span: 16 }}
       style={{ maxWidth: 600 }}
-      initialValues={{ title, collectionId, tagsIds }}
-      onFinish={onFinish}
+      initialValues={{
+        title,
+        collectionId,
+        tagsIds,
+        // cf_2: false,
+        // cf_3: 0,
+        // cf_4: "",
+      }}
+      onFinish={
+        // (v) => console.log(v)
+        onFinish
+      }
       autoComplete="off"
     >
       <Form.Item<ItemFormType>
@@ -53,7 +73,7 @@ export default function ItemForm({
         name="collectionId"
         rules={[{ required: true, message: "Please choice collection!" }]}
       >
-        <Select>
+        <Select onChange={collectionOnChange}>
           {collections.map((collection) => (
             <Select.Option key={collection.id} value={collection.id}>
               {collection.title}
@@ -75,6 +95,10 @@ export default function ItemForm({
           ))}
         </Select>
       </Form.Item>
+
+      {fields.map((f) => (
+        <CustomFormField field={f} key={f.id} />
+      ))}
 
       <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
         <Button type="primary" htmlType="submit">

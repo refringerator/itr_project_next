@@ -38,11 +38,16 @@ export const getItem = (itemId: number) =>
 export const createNewItem = (data: ItemFormType & { userId: string }) => {
   const { title, collectionId, userId } = data;
 
+  let json = Object.fromEntries(
+    Object.entries(data).filter(([key]) => key.startsWith("cf_"))
+  );
+
   return prisma.item.create({
     data: {
       title,
       collectionId,
       authorId: userId,
+      customValues: json as PrismaJson.CustomValuesType,
     },
   });
 };
