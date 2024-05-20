@@ -18,8 +18,12 @@ export default async function EditCollection({ params: { id } }: Props) {
   const collectionId = parseInt(id);
   await getSupabaseUserOrRedirect("/signin");
 
-  const updateCollectionWihtId = updateCollection.bind(null, collectionId);
   const { topics, collection } = await getTopicsCollection(collectionId);
+  const updateCollectionWihtId = updateCollection.bind(
+    null,
+    collectionId,
+    collection?.customFields
+  );
 
   if (!collection) redirect("/collections/new");
 

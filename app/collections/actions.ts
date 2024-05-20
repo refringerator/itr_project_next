@@ -9,8 +9,11 @@ import {
   deleteCollection2,
   updateCollection2,
 } from "@/utils/prisma/collections";
+import { CustomField } from "@prisma/client";
 
 export async function createCollection(data: FieldType) {
+  console.log({ data });
+
   const user = await getSupabaseUserOrRedirect("/signin");
 
   const collection = await createCollection2({ ...data, userId: user.id });
@@ -24,10 +27,14 @@ export async function createCollection(data: FieldType) {
   );
 }
 
-export async function updateCollection(id: number, data: FieldType) {
+export async function updateCollection(
+  id: number,
+  oldCFs: Omit<CustomField, "collectionId">[] | undefined,
+  data: FieldType
+) {
   await getSupabaseUserOrRedirect("/signin");
 
-  const collection = await updateCollection2(id, data);
+  const collection = await updateCollection2(id, oldCFs, data);
 
   redirect(
     getStatusRedirect(
