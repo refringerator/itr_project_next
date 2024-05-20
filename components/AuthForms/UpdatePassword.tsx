@@ -3,7 +3,7 @@
 import { Button, Form, Input } from "antd";
 import { updatePassword } from "@/utils/auth-helpers/server";
 import { handleRequest } from "@/utils/auth-helpers/client";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/navigation";
 import React, { useState } from "react";
 
 interface UpdatePasswordProps {

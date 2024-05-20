@@ -1,0 +1,9 @@
+{
+  "Header": {
+    "home": "Дом",
+    "collecions": "Коллекции",
+    "items": "Элементы",
+    "signout": "Выйти",
+    "signin": "Войти"
+  }
+}

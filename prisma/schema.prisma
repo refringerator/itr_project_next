@@ -5,7 +5,8 @@ datasource db {
 }
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["fullTextSearch"]
 }
 
 generator json {
@@ -23,17 +24,18 @@ model User {
 }
 
 model Collection {
-  id          Int      @id @default(autoincrement())
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  title       String
-  description String?
-  published   Boolean  @default(false)
-  authorId    String   @db.Uuid
-  author      User     @relation(fields: [authorId], references: [id])
-  topicId     Int
-  topic       Topic    @relation(fields: [topicId], references: [id])
-  items       Item[]
+  id           Int           @id @default(autoincrement())
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  title        String
+  description  String?
+  published    Boolean       @default(false)
+  authorId     String        @db.Uuid
+  author       User          @relation(fields: [authorId], references: [id])
+  topicId      Int
+  topic        Topic         @relation(fields: [topicId], references: [id])
+  items        Item[]
+  customFields CustomField[]
 }
 
 model Item {
@@ -48,6 +50,8 @@ model Item {
   collection   Collection @relation(fields: [collectionId], references: [id], onDelete: Cascade)
   tags         Tag[]
   comments     Comment[]
+  /// [CustomValuesType]
+  customValues Json       @default("{}")
 }
 
 model Tag {
@@ -84,4 +88,24 @@ model Topic {
   collections Collection[]
   /// [TranslationType]
   translation Json         @default("[]")
+}
+
+model CustomField {
+  id           Int             @id @default(autoincrement())
+  title        String
+  type         CustomFieldType @default(TEXT)
+  isFilter     Boolean
+  isRequired   Boolean
+  collectionId Int
+  collection   Collection      @relation(fields: [collectionId], references: [id], onDelete: Cascade)
+}
+
+enum CustomFieldType {
+  INT
+  BOOLEAN
+  TEXT
+  LONGTEXT
+  DATE
+  LINK
+  FILE
 }

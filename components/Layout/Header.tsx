@@ -1,19 +1,18 @@
 "use client";
 
-import { Layout, Menu, MenuProps } from "antd";
-import Link from "next/link";
+import { Layout, Flex } from "antd";
+import { Link } from "@/navigation";
+import { Input } from "antd";
+
 const { Header: AntdHeader } = Layout;
+const { Search } = Input;
 
 import { SignOut } from "@/utils/auth-helpers/server";
 import { getRedirectMethod } from "@/utils/auth-helpers/settings";
 import { handleRequest } from "@/utils/auth-helpers/client";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter } from "@/navigation";
+import { useTranslations } from "next-intl";
 
-const items = [
-  { key: 1, label: <Link href="/">Home</Link> },
-  { key: 3, label: <Link href="/collections">Collections</Link> },
-  { key: 2, label: <Link href="/items">Items</Link> },
-];
 interface HeaderProps {
   user?: any;
 }
@@ -21,42 +20,42 @@ interface HeaderProps {
 const Header = ({ user }: HeaderProps) => {
   const router = useRouter();
   const path = usePathname();
+  const t = useTranslations("Header");
 
-  const onClick: MenuProps["onClick"] = (e) => {
-    console.log("click ", e);
+  const onPressEnter = (value: string) => {
+    if (value.length > 1) router.push(`/search?q=${value}`);
   };
 
   return (
-    <AntdHeader style={{ display: "flex", alignItems: "center" }}>
-      <Menu
-        onClick={onClick}
-        theme="light"
-        mode="horizontal"
-        defaultSelectedKeys={["1"]}
-        items={[
-          ...items,
-          {
-            key: 55,
-            label: user ? (
-              <button
-                type="button"
-                onClick={() => {
-                  handleRequest(
-                    { pathName: path },
-                    SignOut,
-                    getRedirectMethod() === "client" ? router : null
-                  );
-                }}
-              >
-                Sign out
-              </button>
-            ) : (
-              <Link href="/signin">Sign In</Link>
-            ),
-          },
-        ]}
-        style={{ flex: 1, minWidth: 0 }}
-      />
+    <AntdHeader style={{ display: "flex" }}>
+      <Flex align="center" justify="space-between" style={{ width: "100%" }}>
+        <Link href="/">{t("home")}</Link>
+        <Link href="/collections">{t("collecions")}</Link>
+        <Link href="/items">{t("items")}</Link>
+        <Search
+          style={{ maxWidth: "400px" }}
+          placeholder="input search"
+          loading={false}
+          enterButton
+          onSearch={onPressEnter}
+        />
+        {user ? (
+          <button
+            type="button"
+            onClick={() => {
+              handleRequest(
+                { pathName: path },
+                SignOut,
+                getRedirectMethod() === "client" ? router : null
+              );
+            }}
+          >
+            {t("signout")}
+          </button>
+        ) : (
+          <Link href="/signin">{t("signin")}</Link>
+        )}
+      </Flex>
     </AntdHeader>
   );
 };

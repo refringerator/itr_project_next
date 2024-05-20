@@ -1,9 +1,9 @@
 "use client";
 
-import Link from "next/link";
+import { Link } from "@/navigation";
 import { signInWithEmail } from "@/utils/auth-helpers/server";
 import { handleRequest } from "@/utils/auth-helpers/client";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/navigation";
 import { useState } from "react";
 
 import { Button, Form, Input } from "antd";

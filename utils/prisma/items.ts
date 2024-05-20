@@ -38,11 +38,16 @@ export const getItem = (itemId: number) =>
 export const createNewItem = (data: ItemFormType & { userId: string }) => {
   const { title, collectionId, userId } = data;
 
+  let json = Object.fromEntries(
+    Object.entries(data).filter(([key]) => key.startsWith("cf_"))
+  );
+
   return prisma.item.create({
     data: {
       title,
       collectionId,
       authorId: userId,
+      customValues: json as PrismaJson.CustomValuesType,
     },
   });
 };
@@ -52,13 +57,15 @@ export const updateItem2 = (
   title: string,
   collectionId: number,
   tagsRemove: string[],
-  tagsAdd: string[]
+  tagsAdd: string[],
+  customFields: PrismaJson.CustomValuesType
 ) =>
   prisma.item.update({
     where: { id },
     data: {
       title,
       collectionId,
+      customValues: customFields,
       tags: {
         connectOrCreate: tagsAdd.map((tag) => ({
           where: {

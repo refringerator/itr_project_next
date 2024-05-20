@@ -5,7 +5,7 @@ import { LikeFilled } from "@ant-design/icons";
 import { Avatar, List, Space, Rate } from "antd";
 import { useState } from "react";
 import { CommentWithAdditionalFields } from "./Comments";
-import { setMyLikeOnComment } from "@/app/items/actions";
+import { setMyLikeOnComment } from "@/app/[locale]/items/actions";
 
 interface CommentProps {
   comment: CommentWithAdditionalFields;

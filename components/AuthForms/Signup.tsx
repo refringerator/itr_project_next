@@ -1,10 +1,10 @@
 "use client";
 
 import React from "react";
-import Link from "next/link";
+import { Link } from "@/navigation";
 import { signUp } from "@/utils/auth-helpers/server";
 import { handleRequest } from "@/utils/auth-helpers/client";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/navigation";
 import { useState } from "react";
 import { Button, Checkbox, Form, Input } from "antd";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
