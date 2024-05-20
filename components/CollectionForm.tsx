@@ -31,6 +31,7 @@ const customTypes: customType[] = [
   { key: "INT", value: "Integer" },
   { key: "BOOLEAN", value: "Boolean" },
   { key: "TEXT", value: "Text" },
+  { key: "DATE", value: "Date" },
 ];
 
 export default function CollectionForm({

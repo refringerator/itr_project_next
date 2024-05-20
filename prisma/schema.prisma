@@ -51,7 +51,7 @@ model Item {
   tags         Tag[]
   comments     Comment[]
   /// [CustomValuesType]
-  customValues Json       @default("[]")
+  customValues Json       @default("{}")
 }
 
 model Tag {

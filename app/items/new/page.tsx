@@ -3,12 +3,12 @@
 import ItemForm from "@/components/ItemForm";
 import { createItem } from "@/app/items/actions";
 import { getSupabaseUserOrRedirect } from "@/utils/auth-helpers/server";
-import { getUserCollectionsTags } from "@/utils/prisma/collections";
+import { getUserCollectionsTagsCFs } from "@/utils/prisma/collections";
 
 export default async function NewCollection() {
   const user = await getSupabaseUserOrRedirect("/signin");
 
-  const { collections, tags } = await getUserCollectionsTags(user.id);
+  const { collections, tags } = await getUserCollectionsTagsCFs(user.id);
 
   return (
     <>

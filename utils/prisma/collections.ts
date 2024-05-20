@@ -43,6 +43,7 @@ export const getCollection = (collectionId: number) =>
 export const userCollections = (userId: string) =>
   prisma.collection.findMany({
     where: { authorId: userId },
+    include: { customFields: true },
   });
 
 export const getCollections = () => prisma.collection.findMany();
@@ -120,7 +121,7 @@ export const deleteCollection2 = (id: number) =>
     where: { id },
   });
 
-export async function getUserCollectionsTags(userId: string) {
+export async function getUserCollectionsTagsCFs(userId: string) {
   const [tags, collections] = await prisma.$transaction([
     getUsedTags(),
     userCollections(userId),
@@ -128,3 +129,7 @@ export async function getUserCollectionsTags(userId: string) {
 
   return { tags, collections };
 }
+
+export type UserCollectionType = NonNullable<
+  Awaited<ReturnType<typeof getUserCollectionsTagsCFs>>["collections"][0]
+>;
