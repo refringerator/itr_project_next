@@ -5,5 +5,8 @@
     "items": "Элементы",
     "signout": "Выйти",
     "signin": "Войти"
+  },
+  "Footer": {
+    "created_by": "Творец"
   }
 }

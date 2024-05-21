@@ -5,5 +5,8 @@
     "items": "Items",
     "signout": "Sign out",
     "signin": "Sign In"
+  },
+  "Footer": {
+    "created_by": "Created by"
   }
 }

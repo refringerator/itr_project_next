@@ -1,13 +1,15 @@
 "use client";
 
 import { Layout } from "antd";
-const { Footer: AntFooter } = Layout;
+import { useTranslations } from "next-intl";
 
 const Footer = () => {
+  const t = useTranslations("Footer");
+
   return (
-    <AntFooter style={{ textAlign: "center" }}>
-      Created by &copy;petruha
-    </AntFooter>
+    <Layout.Footer style={{ textAlign: "center" }}>
+      {t("created_by")} &copy;petruha
+    </Layout.Footer>
   );
 };
 
