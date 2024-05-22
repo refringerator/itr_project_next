@@ -8,6 +8,8 @@ jobs:
   test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
+    outputs:
+      output1: ${{ steps.artifact-upload-step.outputs.artifact-id }}
     env:
       CI: "true"
       POSTGRES_PRISMA_URL: "postgresql://postgres:postgres@127.0.0.1:54322/postgres"
@@ -51,6 +53,7 @@ jobs:
         run: npx playwright test
 
       - uses: actions/upload-artifact@v4
+        id: artifact-upload-step
         if: always()
         with:
           name: playwright-report
@@ -65,9 +68,13 @@ jobs:
     runs-on: ubuntu-latest
     continue-on-error: true
     env:
-      # Unique URL path for each workflow run attempt
+      REPORT_PATH: ${{needs.job1.outputs.output1}}
       HTML_REPORT_URL_PATH: reports/${{ github.ref_name }}/${{ github.run_id }}/${{ github.run_attempt }}
     steps:
+      - env:
+          OUTPUT1: ${{needs.job1.outputs.output1}}
+        run: echo "Artifact ID from previous job is $OUTPUT1"
+
       - name: Checkout GitHub Pages Branch
         uses: actions/checkout@v2
         with:
@@ -78,10 +85,10 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
       - name: Download zipped HTML report
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v4
         with:
           name: playwright-report
-          path: ${{ env.HTML_REPORT_URL_PATH }}
+          path: ${{ env.REPORT_PATH }}
       - name: Push HTML Report
         timeout-minutes: 3
         # commit report, then try push-rebase-loop until it's able to merge the HTML report to the gh-pages branch
@@ -105,6 +112,6 @@ jobs:
           done
       - name: Output Report URL as Worfklow Annotation
         run: |
-          FULL_HTML_REPORT_URL=https://ysfaran.github.io/playwright-gh-actions-gh-pages/$HTML_REPORT_URL_PATH
+          FULL_HTML_REPORT_URL=https://refringerator.github.io/itr_project_next/$HTML_REPORT_URL_PATH
 
           echo "::notice title=📋 Published Playwright Test Report::$FULL_HTML_REPORT_URL"
