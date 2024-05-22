@@ -8,5 +8,11 @@
   },
   "Footer": {
     "created_by": "Created by"
+  },
+  "ThemeSwitcher": {
+    "theme": "Theme",
+    "system": "OS Default",
+    "dark": "Dark",
+    "light": "Light"
   }
 }

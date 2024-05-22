@@ -4,6 +4,7 @@ import { ControlOutlined, MoonOutlined, SunOutlined } from "@ant-design/icons";
 import { useEffect, useState } from "react";
 
 import { useTheme } from "next-themes";
+import { useTranslations } from "next-intl";
 
 type Theme = {
   value: "system" | "dark" | "light";
@@ -11,15 +12,11 @@ type Theme = {
   icon: React.ReactNode;
 };
 
-const themes: Theme[] = [
-  { value: "system", label: "OS Default", icon: <ControlOutlined /> },
-  { value: "dark", label: "Dark", icon: <MoonOutlined /> },
-  { value: "light", label: "Light", icon: <SunOutlined /> },
-];
-
 export default function ThemeSwitcher() {
   const [mounted, setMounted] = useState(false);
   const { theme, setTheme } = useTheme();
+  const t = useTranslations("ThemeSwitcher");
+
   useEffect(() => {
     setMounted(true);
   }, []);
@@ -28,10 +25,20 @@ export default function ThemeSwitcher() {
     return null;
   }
 
+  const themes: Theme[] = [
+    { value: "system", label: t("system"), icon: <ControlOutlined /> },
+    { value: "dark", label: t("dark"), icon: <MoonOutlined /> },
+    { value: "light", label: t("light"), icon: <SunOutlined /> },
+  ];
+
   const findIconByValue = (value: string) =>
     themes.find((e) => e.value === value)?.icon;
 
-  const labelRender = (props: any) => <>{findIconByValue(props.value)} Theme</>;
+  const labelRender = (props: any) => (
+    <>
+      {findIconByValue(props.value)} {t("theme")}
+    </>
+  );
   const optionRender = (props: any) => (
     <>
       {findIconByValue(props.value)} {props.label}

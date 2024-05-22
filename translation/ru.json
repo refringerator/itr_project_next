@@ -8,5 +8,11 @@
   },
   "Footer": {
     "created_by": "Творец"
+  },
+  "ThemeSwitcher": {
+    "theme": "Тема",
+    "system": "Системная",
+    "dark": "Мрачная",
+    "light": "Легкая"
   }
 }
