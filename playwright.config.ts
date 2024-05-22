@@ -33,6 +33,7 @@ export default defineConfig({
       mode: process.env.TEST_VIDEO ? "on" : "off",
       size: { width: 1280, height: 960 },
     },
+    screenshot: "only-on-failure",
   },
 
   /* Configure projects for major browsers */
