@@ -57,15 +57,19 @@ export const createCollection2 = (data: FieldType & { userId: string }) => {
     isRequired: cf.isRequired || false,
   }));
 
+  const customFields2 = cfs
+    ? {
+        createMany: { data: cfs as Omit<CustomField, "id">[] },
+      }
+    : undefined;
+
   return prisma.collection.create({
     data: {
       title,
       topicId,
       description,
       authorId: userId,
-      customFields: {
-        createMany: { data: cfs as Omit<CustomField, "id">[] },
-      },
+      customFields: customFields2,
     },
   });
 };
