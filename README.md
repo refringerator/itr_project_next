@@ -1,6 +1,6 @@
-#
+[![Playwright Tests](https://github.com/refringerator/itr_project_next/actions/workflows/playwright.yaml/badge.svg?branch=dev)](https://refringerator.github.io/itr_project_next/)
 
-Full-stack Web-app for personal collection management
+## Full-stack Web-app for personal collection management
 
 ### Cloud platforms
 
