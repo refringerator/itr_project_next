@@ -15,7 +15,7 @@ export const getUserLikesOnComments = (userId: string, itemId: number) =>
     },
     where: {
       userId: userId,
-      rating: { gte: 0 },
+      rating: { gt: 0 },
       comment: {
         itemId: itemId,
       },
