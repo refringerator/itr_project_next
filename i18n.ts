@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import { getRequestConfig } from "next-intl/server";
+import deepmerge from "deepmerge";
 
 const locales = ["en", "ru"];
 
@@ -9,7 +10,9 @@ export default getRequestConfig(async ({ locale }) => {
 
   if (!locales.includes(locale as any)) notFound();
 
-  return {
-    messages: (await import(`./translation/${locale}.json`)).default,
-  };
+  const userMessages = (await import(`./translation/${locale}.json`)).default;
+  const defaultMessages = (await import(`./translation/en.json`)).default;
+  const messages = deepmerge(defaultMessages, userMessages);
+
+  return { messages };
 });

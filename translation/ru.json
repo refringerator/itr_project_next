@@ -5,5 +5,19 @@
     "items": "Элементы",
     "signout": "Выйти",
     "signin": "Войти"
+  },
+  "Footer": {
+    "created_by": "Творец"
+  },
+  "ThemeSwitcher": {
+    "theme": "Тема",
+    "system": "Системная",
+    "dark": "Мрачная",
+    "light": "Легкая"
+  },
+  "TheComment": {
+    "added": "Добавлено",
+    "author": "Коментатор",
+    "likes": "{count, plural, =0 {нет одобрений} =1 {одно одобрение} few {# одобрения} many {# одобрений} other {# одобрений}}"
   }
 }

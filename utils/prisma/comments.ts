@@ -7,7 +7,7 @@ export const getComments = (itemId: number) =>
     include: {
       author: { select: { name: true } },
       _count: {
-        select: { likes: true },
+        select: { likes: { where: { rating: { gt: 0 } } } },
       },
     },
   });

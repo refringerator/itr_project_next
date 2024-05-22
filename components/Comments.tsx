@@ -32,8 +32,13 @@ export function Comments({
     const channel = supabase
       .channel(`item-${itemId}`)
       .on("broadcast", { event: "new-comment" }, ({ payload }) => {
-        console.log("Received new comment!", { payload });
-        setComments([...comments, payload as CommentWithAdditionalFields]);
+        setComments([
+          ...comments,
+          {
+            ...(payload as CommentWithAdditionalFields),
+            createdAt: new Date(payload.createdAt),
+          },
+        ]);
       })
       .subscribe();
 
