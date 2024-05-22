@@ -4,6 +4,10 @@ on:
     branches: [dev]
   pull_request:
     branches-ignore: [gh-pages]
+
+permissions:
+  contents: write
+
 jobs:
   test:
     timeout-minutes: 60
