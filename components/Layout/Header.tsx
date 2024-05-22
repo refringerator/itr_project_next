@@ -13,6 +13,7 @@ import { handleRequest } from "@/utils/auth-helpers/client";
 import { usePathname, useRouter } from "@/navigation";
 import { useTranslations } from "next-intl";
 import LocaleSelector from "../LocaleSelector";
+import ThemeSwitcher from "../ThemeSwitcher";
 
 interface HeaderProps {
   user?: any;
@@ -34,6 +35,7 @@ const Header = ({ user }: HeaderProps) => {
         <Link href="/collections">{t("collecions")}</Link>
         <Link href="/items">{t("items")}</Link>
         <LocaleSelector />
+        <ThemeSwitcher />
         <Search
           style={{ maxWidth: "400px" }}
           placeholder="input search"
