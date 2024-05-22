@@ -9,7 +9,7 @@ import { createClient } from "@/utils/supabase/server";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import AntConfigProvider from "@/components/AntConfigProvider";
-import { ThemeContextProvider } from "@/context/ThemeContext";
+import { ThemeProvider } from "next-themes";
 
 export const metadata: Metadata = {
   title: "Collection management",
@@ -34,11 +34,11 @@ export default async function RootLayout({
   const messages = await getMessages();
 
   return (
-    <html lang={locale}>
+    <html lang={locale} suppressHydrationWarning>
       <body>
-        <NextIntlClientProvider messages={messages}>
-          <AntdRegistry>
-            <ThemeContextProvider>
+        <ThemeProvider>
+          <NextIntlClientProvider messages={messages}>
+            <AntdRegistry>
               <AntConfigProvider>
                 <Layout>
                   <Header user={user} />
@@ -49,9 +49,9 @@ export default async function RootLayout({
                   <Notification />
                 </Suspense>
               </AntConfigProvider>
-            </ThemeContextProvider>
-          </AntdRegistry>
-        </NextIntlClientProvider>
+            </AntdRegistry>
+          </NextIntlClientProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

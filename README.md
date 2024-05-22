@@ -21,6 +21,10 @@ Full-stack Web-app for personal collection management
 9. ant design
 10. playwright
 
+### Libs
+
+1. next-themes
+
 ### How to local run
 
 TBD
