@@ -23,6 +23,7 @@
     "prisma:db-push": "npx prisma db push",
     "test:ui": "npx playwright test --ui --project=chromium",
     "test:report": "npx playwright show-report",
+    "test:generate": "npx playwright codegen localhost:3000/en",
     "test": "npx playwright test --project=chromium"
   },
   "dependencies": {

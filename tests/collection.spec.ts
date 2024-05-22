@@ -24,7 +24,11 @@ test("test", async ({ page }) => {
   await expect(page.getByText("Description")).toBeVisible();
   await expect(page.getByRole("button", { name: "Create" })).toBeVisible();
   await page.getByLabel("Topic").click();
-  await expect(page.locator(".ant-select-selector")).toBeVisible();
+  await expect(
+    page.locator(
+      ".ant-form-item-control-input-content > .ant-select > .ant-select-selector"
+    )
+  ).toBeVisible();
   await page.getByLabel("Topic").click();
   await expect(page.getByText("Rants")).toBeVisible();
 
