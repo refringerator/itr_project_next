@@ -3,7 +3,7 @@
 import { createClient } from "@/utils/supabase/client";
 import { Comment } from "@prisma/client";
 import { useEffect, useState } from "react";
-import { TheComment } from "./TheComment";
+import { TheComment } from "../TheComment";
 import { List } from "antd";
 
 export type CommentWithAdditionalFields = {

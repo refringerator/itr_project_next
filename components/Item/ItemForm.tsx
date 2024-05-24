@@ -6,7 +6,7 @@ import type { FormProps } from "antd";
 import { Collection, Tag } from "@prisma/client";
 import { useState } from "react";
 import { UserCollectionType } from "@/utils/prisma/collections";
-import CustomFormField from "./CustomFormField";
+import CustomFormField from "../Collection/CustomFormField";
 
 export type ItemFormType = {
   title: string;
