@@ -146,3 +146,14 @@ export async function getUserCollectionsTagsCFs(userId: string) {
 export type UserCollectionType = NonNullable<
   Awaited<ReturnType<typeof getUserCollectionsTagsCFs>>["collections"][0]
 >;
+
+export const get5LargeCollections = () =>
+  prisma.collection.findMany({
+    include: {
+      author: true,
+    },
+    // where: {
+    //   published: true,
+    // },
+    take: 5,
+  });
