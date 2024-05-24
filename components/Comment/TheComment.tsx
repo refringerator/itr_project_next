@@ -4,7 +4,7 @@ import { LikeFilled } from "@ant-design/icons";
 
 import { Avatar, List, Space, Rate } from "antd";
 import { useState } from "react";
-import { CommentWithAdditionalFields } from "./Item/Comments";
+import { CommentWithAdditionalFields } from "./Comments";
 import { setMyLikeOnComment } from "@/app/[locale]/items/actions";
 import { useTranslations } from "next-intl";
 import { useParams } from "next/navigation";

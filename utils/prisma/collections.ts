@@ -28,6 +28,15 @@ export const getCollection = (collectionId: number) =>
     include: {
       author: { select: { name: true } },
       topic: { select: { title: true } },
+      items: {
+        select: {
+          id: true,
+          title: true,
+          published: true,
+          tags: true,
+          createdAt: true,
+        },
+      },
       customFields: {
         select: {
           id: true,

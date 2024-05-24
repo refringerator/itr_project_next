@@ -2,7 +2,7 @@
 
 import { Link } from "@/navigation";
 import { addComment } from "@/app/[locale]/items/actions";
-import { Comments } from "@/components/Item/Comments";
+import { Comments } from "@/components/Comment/Comments";
 import { Tag } from "antd";
 import { getItemCommentsLikes } from "@/utils/prisma/items";
 import { getSupabaseUser } from "@/utils/auth-helpers/server";
