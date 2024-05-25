@@ -3,8 +3,6 @@
 import React from "react";
 import { Layout, theme } from "antd";
 
-const { Content: AntdContent } = Layout;
-
 const Content = ({
   children,
 }: Readonly<{
@@ -15,7 +13,7 @@ const Content = ({
   } = theme.useToken();
 
   return (
-    <AntdContent style={{ padding: "0 48px" }}>
+    <Layout.Content style={{ paddingTop: "4px" }}>
       <div
         style={{
           background: colorBgContainer,
@@ -26,7 +24,7 @@ const Content = ({
       >
         {children}
       </div>
-    </AntdContent>
+    </Layout.Content>
   );
 };
 
