@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "@/styles/globals.css";
 import { Header, Footer, Content } from "@/components/Layout";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
@@ -14,6 +14,11 @@ import { ThemeProvider } from "next-themes";
 export const metadata: Metadata = {
   title: "Collection management",
   description: "Full-stack Web-app for personal collection management",
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1.0,
 };
 
 export default async function RootLayout({
