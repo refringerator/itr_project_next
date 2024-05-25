@@ -4,7 +4,6 @@ import { Layout, Flex } from "antd";
 import { Link } from "@/navigation";
 import { Input } from "antd";
 
-const { Header: AntdHeader } = Layout;
 const { Search } = Input;
 
 import { SignOut } from "@/utils/auth-helpers/server";
@@ -19,6 +18,15 @@ interface HeaderProps {
   user?: any;
 }
 
+const headerStyle: React.CSSProperties = {
+  textAlign: "end",
+  height: 48,
+  lineHeight: "48px",
+  backgroundColor: "rgba(0, 0, 0, 0.1)",
+  width: "100%",
+  display: "flex",
+};
+
 const Header = ({ user }: HeaderProps) => {
   const router = useRouter();
   const path = usePathname();
@@ -29,7 +37,7 @@ const Header = ({ user }: HeaderProps) => {
   };
 
   return (
-    <AntdHeader style={{ display: "flex" }}>
+    <Layout.Header style={headerStyle}>
       <Flex align="center" justify="space-between" style={{ width: "100%" }}>
         <Link href="/">{t("home")}</Link>
         <Link href="/collections">{t("collecions")}</Link>
@@ -60,7 +68,7 @@ const Header = ({ user }: HeaderProps) => {
           <Link href="/signin">{t("signin")}</Link>
         )}
       </Flex>
-    </AntdHeader>
+    </Layout.Header>
   );
 };
 
