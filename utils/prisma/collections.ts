@@ -1,6 +1,6 @@
 import { prisma } from "@/utils/prisma";
 import { getTopics } from "./topics";
-import { FieldType } from "@/components/CollectionForm";
+import { FieldType } from "@/components/Collection/CollectionForm";
 import { getUsedTags } from "./tags";
 import { CustomField } from "@prisma/client";
 
