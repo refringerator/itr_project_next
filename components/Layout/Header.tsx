@@ -1,6 +1,6 @@
 "use client";
 
-import { Layout, Flex, Col, Row } from "antd";
+import { Layout, Flex, Col, Row, Grid } from "antd";
 import { Link } from "@/navigation";
 import { Input, theme } from "antd";
 
@@ -11,50 +11,7 @@ import { usePathname, useRouter } from "@/navigation";
 import { useTranslations } from "next-intl";
 import LocaleSelector from "../LocaleSelector";
 import ThemeSwitcher from "../ThemeSwitcher";
-
-import React, { useState } from "react";
-import {
-  AppstoreOutlined,
-  MailOutlined,
-  SettingOutlined,
-} from "@ant-design/icons";
-import type { MenuProps } from "antd";
-import { Menu } from "antd";
-
-const MainMenu: React.FC = () => {
-  const t = useTranslations("Header");
-  const [current, setCurrent] = useState("mail");
-
-  const onClick: MenuProps["onClick"] = (e) => {
-    console.log("click ", e);
-    setCurrent(e.key);
-  };
-
-  const items = [
-    {
-      key: "1",
-      label: <Link href="/">{t("home")}</Link>,
-    },
-    {
-      key: "2",
-      label: <Link href="/collections">{t("collecions")}</Link>,
-    },
-    {
-      key: "3",
-      label: <Link href="/items">{t("items")}</Link>,
-    },
-  ];
-
-  return (
-    <Menu
-      // style={{ flex: "auto", minWidth: 0 }}
-      onClick={onClick}
-      selectedKeys={[current]}
-      mode="horizontal"
-      items={items}
-    />
-  );
-};
+import MainMenu from "../MainMenu";
 
 interface HeaderProps {
   user?: any;
@@ -75,17 +32,19 @@ const Header = ({ user }: HeaderProps) => {
   const path = usePathname();
   const t = useTranslations("Header");
   const { token } = theme.useToken();
+  const screens = Grid.useBreakpoint();
 
   const onPressEnter = (value: string) => {
     if (value.length > 1) router.push(`/search?q=${value}`);
   };
 
-  console.log({ token });
+  console.log({ ...screens });
 
   return (
     <Layout.Header style={headerStyle}>
       <MainMenu />
       <Row
+        wrap={false}
         align="middle"
         style={{
           width: "100%",
@@ -95,7 +54,7 @@ const Header = ({ user }: HeaderProps) => {
           borderBottomStyle: "solid",
         }}
       >
-        <Col>
+        <Col flex="none">
           <Flex align="center" style={{ width: "100%" }}>
             <Input.Search
               placeholder="input search"
@@ -104,13 +63,14 @@ const Header = ({ user }: HeaderProps) => {
             />
           </Flex>
         </Col>
-        <Col>
+        <Col flex="auto" />
+        <Col flex="none">
           <ThemeSwitcher />
         </Col>
-        <Col>
+        <Col flex="none">
           <LocaleSelector />
         </Col>
-        <Col>
+        <Col flex="none">
           {user ? (
             <button
               type="button"
