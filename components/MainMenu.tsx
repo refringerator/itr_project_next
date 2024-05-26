@@ -1,63 +1,50 @@
 import React, { useState } from "react";
-import {
-  AppstoreOutlined,
-  MailOutlined,
-  MenuFoldOutlined,
-  MenuUnfoldOutlined,
-  SettingOutlined,
-} from "@ant-design/icons";
 import type { MenuProps } from "antd";
-import { Button, Menu } from "antd";
+import { Menu } from "antd";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
+import { usePathname } from "@/navigation";
+import useDimension from "@/hooks/useDimension";
 
 const MainMenu: React.FC = () => {
+  const pathname = usePathname();
   const t = useTranslations("Header");
-  const [current, setCurrent] = useState("mail");
-  const [collapsed, setCollapsed] = useState(false);
-
-  const toggleCollapsed = () => {
-    setCollapsed(!collapsed);
-  };
+  const [current, setCurrent] = useState(pathname);
 
   const onClick: MenuProps["onClick"] = (e) => {
-    console.log("click ", e);
     setCurrent(e.key);
   };
 
-  const items = [
+  const style = useDimension({
+    defaultValue: { width: "100%" },
+    xs: { width: "50px" },
+  });
+
+  console.log({ style });
+
+  const menuItems = [
     {
-      key: "1",
+      key: "/",
       label: <Link href="/">{t("home")}</Link>,
     },
     {
-      key: "2",
+      key: "/collections",
       label: <Link href="/collections">{t("collecions")}</Link>,
     },
     {
-      key: "3",
+      key: "/items",
       label: <Link href="/items">{t("items")}</Link>,
     },
   ];
 
   return (
-    <>
-      <Button
-        type="primary"
-        onClick={toggleCollapsed}
-        style={{ marginBottom: 16 }}
-      >
-        {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-      </Button>
-      <Menu
-        // style={{ flex: "auto", minWidth: 0 }}
-        inlineCollapsed={collapsed}
-        onClick={onClick}
-        selectedKeys={[current]}
-        mode="horizontal"
-        items={items}
-      />
-    </>
+    <Menu
+      style={{ ...style, minWidth: 0, flex: "auto" }}
+      onClick={onClick}
+      selectedKeys={[current]}
+      mode="horizontal"
+      items={menuItems}
+    />
   );
 };
 

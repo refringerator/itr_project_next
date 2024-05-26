@@ -1,4 +1,4 @@
-import { Select } from "antd";
+import { Select, Grid } from "antd";
 import { ControlOutlined, MoonOutlined, SunOutlined } from "@ant-design/icons";
 
 import { useEffect, useState } from "react";
@@ -16,6 +16,9 @@ export default function ThemeSwitcher() {
   const [mounted, setMounted] = useState(false);
   const { theme, setTheme } = useTheme();
   const t = useTranslations("ThemeSwitcher");
+  const screens = Grid.useBreakpoint();
+
+  // console.log({ ...screens });
 
   useEffect(() => {
     setMounted(true);

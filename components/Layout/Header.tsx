@@ -38,8 +38,6 @@ const Header = ({ user }: HeaderProps) => {
     if (value.length > 1) router.push(`/search?q=${value}`);
   };
 
-  console.log({ ...screens });
-
   return (
     <Layout.Header style={headerStyle}>
       <MainMenu />
