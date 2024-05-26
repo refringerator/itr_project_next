@@ -12,6 +12,7 @@ import { useTranslations } from "next-intl";
 import LocaleSelector from "../LocaleSelector";
 import ThemeSwitcher from "../ThemeSwitcher";
 import MainMenu from "../MainMenu";
+import useDimension from "@/hooks/useDimension";
 
 interface HeaderProps {
   user?: any;
@@ -32,7 +33,7 @@ const Header = ({ user }: HeaderProps) => {
   const path = usePathname();
   const t = useTranslations("Header");
   const { token } = theme.useToken();
-  const screens = Grid.useBreakpoint();
+  const showTitle = useDimension({ xs: false, sm: false, defaultValue: true });
 
   const onPressEnter = (value: string) => {
     if (value.length > 1) router.push(`/search?q=${value}`);

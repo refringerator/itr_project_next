@@ -10,10 +10,10 @@ const useDimension = (params: DimensionProps) => {
 
   const value = useMemo(() => {
     for (const size of ["xxl", "xl", "lg", "md", "sm", "xs"]) {
-      if (params[size as DimensionKey] && screens[size as Breakpoint])
+      if (params.hasOwnProperty(size) && screens[size as Breakpoint])
         return params[size as DimensionKey];
     }
-    if (params.defaultValue) return params.defaultValue;
+    if (params.hasOwnProperty("defaultValue")) return params.defaultValue;
     return undefined;
   }, [params, screens]);
 

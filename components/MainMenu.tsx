@@ -16,7 +16,7 @@ const MainMenu: React.FC = () => {
   };
 
   const style = useDimension({
-    defaultValue: { width: "100%" },
+    defaultValue: { flex: "1 1 auto", width: "60%" },
     xs: { width: "50px" },
   });
 
