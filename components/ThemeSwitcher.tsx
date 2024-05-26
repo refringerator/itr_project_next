@@ -19,8 +19,6 @@ export default function ThemeSwitcher() {
   const t = useTranslations("ThemeSwitcher");
   const showTitle = useDimension({ xs: false, sm: false, md: true });
 
-  console.log({ showTitle });
-
   useEffect(() => {
     setMounted(true);
   }, []);

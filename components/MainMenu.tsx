@@ -20,8 +20,6 @@ const MainMenu: React.FC = () => {
     xs: { width: "50px" },
   });
 
-  console.log({ style });
-
   const menuItems = [
     {
       key: "/",
