@@ -4,8 +4,11 @@ import { ConfigProvider } from "antd";
 import { theme } from "antd";
 import { PropsWithChildren, useEffect, useState } from "react";
 import { useTheme } from "next-themes";
+import ru from "antd/locale/ru_RU";
+import { useParams } from "next/navigation";
 
 const AntConfigProvider = ({ children }: PropsWithChildren) => {
+  const { locale } = useParams();
   const [mounted, setMounted] = useState(false);
   const { resolvedTheme } = useTheme();
   useEffect(() => {
@@ -21,7 +24,14 @@ const AntConfigProvider = ({ children }: PropsWithChildren) => {
     return null;
   }
 
-  return <ConfigProvider theme={changedTheme}>{children}</ConfigProvider>;
+  return (
+    <ConfigProvider
+      theme={changedTheme}
+      locale={locale === "ru" ? ru : undefined}
+    >
+      {children}
+    </ConfigProvider>
+  );
 };
 
 export default AntConfigProvider;

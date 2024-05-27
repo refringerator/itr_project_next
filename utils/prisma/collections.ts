@@ -1,6 +1,6 @@
 import { prisma } from "@/utils/prisma";
 import { getTopics } from "./topics";
-import { FieldType } from "@/components/CollectionForm";
+import { FieldType } from "@/components/Collection/CollectionForm";
 import { getUsedTags } from "./tags";
 import { CustomField } from "@prisma/client";
 
@@ -28,6 +28,15 @@ export const getCollection = (collectionId: number) =>
     include: {
       author: { select: { name: true } },
       topic: { select: { title: true } },
+      items: {
+        select: {
+          id: true,
+          title: true,
+          published: true,
+          tags: true,
+          createdAt: true,
+        },
+      },
       customFields: {
         select: {
           id: true,
@@ -137,3 +146,14 @@ export async function getUserCollectionsTagsCFs(userId: string) {
 export type UserCollectionType = NonNullable<
   Awaited<ReturnType<typeof getUserCollectionsTagsCFs>>["collections"][0]
 >;
+
+export const get5LargeCollections = () =>
+  prisma.collection.findMany({
+    include: {
+      author: true,
+    },
+    // where: {
+    //   published: true,
+    // },
+    take: 5,
+  });

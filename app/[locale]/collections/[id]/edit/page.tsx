@@ -1,6 +1,8 @@
 "use server";
 
-import CollectionForm, { FieldType } from "@/components/CollectionForm";
+import CollectionForm, {
+  FieldType,
+} from "@/components/Collection/CollectionForm";
 import {
   updateCollection,
   deleteCollection,

@@ -6,7 +6,8 @@ import type { FormProps } from "antd";
 import { Collection, Tag } from "@prisma/client";
 import { useState } from "react";
 import { UserCollectionType } from "@/utils/prisma/collections";
-import CustomFormField from "./CustomFormField";
+import CustomFormField from "../Collection/CustomFormField";
+import { Link } from "@/navigation";
 
 export type ItemFormType = {
   title: string;
@@ -41,7 +42,13 @@ export default function ItemForm({
     getCustomFields(collections, initialValues?.collectionId || -1)
   );
 
-  if (collections.length === 0) return <div>There is no collections!</div>;
+  if (collections.length === 0)
+    return (
+      <div>
+        There is no collections! You can{" "}
+        <Link href="/collections/new">create a new one</Link>
+      </div>
+    );
 
   // const { title, collectionId, tagsIds } = initialValues || {};
 

@@ -6,6 +6,7 @@ import { signInWithPassword } from "@/utils/auth-helpers/server";
 import { handleRequest } from "@/utils/auth-helpers/client";
 import { useRouter } from "@/navigation";
 import { useState } from "react";
+import { LockOutlined, MailOutlined } from "@ant-design/icons";
 
 // Define prop type with allowEmail boolean
 interface PasswordSignInProps {
@@ -36,55 +37,49 @@ export default function PasswordSignIn({
   };
 
   return (
-    <div>
-      <Form
-        name="basic"
-        labelCol={{ span: 8 }}
-        wrapperCol={{ span: 16 }}
-        style={{ maxWidth: 600 }}
-        // noValidate={true}
-        autoComplete="off"
-        onFinish={(e) => handleSubmit(e)}
+    <Form
+      name="password_signin"
+      // labelCol={{ span: 8 }}
+      // wrapperCol={{ span: 16 }}
+      style={{ maxWidth: "300px" }}
+      autoComplete="off"
+      onFinish={(e) => handleSubmit(e)}
+    >
+      <Form.Item<FieldType>
+        name="email"
+        rules={[
+          {
+            required: true,
+            message: "Please input your email!",
+            type: "email",
+          },
+        ]}
       >
-        <Form.Item<FieldType>
-          label="Email"
-          name="email"
-          rules={[
-            {
-              required: true,
-              message: "Please input your email!",
-              type: "email",
-            },
-          ]}
-        >
-          <Input />
-        </Form.Item>
-        <Form.Item<FieldType>
-          label="Password"
-          name="password"
-          rules={[{ required: true, message: "Please input your password!" }]}
-        >
-          <Input.Password />
-        </Form.Item>
+        <Input prefix={<MailOutlined />} placeholder="Email" />
+      </Form.Item>
+      <Form.Item<FieldType>
+        name="password"
+        rules={[{ required: true, message: "Please input your password!" }]}
+      >
+        <Input.Password prefix={<LockOutlined />} placeholder="Password" />
+      </Form.Item>
 
-        <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-          <Button type="primary" htmlType="submit" loading={isSubmitting}>
-            Sign in
-          </Button>
-        </Form.Item>
-      </Form>
-
-      <p>
-        <Link href="/signin/forgot_password">Forgot your password?</Link>
-      </p>
-      {allowEmail && (
+      <Form.Item>
+        <Button type="primary" htmlType="submit" loading={isSubmitting}>
+          Sign in
+        </Button>
         <p>
-          <Link href="/signin/email_signin">Sign in via magic link</Link>
+          <Link href="/signin/forgot_password">Forgot your password?</Link>
         </p>
-      )}
-      <p>
-        <Link href="/signin/signup">Don&apos;t have an account? Sign up</Link>
-      </p>
-    </div>
+        {allowEmail && (
+          <p>
+            <Link href="/signin/email_signin">Sign in via magic link</Link>
+          </p>
+        )}
+        <p>
+          <Link href="/signin/signup">Don&apos;t have an account? Sign up</Link>
+        </p>
+      </Form.Item>
+    </Form>
   );
 }

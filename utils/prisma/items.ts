@@ -2,7 +2,7 @@ import { prisma } from "@/utils/prisma";
 import { userCollections } from "./collections";
 import { getUsedTags } from "./tags";
 import { getUserLikesOnComments } from "./likes";
-import { ItemFormType } from "@/components/ItemForm";
+import { ItemFormType } from "@/components/Item/ItemForm";
 import { getComments } from "./comments";
 
 export async function getMyCollectionsTagsItem(userId: string, itemId: number) {

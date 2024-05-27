@@ -1,10 +1,19 @@
-import { Link } from "@/navigation";
+import CollectionsList from "@/components/Collection/CollectionsList";
+import { get5LargeCollections } from "@/utils/prisma/collections";
 
-export default function Home() {
+export default async function Home() {
+  const collections = await get5LargeCollections();
+
+  const data = collections.map((c) => ({
+    title: c.title,
+    description: c.description || "",
+    updatedAt: c.updatedAt,
+    avatar: "",
+    href: "",
+  }));
   return (
     <>
-      <h1>Home page</h1>
-      <Link href="/dashboard">Dashboard</Link>
+      <CollectionsList data={data} />
     </>
   );
 }

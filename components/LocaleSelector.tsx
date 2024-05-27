@@ -3,8 +3,10 @@
 import { Select } from "antd";
 
 import { useRouter, usePathname } from "@/navigation";
-import { useTransition } from "react";
+import { useCallback, useTransition } from "react";
 import { useSearchParams, useParams } from "next/navigation";
+import useDimension from "@/hooks/useDimension";
+import { GlobalOutlined } from "@ant-design/icons";
 
 export default function LocaleSelector() {
   const router = useRouter();
@@ -12,6 +14,7 @@ export default function LocaleSelector() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const { locale } = useParams();
+  const showTitle = useDimension({ xs: false, sm: false, md: true });
 
   function onSelectChange(nextLocale: string) {
     const params = searchParams.size ? `?${searchParams.toString()}` : "";
@@ -20,12 +23,18 @@ export default function LocaleSelector() {
     });
   }
 
+  const labelRender = useCallback(
+    (props: any) => <>{showTitle ? props.label : <GlobalOutlined />}</>,
+    [showTitle]
+  );
+
   return (
     <Select
       defaultValue={locale as string}
       disabled={isPending}
-      style={{ width: 120 }}
+      dropdownStyle={{ minWidth: "150px" }}
       onChange={onSelectChange}
+      labelRender={labelRender}
       options={[
         { value: "en", label: "English" },
         { value: "ru", label: "Russian" },

@@ -1,6 +1,6 @@
 "use server";
 
-import { ItemFormType } from "@/components/ItemForm";
+import { ItemFormType } from "@/components/Item/ItemForm";
 import {
   getSupabaseUser,
   getSupabaseUserOrRedirect,
