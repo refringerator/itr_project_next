@@ -10,7 +10,7 @@ import { useState } from "react";
 type OAuthProviders = {
   name: Provider;
   displayName: string;
-  icon: JSX.Element;
+  icon?: JSX.Element;
 };
 
 export default function OauthSignIn() {
@@ -18,7 +18,12 @@ export default function OauthSignIn() {
     {
       name: "github",
       displayName: "GitHub",
-      icon: "",
+      //   icon: "",
+    },
+    {
+      name: "google",
+      displayName: "Google",
+      //   icon: "",
     },
     /* Add desired OAuth providers here */
   ];
