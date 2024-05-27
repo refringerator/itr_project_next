@@ -35,50 +35,49 @@ export default function ForgotPassword({
   };
 
   return (
-    <div>
-      <Form
-        name="normal_signin_email"
-        initialValues={{ remember: true }}
-        onFinish={onFinish}
-        autoComplete="off"
+    <Form
+      name="forgot_password"
+      initialValues={{ remember: true }}
+      style={{ maxWidth: "300px" }}
+      onFinish={onFinish}
+      autoComplete="off"
+    >
+      <Form.Item
+        name="email"
+        rules={[
+          {
+            required: true,
+            message: "Please input your email!",
+            type: "email",
+          },
+        ]}
       >
-        <Form.Item
-          name="email"
-          rules={[
-            {
-              required: true,
-              message: "Please input your email!",
-              type: "email",
-            },
-          ]}
-        >
-          <Input prefix={<UserOutlined />} placeholder="Email" />
-        </Form.Item>
+        <Input prefix={<UserOutlined />} placeholder="Email" />
+      </Form.Item>
 
-        <Form.Item>
-          <Button
-            type="primary"
-            htmlType="submit"
-            loading={isSubmitting}
-            disabled={disableButton}
-          >
-            Send Email
-          </Button>
-        </Form.Item>
-      </Form>
-      <p>
-        <Link href="/signin/password_signin">
-          Sign in with email and password
-        </Link>
-      </p>
-      {allowEmail && (
+      <Form.Item>
+        <Button
+          type="primary"
+          htmlType="submit"
+          loading={isSubmitting}
+          disabled={disableButton}
+        >
+          Send Email
+        </Button>
         <p>
-          <Link href="/signin/email_signin">Sign in via magic link</Link>
+          <Link href="/signin/password_signin">
+            Sign in with email and password
+          </Link>
         </p>
-      )}
-      <p>
-        <Link href="/signin/signup">Don&apos;t have an account? Sign up</Link>
-      </p>
-    </div>
+        {allowEmail && (
+          <p>
+            <Link href="/signin/email_signin">Sign in via magic link</Link>
+          </p>
+        )}
+        <p>
+          <Link href="/signin/signup">Don&apos;t have an account? Sign up</Link>
+        </p>
+      </Form.Item>
+    </Form>
   );
 }

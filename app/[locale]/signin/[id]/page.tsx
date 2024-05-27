@@ -13,6 +13,7 @@ import SignUp from "@/components/AuthForms/Signup";
 import EmailSignIn from "@/components/AuthForms/EmailSignIn";
 import ForgotPassword from "@/components/AuthForms/ForgotPassword";
 import UpdatePassword from "@/components/AuthForms/UpdatePassword";
+import OauthSignIn from "@/components/AuthForms/OauthSignIn";
 // import Separator from "@/components/ui/AuthForms/Separator";
 // import OauthSignIn from "@/components/ui/AuthForms/OauthSignIn";
 
@@ -56,17 +57,25 @@ export default async function SignIn({
 
   return (
     <>
-      <h3>Auth page</h3>
-      <h3>
-        {viewProp === "forgot_password"
-          ? "Reset Password"
-          : viewProp === "update_password"
-          ? "Update Password"
-          : viewProp === "signup"
-          ? "Sign Up"
-          : "Sign In"}
-      </h3>
-      <div>
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          flexDirection: "column",
+        }}
+      >
+        <h3>Auth page</h3>
+        <div style={{ display: "flex" }}>
+          {viewProp === "forgot_password"
+            ? "Reset Password"
+            : viewProp === "update_password"
+            ? "Update Password"
+            : viewProp === "signup"
+            ? "Sign Up"
+            : viewProp === "email_signin"
+            ? "Sign in with magic link"
+            : "Sign In"}
+        </div>
         {viewProp === "password_signin" && (
           <PasswordSignIn
             allowEmail={allowEmail}
@@ -93,15 +102,15 @@ export default async function SignIn({
         {viewProp === "update_password" && (
           <UpdatePassword redirectMethod={redirectMethod} />
         )}
+        {viewProp !== "update_password" &&
+          viewProp !== "signup" &&
+          allowOauth && (
+            <>
+              {/* <Separator text="Third-party sign-in" /> */}
+              <OauthSignIn />
+            </>
+          )}
       </div>
     </>
   );
-  //       {viewProp !== "update_password" &&
-  //         viewProp !== "signup" &&
-  //         allowOauth && (
-  //           <>
-  //             <Separator text="Third-party sign-in" />
-  //             <OauthSignIn />
-  //           </>
-  //         )}
 }

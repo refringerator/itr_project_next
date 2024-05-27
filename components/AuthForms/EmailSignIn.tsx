@@ -7,7 +7,7 @@ import { useRouter } from "@/navigation";
 import { useState } from "react";
 
 import { Button, Form, Input } from "antd";
-import { UserOutlined } from "@ant-design/icons";
+import { UserOutlined, MailOutlined } from "@ant-design/icons";
 
 // Define prop type with allowPassword boolean
 interface EmailSignInProps {
@@ -35,51 +35,50 @@ export default function EmailSignIn({
   };
 
   return (
-    <div>
-      <Form
-        name="normal_signin_email"
-        initialValues={{ remember: true }}
-        onFinish={onFinish}
-        autoComplete="off"
+    <Form
+      style={{ maxWidth: "300px" }}
+      name="normal_signin_email"
+      initialValues={{ remember: true }}
+      onFinish={onFinish}
+      autoComplete="off"
+    >
+      <Form.Item
+        name="email"
+        rules={[
+          {
+            required: true,
+            message: "Please input your email!",
+            type: "email",
+          },
+        ]}
       >
-        <Form.Item
-          name="email"
-          rules={[
-            {
-              required: true,
-              message: "Please input your email!",
-              type: "email",
-            },
-          ]}
-        >
-          <Input prefix={<UserOutlined />} placeholder="Email" />
-        </Form.Item>
+        <Input prefix={<MailOutlined />} placeholder="Email" />
+      </Form.Item>
 
-        <Form.Item>
-          <Button
-            type="primary"
-            htmlType="submit"
-            loading={isSubmitting}
-            disabled={disableButton}
-          >
-            Sign in
-          </Button>
-        </Form.Item>
-      </Form>
-      {allowPassword && (
-        <>
-          <p>
-            <Link href="/signin/password_signin">
-              Sign in with email and password
-            </Link>
-          </p>
-          <p>
-            <Link href="/signin/signup">
-              Don&apos;t have an account? Sign up
-            </Link>
-          </p>
-        </>
-      )}
-    </div>
+      <Form.Item>
+        <Button
+          type="primary"
+          htmlType="submit"
+          loading={isSubmitting}
+          disabled={disableButton}
+        >
+          Sign in
+        </Button>
+        {allowPassword && (
+          <>
+            <p>
+              <Link href="/signin/password_signin">
+                Sign in with email and password
+              </Link>
+            </p>
+            <p>
+              <Link href="/signin/signup">
+                Don&apos;t have an account? Sign up
+              </Link>
+            </p>
+          </>
+        )}
+      </Form.Item>
+    </Form>
   );
 }
