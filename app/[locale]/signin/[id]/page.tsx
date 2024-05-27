@@ -14,8 +14,6 @@ import EmailSignIn from "@/components/AuthForms/EmailSignIn";
 import ForgotPassword from "@/components/AuthForms/ForgotPassword";
 import UpdatePassword from "@/components/AuthForms/UpdatePassword";
 import OauthSignIn from "@/components/AuthForms/OauthSignIn";
-// import Separator from "@/components/ui/AuthForms/Separator";
-// import OauthSignIn from "@/components/ui/AuthForms/OauthSignIn";
 
 export default async function SignIn({
   params,
@@ -64,8 +62,7 @@ export default async function SignIn({
           flexDirection: "column",
         }}
       >
-        <h3>Auth page</h3>
-        <div style={{ display: "flex" }}>
+        <h3 style={{ display: "flex" }}>
           {viewProp === "forgot_password"
             ? "Reset Password"
             : viewProp === "update_password"
@@ -75,7 +72,7 @@ export default async function SignIn({
             : viewProp === "email_signin"
             ? "Sign in with magic link"
             : "Sign In"}
-        </div>
+        </h3>
         {viewProp === "password_signin" && (
           <PasswordSignIn
             allowEmail={allowEmail}
@@ -106,7 +103,6 @@ export default async function SignIn({
           viewProp !== "signup" &&
           allowOauth && (
             <>
-              {/* <Separator text="Third-party sign-in" /> */}
               <OauthSignIn />
             </>
           )}

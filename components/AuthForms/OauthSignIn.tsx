@@ -1,60 +1,53 @@
 "use client";
 
-// import Button from "@/components/ui/Button";
 import { signInWithOAuth } from "@/utils/auth-helpers/client";
+import { GithubOutlined, GoogleOutlined } from "@ant-design/icons";
 import { type Provider } from "@supabase/supabase-js";
-import { Button } from "antd";
-// import { Github } from "lucide-react";
+import { Button, Flex, Typography } from "antd";
 import { useState } from "react";
 
 type OAuthProviders = {
   name: Provider;
   displayName: string;
-  icon?: JSX.Element;
+  icon: JSX.Element;
 };
 
+const oAuthProviders: OAuthProviders[] = [
+  {
+    name: "github",
+    displayName: "GitHub",
+    icon: <GithubOutlined />,
+  },
+  {
+    name: "google",
+    displayName: "Google",
+    icon: <GoogleOutlined />,
+  },
+];
+
 export default function OauthSignIn() {
-  const oAuthProviders: OAuthProviders[] = [
-    {
-      name: "github",
-      displayName: "GitHub",
-      //   icon: "",
-    },
-    {
-      name: "google",
-      displayName: "Google",
-      //   icon: "",
-    },
-    /* Add desired OAuth providers here */
-  ];
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    setIsSubmitting(true); // Disable the button while the request is being handled
-    await signInWithOAuth(e);
-    setIsSubmitting(false);
+  const handleSubmit = (provider: Provider) => {
+    setIsSubmitting(true);
+    signInWithOAuth(provider);
   };
 
   return (
-    <div className="mt-8">
-      {oAuthProviders.map((provider) => (
-        <form
-          key={provider.name}
-          className="pb-2"
-          onSubmit={(e) => handleSubmit(e)}
-        >
-          <input type="hidden" name="provider" value={provider.name} />
-          <button
-            // variant="slim"
-            type="submit"
-            className="w-full"
-            // loading={isSubmitting}
+    <>
+      <Typography.Text>Third-party sign-in</Typography.Text>
+      <Flex style={{ maxWidth: "300px" }} gap="middle" vertical={false}>
+        {oAuthProviders.map((provider) => (
+          <Button
+            key={provider.name}
+            onClick={() => handleSubmit(provider.name)}
+            icon={provider.icon}
+            loading={isSubmitting}
           >
-            <span className="mr-2">{provider.icon}</span>
-            <span>{provider.displayName}</span>
-          </button>
-        </form>
-      ))}
-    </div>
+            {provider.displayName}
+          </Button>
+        ))}
+      </Flex>
+    </>
   );
 }
