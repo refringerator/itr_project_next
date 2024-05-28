@@ -4,7 +4,8 @@
     "collecions": "Collections",
     "items": "Items",
     "signout": "Sign out",
-    "signin": "Sign In"
+    "signin": "Sign In",
+    "profile": "My Profile"
   },
   "Footer": {
     "created_by": "Created by"

@@ -4,7 +4,8 @@
     "collecions": "Коллекции",
     "items": "Элементы",
     "signout": "Выйти",
-    "signin": "Войти"
+    "signin": "Войти",
+    "profile": "Мой профиль"
   },
   "Footer": {
     "created_by": "Творец"
