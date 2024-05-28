@@ -14,6 +14,10 @@ jobs:
       SUPABASE_ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
       SUPABASE_DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
       PROJECT_ID: ${{ secrets.PROJECT_ID }}
+      SUPABASE_AUTH_GITHUB_CLIENT_ID: yndefined
+      SUPABASE_AUTH_GITHUB_SECRET: yndefined
+      SUPABASE_AUTH_GOOGLE_CLIENT_ID: yndefined
+      SUPABASE_AUTH_GOOGLE_SECRET: yndefined
 
     steps:
       - uses: actions/checkout@v3
