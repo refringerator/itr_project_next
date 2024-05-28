@@ -1,18 +1,20 @@
 "use client";
 
-import { Layout, Flex, Col, Row, Grid } from "antd";
-import { Link } from "@/navigation";
-import { Input, theme } from "antd";
+import { Layout, Flex, Col, Row, Button, Tooltip, Popover } from "antd";
+import { Input, theme, Avatar } from "antd";
+import { LoginOutlined, LogoutOutlined } from "@ant-design/icons";
 
-import { SignOut } from "@/utils/auth-helpers/server";
-import { getRedirectMethod } from "@/utils/auth-helpers/settings";
-import { handleRequest } from "@/utils/auth-helpers/client";
-import { usePathname, useRouter } from "@/navigation";
 import { useTranslations } from "next-intl";
 import LocaleSelector from "../LocaleSelector";
+
+import { usePathname, useRouter } from "@/navigation";
 import ThemeSwitcher from "../ThemeSwitcher";
 import MainMenu from "../MainMenu";
 import useDimension from "@/hooks/useDimension";
+
+import { handleRequest } from "@/utils/auth-helpers/client";
+import { getRedirectMethod } from "@/utils/auth-helpers/settings";
+import { SignOut } from "@/utils/auth-helpers/server";
 
 interface HeaderProps {
   user?: any;
@@ -20,18 +22,21 @@ interface HeaderProps {
 
 const headerStyle: React.CSSProperties = {
   textAlign: "end",
-  height: 48,
-  lineHeight: "48px",
+  height: 52,
+  lineHeight: "52px",
   backgroundColor: "rgba(0, 0, 0, 0.1)",
   width: "100%",
   display: "flex",
   padding: 0,
+  position: "sticky",
+  top: "0",
+  zIndex: 10,
 };
 
 const Header = ({ user }: HeaderProps) => {
   const router = useRouter();
-  const path = usePathname();
   const t = useTranslations("Header");
+  const path = usePathname();
   const { token } = theme.useToken();
   const showTitle = useDimension({ xs: false, sm: false, defaultValue: true });
 
@@ -45,6 +50,7 @@ const Header = ({ user }: HeaderProps) => {
       <Row
         wrap={false}
         align="middle"
+        // gutter={[2, 0]}
         style={{
           width: "100%",
           backgroundColor: token.colorBgContainer,
@@ -71,20 +77,46 @@ const Header = ({ user }: HeaderProps) => {
         </Col>
         <Col flex="none">
           {user ? (
-            <button
-              type="button"
-              onClick={() => {
-                handleRequest(
-                  { pathName: path },
-                  SignOut,
-                  getRedirectMethod() === "client" ? router : null
-                );
-              }}
+            <Popover
+              trigger="click"
+              content={
+                <>
+                  <Button>{t("profile")}</Button>
+                  <Button
+                    icon={<LogoutOutlined />}
+                    onClick={() => {
+                      handleRequest(
+                        { pathName: path },
+                        SignOut,
+                        getRedirectMethod() === "client" ? router : null
+                      );
+                    }}
+                  >
+                    {t("signout")}
+                  </Button>
+                </>
+              }
             >
-              {t("signout")}
-            </button>
+              <Avatar
+                style={{
+                  display: "flex",
+                  backgroundColor: "rgba(0,0,0,0.20)",
+                }}
+                size={42}
+                src={`https://api.dicebear.com/7.x/miniavs/svg?seed=${user.id}`}
+              />
+            </Popover>
           ) : (
-            <Link href="/signin">{t("signin")}</Link>
+            <Tooltip placement="leftBottom" title={t("signin")}>
+              <Button
+                style={{ display: "flex" }}
+                shape="default"
+                icon={<LoginOutlined />}
+                onClick={() => {
+                  router.push(`/signin`);
+                }}
+              />
+            </Tooltip>
           )}
         </Col>
       </Row>

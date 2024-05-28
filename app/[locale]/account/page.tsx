@@ -1,7 +1,16 @@
-export default function Account() {
+import Profile from "@/components/Profile";
+import { getSupabaseUserOrRedirect } from "@/utils/auth-helpers/server";
+import { getUsername } from "@/utils/prisma/profile";
+
+export default async function Account() {
+  const user = await getSupabaseUserOrRedirect("/signin");
+
+  const userName = (await getUsername(user.id))?.name || "Hidden name";
+
   return (
     <>
-      <h1>PROFILE</h1>
+      <h1>Profile page</h1>
+      <Profile username={userName} />
     </>
   );
 }
