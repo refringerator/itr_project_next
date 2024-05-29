@@ -16,14 +16,20 @@ import { redirect } from "@/navigation";
 type Props = {
   params: {
     id: string;
+    locale: string;
   };
 };
 
-export default async function EditCollection({ params: { id } }: Props) {
+export default async function EditCollection({
+  params: { id, locale },
+}: Props) {
   const collectionId = parseInt(id);
   await getSupabaseUserOrRedirect("/signin");
 
-  const { topics, collection } = await getTopicsCollection(collectionId);
+  const { topics, collection } = await getTopicsCollection(
+    collectionId,
+    locale
+  );
   const updateCollectionWihtId = updateCollection.bind(
     null,
     collectionId,

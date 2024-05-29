@@ -4,8 +4,11 @@ import { FieldType } from "@/components/Collection/CollectionForm";
 import { getUsedTags } from "./tags";
 import { CustomField } from "@prisma/client";
 
-export async function getTopicsCollection(collectionId: number) {
-  const locale = "ru_RU";
+export async function getTopicsCollection(
+  collectionId: number,
+  curLocale: string
+) {
+  const locale = curLocale === "ru" ? "ru_RU" : "en";
 
   const [topics, collection] = await prisma.$transaction([
     getTopics(),
