@@ -1,4 +1,4 @@
-import CollectionsList from "@/components/Collection/CollectionsList";
+import CollectionsList from "@/sections/Collection/CollectionsList";
 import { defaultImage } from "@/constants/server";
 import { get5LargeCollections } from "@/utils/prisma/collections";
 

@@ -1,16 +1,17 @@
-import type { Metadata, Viewport } from "next";
 import "@/styles/globals.css";
-import { Header, Footer, Content } from "@/components/Layout";
-import { AntdRegistry } from "@ant-design/nextjs-registry";
-import { Layout } from "antd";
 import { Suspense } from "react";
-import { Notification } from "@/components/Notification/Notification";
-import { createClient } from "@/utils/supabase/server";
+
+import type { Metadata, Viewport } from "next";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
-import AntConfigProvider from "@/context/AntConfigProvider";
+
+import { Header, Footer, Content } from "@/sections/Layout";
 import { ThemeProvider } from "next-themes";
-import ContextProvider from "@/context/context-provider";
+import { AntdRegistry } from "@ant-design/nextjs-registry";
+import { Layout } from "antd";
+import { Notification } from "@/components/Notification";
+import { createClient } from "@/utils/supabase/server";
+import { ContextProvider, AntConfigProvider } from "@/context";
 
 export const metadata: Metadata = {
   title: "Collection management",

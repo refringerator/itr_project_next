@@ -2,7 +2,7 @@
 
 import CollectionForm, {
   CollectionFormFieldType,
-} from "@/components/Collection/CollectionForm";
+} from "@/sections/Collection/CollectionForm";
 import {
   updateCollection,
   deleteCollection,

@@ -1,4 +1,4 @@
-import ItemList, { ItemsList } from "../Item/ItemList";
+import ItemList, { ItemsList } from "@/sections/Item/ItemList";
 
 export type CollectionProps = {
   items: ItemsList;

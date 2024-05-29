@@ -4,7 +4,7 @@ import { getCollection } from "@/utils/prisma/collections";
 import { Link } from "@/navigation";
 import { redirect } from "@/navigation";
 import Image from "next/image";
-import TheCollection from "@/components/Collection/TheCollection";
+import TheCollection from "@/sections/Collection/TheCollection";
 import { defaultImage } from "@/constants/server";
 
 type Props = {

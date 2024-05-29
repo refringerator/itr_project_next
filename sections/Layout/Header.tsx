@@ -5,11 +5,11 @@ import { Input, theme, Avatar } from "antd";
 import { LoginOutlined, LogoutOutlined } from "@ant-design/icons";
 
 import { useTranslations } from "next-intl";
-import LocaleSelector from "../LocaleSelector";
+import LocaleSelector from "../../components/LocaleSelector";
 
 import { usePathname, useRouter } from "@/navigation";
-import ThemeSwitcher from "../ThemeSwitcher";
-import MainMenu from "../MainMenu";
+import ThemeSwitcher from "../../components/ThemeSwitcher";
+import MainMenu from "../../components/MainMenu";
 import useDimension from "@/hooks/useDimension";
 
 import { handleRequest } from "@/utils/auth-helpers/client";

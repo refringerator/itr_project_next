@@ -7,7 +7,7 @@ import { notification } from "antd";
 
 type NotificationType = "success" | "info" | "warning" | "error";
 
-export function Notification() {
+function Notification() {
   const [api, contextHolder] = notification.useNotification();
 
   const searchParams = useSearchParams();
@@ -46,3 +46,5 @@ export function Notification() {
 
   return <>{contextHolder}</>;
 }
+
+export default Notification;

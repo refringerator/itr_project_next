@@ -63,15 +63,17 @@ export default function CollectionForm({
         title,
         topicId,
         description,
-        cover: cover && [
-          {
-            uid: cover,
-            name: "Current cover.png",
-            status: "done",
-            url: cover,
-            thumbUrl: cover,
-          },
-        ],
+        cover:
+          (cover && [
+            {
+              uid: cover,
+              name: "Current cover.png",
+              status: "done",
+              url: cover,
+              thumbUrl: cover,
+            },
+          ]) ||
+          [],
       }}
       onFinish={(data) => {
         console.log({ data });

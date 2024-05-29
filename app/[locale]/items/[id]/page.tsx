@@ -8,7 +8,7 @@ import { getItemCommentsLikes } from "@/utils/prisma/items";
 import { getSupabaseUser } from "@/utils/auth-helpers/server";
 import { redirect } from "@/navigation";
 import { getErrorRedirect } from "@/utils/helpers";
-import ItemRate from "@/components/Item/ItemRate";
+import ItemRate from "@/sections/Item/ItemRate";
 
 type Props = {
   params: {

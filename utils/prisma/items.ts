@@ -6,7 +6,7 @@ import {
   getUserLikesOnComments,
   getUserLikesOnItem,
 } from "./likes";
-import { ItemFormType } from "@/components/Item/ItemForm";
+import { ItemFormType } from "@/sections/Item/ItemForm";
 import { getComments } from "./comments";
 
 export async function getMyCollectionsTagsItem(userId: string, itemId: number) {

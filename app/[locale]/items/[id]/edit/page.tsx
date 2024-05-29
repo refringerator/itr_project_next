@@ -1,6 +1,6 @@
 "use server";
 
-import ItemForm, { ItemFormType } from "@/components/Item/ItemForm";
+import ItemForm, { ItemFormType } from "@/sections/Item/ItemForm";
 import { deleteItem, updateItem } from "@/app/[locale]/items/actions";
 import { DeleteButton } from "@/components/DeleteButton";
 import { getSupabaseUserOrRedirect } from "@/utils/auth-helpers/server";
