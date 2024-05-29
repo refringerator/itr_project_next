@@ -7,6 +7,7 @@ import { createClient } from "@/utils/supabase/client";
 import { collectionBucketName } from "@/constants";
 import { useContext } from "react";
 import { Context } from "@/context/context-provider";
+import { useTranslations } from "next-intl";
 
 interface ImageUploadProps {
   value?: UploadFile[];
@@ -14,6 +15,7 @@ interface ImageUploadProps {
 }
 
 const ImageUpload = ({ value, onChange }: ImageUploadProps) => {
+  const t = useTranslations("Components.ImageUpload");
   const context = useContext(Context);
   const supabase = createClient();
 
@@ -67,7 +69,7 @@ const ImageUpload = ({ value, onChange }: ImageUploadProps) => {
         onSuccess?.({ url: data?.publicUrl });
       }}
     >
-      <Button icon={<UploadOutlined />}>Click to Upload</Button>
+      <Button icon={<UploadOutlined />}>{t("clickToUpload")}</Button>
     </Upload>
   );
 };
