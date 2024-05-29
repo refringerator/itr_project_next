@@ -8,7 +8,7 @@ import { Notification } from "@/components/Notification/Notification";
 import { createClient } from "@/utils/supabase/server";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
-import AntConfigProvider from "@/components/Layout/AntConfigProvider";
+import AntConfigProvider from "@/context/AntConfigProvider";
 import { ThemeProvider } from "next-themes";
 import ContextProvider from "@/context/context-provider";
 
