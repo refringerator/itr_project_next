@@ -5,6 +5,7 @@ import { Link } from "@/navigation";
 import { redirect } from "@/navigation";
 import Image from "next/image";
 import TheCollection from "@/components/Collection/TheCollection";
+import { defaultImage } from "@/constants/server";
 
 type Props = {
   params: {
@@ -33,14 +34,12 @@ export default async function Collection({ params: { id } }: Props) {
       <p>{collection.topic.title}</p>
       <p>p: {collection.published}</p>
       <p>d: {collection.description}</p>
-      {collection.coverUrl && (
-        <Image
-          src={collection.coverUrl}
-          width={500}
-          height={500}
-          alt="Picture of the author"
-        />
-      )}
+      <Image
+        src={collection.coverUrl || defaultImage}
+        width={500}
+        height={500}
+        alt="Picture of the author"
+      />
       <TheCollection items={items} />
     </>
   );
