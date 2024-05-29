@@ -26,6 +26,9 @@ jobs:
       SUPABASE_AUTH_GITHUB_SECRET: yndefined
       SUPABASE_AUTH_GOOGLE_CLIENT_ID: yndefined
       SUPABASE_AUTH_GOOGLE_SECRET: yndefined
+      STORAGE_HOST: "127.0.0.1"
+      STORAGE_PORT: "54321"
+      STORAGE_PROTOCOL: "http"
 
     steps:
       - uses: actions/checkout@v4
