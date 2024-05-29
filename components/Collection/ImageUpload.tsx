@@ -3,24 +3,15 @@
 // import React, { useEffect, useState } from "react";
 import { UploadOutlined } from "@ant-design/icons";
 import type { UploadFile, UploadProps } from "antd";
-import { Button, message, Upload } from "antd";
+import { Button, Upload } from "antd";
 import { createClient } from "@/utils/supabase/client";
 
-interface OSSDataType {
-  dir: string;
-  expire: string;
-  host: string;
-  accessId: string;
-  policy: string;
-  signature: string;
-}
-
-interface AliyunOSSUploadProps {
+interface ImageUploadProps {
   value?: UploadFile[];
   onChange?: (fileList: UploadFile[]) => void;
 }
 
-const ImageUpload = ({ value, onChange }: AliyunOSSUploadProps) => {
+const ImageUpload = ({ value, onChange }: ImageUploadProps) => {
   const supabase = createClient();
 
   const handleChange: UploadProps["onChange"] = ({ fileList, file }) => {
@@ -94,16 +85,9 @@ const ImageUpload = ({ value, onChange }: AliyunOSSUploadProps) => {
         if (error) {
           return onError?.(error);
         }
-        const { data, error: urlError } = await supabase.storage
+        const { data } = await supabase.storage
           .from("collection")
           .getPublicUrl(fileUrl);
-
-        if (urlError) {
-          console.log({ urlError });
-          return onError?.(urlError);
-        }
-
-        console.log(data?.publicUrl);
 
         onSuccess?.({ url: data?.publicUrl }, new XMLHttpRequest());
       }}

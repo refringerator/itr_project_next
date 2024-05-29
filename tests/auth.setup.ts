@@ -15,7 +15,7 @@ setup("authenticate", async ({ page }) => {
   await expect(page.getByText("You are now signed in.")).toBeVisible();
 
   // await page.getByRole("button", { name: "Sign out" }).click();
-  await page.locator("img").click();
+  await page.getByRole("banner").locator("img").click();
   await page.getByRole("button", { name: "logout Sign out" }).click();
 
   await page.goto("/signin/password_signin");
