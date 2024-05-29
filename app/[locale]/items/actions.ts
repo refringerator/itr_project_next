@@ -8,7 +8,7 @@ import {
 import { getStatusRedirect } from "@/utils/helpers";
 import { addComment2 } from "@/utils/prisma/comments";
 import { createNewItem, deleteItem2, updateItem2 } from "@/utils/prisma/items";
-import { setLike } from "@/utils/prisma/likes";
+import { setItemRate, setLike } from "@/utils/prisma/likes";
 import { pubComment } from "@/utils/supabase/s-helpers";
 
 import { redirect } from "@/navigation";
@@ -89,4 +89,14 @@ export async function setMyLikeOnComment(commentId: number, rating: number) {
   }
 
   await setLike(user.id, commentId, rating);
+}
+
+export async function setRateOnItem(itemId: number, rating: number) {
+  const user = await getSupabaseUser();
+
+  if (!user) {
+    return;
+  }
+
+  await setItemRate(user.id, itemId, rating);
 }

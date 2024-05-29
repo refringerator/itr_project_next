@@ -14,15 +14,16 @@ generator json {
 }
 
 model User {
-  id          String          @id @default(uuid()) @db.Uuid
-  createdAt   DateTime        @default(now())
-  updatedAt   DateTime        @default(now()) @updatedAt
-  name        String?
-  superuser   Boolean         @default(false)
-  collections Collection[]
-  items       Item[]
-  likes       LikeOnComment[]
-  comments    Comment[]
+  id           String          @id @default(uuid()) @db.Uuid
+  createdAt    DateTime        @default(now())
+  updatedAt    DateTime        @default(now()) @updatedAt
+  name         String?
+  superuser    Boolean         @default(false)
+  collections  Collection[]
+  items        Item[]
+  likes        LikeOnComment[]
+  comments     Comment[]
+  starredItems LikeOnItem[]
 }
 
 model Collection {
@@ -41,19 +42,20 @@ model Collection {
 }
 
 model Item {
-  id           Int        @id @default(autoincrement())
-  createdAt    DateTime   @default(now())
-  updatedAt    DateTime   @updatedAt
+  id           Int          @id @default(autoincrement())
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
   title        String
-  published    Boolean    @default(false)
-  authorId     String     @db.Uuid
-  author       User       @relation(fields: [authorId], references: [id])
+  published    Boolean      @default(false)
+  authorId     String       @db.Uuid
+  author       User         @relation(fields: [authorId], references: [id])
   collectionId Int
-  collection   Collection @relation(fields: [collectionId], references: [id], onDelete: Cascade)
+  collection   Collection   @relation(fields: [collectionId], references: [id], onDelete: Cascade)
   tags         Tag[]
   comments     Comment[]
+  likes        LikeOnItem[]
   /// [CustomValuesType]
-  customValues Json       @default("{}")
+  customValues Json         @default("{}")
 }
 
 model Tag {
@@ -82,6 +84,17 @@ model LikeOnComment {
   createdAt DateTime @default(now())
 
   @@id(name: "likeId", [userId, commentId])
+}
+
+model LikeOnItem {
+  userId    String   @db.Uuid
+  user      User     @relation(fields: [userId], references: [id])
+  itemId    Int
+  item      Item     @relation(fields: [itemId], references: [id])
+  rating    Int
+  createdAt DateTime @default(now())
+
+  @@id(name: "likeId", [userId, itemId])
 }
 
 model Topic {
