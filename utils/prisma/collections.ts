@@ -88,7 +88,7 @@ export const updateCollection2 = (
   oldCFs: Omit<CustomField, "collectionId">[] | undefined,
   data: FieldType
 ) => {
-  const { title, topicId, description, customFields } = data;
+  const { title, topicId, description, customFields, cover } = data;
 
   const newCFs = customFields
     ?.filter((cf) => !cf.id)
@@ -113,6 +113,7 @@ export const updateCollection2 = (
   console.log({ update });
   console.log({ deleteCFs });
   console.log({ newCFs });
+  console.log({ cover });
 
   return prisma.collection.update({
     where: { id },
@@ -120,6 +121,7 @@ export const updateCollection2 = (
       title,
       topicId,
       description,
+      coverUrl: cover,
       customFields: {
         createMany: { data: newCFs as Omit<CustomField, "id">[] },
         deleteMany: deleteCFs.map((cf) => ({ id: cf.id })),

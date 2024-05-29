@@ -39,6 +39,7 @@ model Collection {
   topic        Topic         @relation(fields: [topicId], references: [id])
   items        Item[]
   customFields CustomField[]
+  coverUrl     String?
 }
 
 model Item {
