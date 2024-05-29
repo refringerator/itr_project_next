@@ -15,10 +15,8 @@ import useDimension from "@/hooks/useDimension";
 import { handleRequest } from "@/utils/auth-helpers/client";
 import { getRedirectMethod } from "@/utils/auth-helpers/settings";
 import { SignOut } from "@/utils/auth-helpers/server";
-
-interface HeaderProps {
-  user?: any;
-}
+import { useContext } from "react";
+import { Context } from "@/context/context-provider";
 
 const headerStyle: React.CSSProperties = {
   textAlign: "end",
@@ -33,7 +31,8 @@ const headerStyle: React.CSSProperties = {
   zIndex: 10,
 };
 
-const Header = ({ user }: HeaderProps) => {
+const Header = () => {
+  const context = useContext(Context);
   const router = useRouter();
   const t = useTranslations("Header");
   const path = usePathname();
@@ -76,7 +75,7 @@ const Header = ({ user }: HeaderProps) => {
           <LocaleSelector />
         </Col>
         <Col flex="none">
-          {user ? (
+          {context?.user ? (
             <Popover
               trigger="click"
               content={
@@ -103,7 +102,7 @@ const Header = ({ user }: HeaderProps) => {
                   backgroundColor: "rgba(0,0,0,0.20)",
                 }}
                 size={42}
-                src={`https://api.dicebear.com/7.x/miniavs/svg?seed=${user.id}`}
+                src={`https://api.dicebear.com/7.x/miniavs/svg?seed=${context.user.id}`}
               />
             </Popover>
           ) : (

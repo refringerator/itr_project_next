@@ -10,6 +10,7 @@ import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import AntConfigProvider from "@/components/Layout/AntConfigProvider";
 import { ThemeProvider } from "next-themes";
+import ContextProvider from "@/context/context-provider";
 
 export const metadata: Metadata = {
   title: "Collection management",
@@ -45,14 +46,16 @@ export default async function RootLayout({
           <NextIntlClientProvider messages={messages}>
             <AntdRegistry>
               <AntConfigProvider>
-                <Layout>
-                  <Header user={user} />
-                  <Content>{children}</Content>
-                  <Footer />
-                </Layout>
-                <Suspense>
-                  <Notification />
-                </Suspense>
+                <ContextProvider value={{ user: user }}>
+                  <Layout>
+                    <Header />
+                    <Content>{children}</Content>
+                    <Footer />
+                  </Layout>
+                  <Suspense>
+                    <Notification />
+                  </Suspense>
+                </ContextProvider>
               </AntConfigProvider>
             </AntdRegistry>
           </NextIntlClientProvider>

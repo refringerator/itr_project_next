@@ -5,6 +5,8 @@ import type { UploadFile, UploadProps } from "antd";
 import { Button, Upload } from "antd";
 import { createClient } from "@/utils/supabase/client";
 import { collectionBucketName } from "@/constants";
+import { useContext } from "react";
+import { Context } from "@/context/context-provider";
 
 interface ImageUploadProps {
   value?: UploadFile[];
@@ -12,6 +14,7 @@ interface ImageUploadProps {
 }
 
 const ImageUpload = ({ value, onChange }: ImageUploadProps) => {
+  const context = useContext(Context);
   const supabase = createClient();
 
   const handleChange: UploadProps["onChange"] = ({ fileList }) => {
@@ -43,7 +46,7 @@ const ImageUpload = ({ value, onChange }: ImageUploadProps) => {
       customRequest={async ({ file, onError, onSuccess }) => {
         const rcFile = file as File;
 
-        const uid = 123;
+        const uid = context?.user?.id || "";
         const fileExt = rcFile.name.split(".").pop();
         const fileUrl = `${uid}-${Math.random()}.${fileExt}`;
 
