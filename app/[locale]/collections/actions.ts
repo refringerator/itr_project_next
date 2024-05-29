@@ -1,7 +1,7 @@
 "use server";
 
 import { redirect } from "@/navigation";
-import { FieldType } from "@/components/Collection/CollectionForm";
+import { CollectionFormFieldType } from "@/components/Collection/CollectionForm";
 import { getSupabaseUserOrRedirect } from "@/utils/auth-helpers/server";
 import { getStatusRedirect } from "@/utils/helpers";
 import {
@@ -11,7 +11,7 @@ import {
 } from "@/utils/prisma/collections";
 import { CustomField } from "@prisma/client";
 
-export async function createCollection(data: FieldType) {
+export async function createCollection(data: CollectionFormFieldType) {
   console.log({ data });
 
   const user = await getSupabaseUserOrRedirect("/signin");
@@ -30,7 +30,7 @@ export async function createCollection(data: FieldType) {
 export async function updateCollection(
   id: number,
   oldCFs: Omit<CustomField, "collectionId">[] | undefined,
-  data: FieldType
+  data: CollectionFormFieldType
 ) {
   await getSupabaseUserOrRedirect("/signin");
 

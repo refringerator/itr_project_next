@@ -1,7 +1,7 @@
 "use server";
 
 import CollectionForm, {
-  FieldType,
+  CollectionFormFieldType,
 } from "@/components/Collection/CollectionForm";
 import {
   updateCollection,
@@ -50,7 +50,12 @@ export default async function EditCollection({
       <CollectionForm
         topics={topics}
         onFinish={updateCollectionWihtId}
-        initialValues={collection as FieldType}
+        initialValues={
+          {
+            ...collection,
+            cover: collection.coverUrl,
+          } as CollectionFormFieldType
+        }
         buttonText="Update"
       />
     </>

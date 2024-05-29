@@ -9,7 +9,7 @@ import ImageUpload from "./ImageUpload";
 type PartialBy<T, K extends keyof T, D extends keyof T> = Omit<Omit<T, D>, K> &
   Partial<Pick<T, K>>;
 
-export type FieldType = {
+export type CollectionFormFieldType = {
   title: string;
   description?: string;
   topicId: number;
@@ -25,8 +25,8 @@ type customType = {
 interface CollectionFormProps {
   buttonText?: string;
   topics: Omit<Topic, "translation">[];
-  onFinish: FormProps<FieldType>["onFinish"];
-  initialValues?: FieldType;
+  onFinish: FormProps<CollectionFormFieldType>["onFinish"];
+  initialValues?: CollectionFormFieldType;
 }
 
 const customTypes: customType[] = [
@@ -49,23 +49,37 @@ export default function CollectionForm({
     description = "",
     topicId,
     customFields,
+    cover,
   } = initialValues || {};
 
+  console.log({ cover });
   return (
     <Form
       name="basic"
       labelCol={{ span: 8 }}
       wrapperCol={{ span: 16 }}
       style={{ maxWidth: 600 }}
-      initialValues={{ title, topicId, description }}
+      initialValues={{
+        title,
+        topicId,
+        description,
+        cover: cover && [
+          {
+            uid: cover,
+            name: "Current cover.png",
+            status: "done",
+            url: cover,
+            thumbUrl: cover,
+          },
+        ],
+      }}
       onFinish={(data) => {
         console.log({ data });
-        onFinish &&
-          onFinish({ ...data, cover: data.cover?.at(0)?.response.url || "" });
+        onFinish && onFinish({ ...data, cover: data.cover?.at(0)?.url || "" });
       }}
       autoComplete="off"
     >
-      <Form.Item<FieldType>
+      <Form.Item<CollectionFormFieldType>
         label="Title"
         name="title"
         rules={[{ required: true, message: "Please input title!" }]}
@@ -87,7 +101,10 @@ export default function CollectionForm({
         </Select>
       </Form.Item>
 
-      <Form.Item<FieldType> label="Description" name="description">
+      <Form.Item<CollectionFormFieldType>
+        label="Description"
+        name="description"
+      >
         <Input.TextArea
           placeholder="Something about collection"
           autoSize={{ minRows: 2, maxRows: 6 }}

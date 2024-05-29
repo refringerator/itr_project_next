@@ -1,6 +1,6 @@
 import { prisma } from "@/utils/prisma";
 import { getTopics } from "./topics";
-import { FieldType } from "@/components/Collection/CollectionForm";
+import { CollectionFormFieldType } from "@/components/Collection/CollectionForm";
 import { getUsedTags } from "./tags";
 import { CustomField } from "@prisma/client";
 
@@ -60,7 +60,9 @@ export const userCollections = (userId: string) =>
 
 export const getCollections = () => prisma.collection.findMany();
 
-export const createCollection2 = (data: FieldType & { userId: string }) => {
+export const createCollection2 = (
+  data: CollectionFormFieldType & { userId: string }
+) => {
   const { title, topicId, description, userId, customFields, cover } = data;
 
   const cfs = customFields?.map((cf) => ({
@@ -90,7 +92,7 @@ export const createCollection2 = (data: FieldType & { userId: string }) => {
 export const updateCollection2 = (
   id: number,
   oldCFs: Omit<CustomField, "collectionId">[] | undefined,
-  data: FieldType
+  data: CollectionFormFieldType
 ) => {
   const { title, topicId, description, customFields, cover } = data;
 
