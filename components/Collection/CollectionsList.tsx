@@ -2,6 +2,7 @@
 
 import React from "react";
 import { Avatar, List } from "antd";
+import Image from "next/image";
 
 export type CollectionData = {
   title: string;
@@ -9,6 +10,7 @@ export type CollectionData = {
   updatedAt: Date;
   avatar: string;
   href: string;
+  coverUrl: string;
 };
 
 export type CollectionListProps = {
@@ -18,9 +20,6 @@ export type CollectionListProps = {
 const CollectionsList = ({ data }: CollectionListProps) => {
   const showAuthor = true;
   const showFields = true;
-
-  const image =
-    "https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png";
 
   return (
     <List
@@ -37,7 +36,14 @@ const CollectionsList = ({ data }: CollectionListProps) => {
       renderItem={(item) => (
         <List.Item
           key={item.title}
-          extra={<img width={150} alt="logo" src={image} />}
+          extra={
+            <Image
+              src={item.coverUrl}
+              width={150}
+              height={150}
+              alt="Picture of the collection"
+            />
+          }
         >
           <List.Item.Meta
             avatar={showAuthor && <Avatar src={item.avatar} />}

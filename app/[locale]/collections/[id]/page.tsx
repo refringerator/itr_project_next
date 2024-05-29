@@ -3,6 +3,7 @@
 import { getCollection } from "@/utils/prisma/collections";
 import { Link } from "@/navigation";
 import { redirect } from "@/navigation";
+import Image from "next/image";
 import TheCollection from "@/components/Collection/TheCollection";
 
 type Props = {
@@ -32,6 +33,14 @@ export default async function Collection({ params: { id } }: Props) {
       <p>{collection.topic.title}</p>
       <p>p: {collection.published}</p>
       <p>d: {collection.description}</p>
+      {collection.coverUrl && (
+        <Image
+          src={collection.coverUrl}
+          width={500}
+          height={500}
+          alt="Picture of the author"
+        />
+      )}
       <TheCollection items={items} />
     </>
   );
