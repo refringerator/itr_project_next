@@ -7,6 +7,10 @@ on:
 jobs:
   test-build:
     runs-on: ubuntu-latest
+    env:
+      STORAGE_HOST: "127.0.0.1"
+      STORAGE_PORT: "54321"
+      STORAGE_PROTOCOL: "http"
 
     strategy:
       matrix:
