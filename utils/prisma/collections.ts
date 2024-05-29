@@ -58,7 +58,7 @@ export const userCollections = (userId: string) =>
 export const getCollections = () => prisma.collection.findMany();
 
 export const createCollection2 = (data: FieldType & { userId: string }) => {
-  const { title, topicId, description, userId, customFields } = data;
+  const { title, topicId, description, userId, customFields, cover } = data;
 
   const cfs = customFields?.map((cf) => ({
     ...cf,
@@ -76,6 +76,7 @@ export const createCollection2 = (data: FieldType & { userId: string }) => {
     data: {
       title,
       topicId,
+      coverUrl: cover || "",
       description,
       authorId: userId,
       customFields: customFields2,

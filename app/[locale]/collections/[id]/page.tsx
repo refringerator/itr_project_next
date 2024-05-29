@@ -9,7 +9,7 @@ import { defaultImage } from "@/constants/server";
 
 type Props = {
   params: {
-    id: number;
+    id: string;
   };
 };
 
