@@ -43,7 +43,11 @@ export default async function Item({ params: { id } }: Props) {
       <p>{item.author.name}</p>
       <p>{item.collection.title}</p>
       <p>{item.published ? "published" : "not published"}</p>
-      <p>Average rate is {averageRate._avg.rating}</p>
+      <p>
+        {averageRate._avg.rating
+          ? `Average rate is ${averageRate._avg.rating}`
+          : "No rate"}
+      </p>
       <>
         {item.tags.map((tag) => (
           <Tag key={tag.id}>{tag.title}</Tag>
@@ -51,6 +55,7 @@ export default async function Item({ params: { id } }: Props) {
       </>
 
       <ItemRate
+        readOnly={!user}
         userRate={rate?.rating || 0}
         updateRate={setRateOnItem.bind(null, itemId)}
       />
