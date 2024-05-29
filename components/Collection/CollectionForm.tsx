@@ -60,7 +60,8 @@ export default function CollectionForm({
       initialValues={{ title, topicId, description }}
       onFinish={(data) => {
         console.log({ data });
-        onFinish && onFinish({ ...data, cover: data.cover[0].response.url });
+        onFinish &&
+          onFinish({ ...data, cover: data.cover?.at(0)?.response.url || "" });
       }}
       autoComplete="off"
     >
