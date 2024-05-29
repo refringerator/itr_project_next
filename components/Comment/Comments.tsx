@@ -26,6 +26,7 @@ export function Comments({
   likedCommentIds,
 }: CommentsProps) {
   const [comments, setComments] = useState(serverComments);
+  const [readOnly, setReadOnly] = useState(true);
   const supabase = createClient();
 
   useEffect(() => {
@@ -41,6 +42,10 @@ export function Comments({
         ]);
       })
       .subscribe();
+
+    supabase.auth
+      .getSession()
+      .then(({ data: { session } }) => setReadOnly(!session?.user));
 
     return () => {
       supabase.removeChannel(channel);
@@ -67,6 +72,7 @@ export function Comments({
         dataSource={comments}
         renderItem={(comment) => (
           <TheComment
+            readOnly={readOnly}
             comment={comment}
             liked={likedCommentIds.includes(comment.id)}
           />

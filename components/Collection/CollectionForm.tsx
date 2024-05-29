@@ -4,6 +4,7 @@ import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import type { FormProps } from "antd";
 
 import { CustomField, Topic, CustomFieldType } from "@prisma/client";
+import ImageUpload from "./ImageUpload";
 
 type PartialBy<T, K extends keyof T, D extends keyof T> = Omit<Omit<T, D>, K> &
   Partial<Pick<T, K>>;
@@ -13,6 +14,7 @@ export type FieldType = {
   description?: string;
   topicId: number;
   customFields?: PartialBy<CustomField, "id", "collectionId">[];
+  cover?: string;
 };
 
 type customType = {
@@ -56,7 +58,11 @@ export default function CollectionForm({
       wrapperCol={{ span: 16 }}
       style={{ maxWidth: 600 }}
       initialValues={{ title, topicId, description }}
-      onFinish={onFinish}
+      onFinish={(data) => {
+        console.log({ data });
+        onFinish &&
+          onFinish({ ...data, cover: data.cover?.at(0)?.response.url || "" });
+      }}
       autoComplete="off"
     >
       <Form.Item<FieldType>
@@ -86,6 +92,16 @@ export default function CollectionForm({
           placeholder="Something about collection"
           autoSize={{ minRows: 2, maxRows: 6 }}
         />
+      </Form.Item>
+
+      <Form.Item
+        name="cover"
+        label="Cover"
+        // valuePropName="fileList"
+        // getValueFromEvent={normFile}
+        // extra="longgggggggggggggggggggggggggggggggggg"
+      >
+        <ImageUpload />
       </Form.Item>
 
       <Form.List name="customFields" initialValue={customFields}>

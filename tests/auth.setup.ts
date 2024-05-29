@@ -13,11 +13,14 @@ setup("authenticate", async ({ page }) => {
 
   await expect(page.getByText("Success!")).toBeVisible();
   await expect(page.getByText("You are now signed in.")).toBeVisible();
-  await page.getByRole("button", { name: "Sign out" }).click();
+
+  // await page.getByRole("button", { name: "Sign out" }).click();
+  await page.getByRole("banner").locator("img").click();
+  await page.getByRole("button", { name: "logout Sign out" }).click();
 
   await page.goto("/signin/password_signin");
-  await page.getByLabel("Email").fill(email);
-  await page.getByLabel("Password").fill(pass);
+  await page.getByPlaceholder("Email").fill(email);
+  await page.getByPlaceholder("Password").fill(pass);
   await page.getByRole("button", { name: "Sign in" }).click();
 
   await expect(page.getByText("Success!")).toBeVisible();

@@ -12,9 +12,10 @@ import { useParams } from "next/navigation";
 interface CommentProps {
   comment: CommentWithAdditionalFields;
   liked: boolean;
+  readOnly: boolean;
 }
 
-export function TheComment({ comment, liked }: CommentProps) {
+export function TheComment({ comment, liked, readOnly }: CommentProps) {
   const numLike = Number(liked);
   const defLikes = comment._count.likes;
 
@@ -39,6 +40,7 @@ export function TheComment({ comment, liked }: CommentProps) {
             count={1}
             defaultValue={numLike}
             onChange={OnChange}
+            disabled={readOnly}
           />
           {t("likes", { count: likesCount })}
         </Space>,

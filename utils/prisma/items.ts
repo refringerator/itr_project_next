@@ -1,7 +1,11 @@
 import { prisma } from "@/utils/prisma";
 import { userCollections } from "./collections";
 import { getUsedTags } from "./tags";
-import { getUserLikesOnComments } from "./likes";
+import {
+  getAverageItemRate,
+  getUserLikesOnComments,
+  getUserLikesOnItem,
+} from "./likes";
 import { ItemFormType } from "@/components/Item/ItemForm";
 import { getComments } from "./comments";
 
@@ -16,13 +20,21 @@ export async function getMyCollectionsTagsItem(userId: string, itemId: number) {
 }
 
 export async function getItemCommentsLikes(userId: string, itemId: number) {
-  const [item, comments, likes] = await prisma.$transaction([
+  const [item, comments, likes, rate, averageRate] = await prisma.$transaction([
     getItem(itemId),
     getComments(itemId),
     getUserLikesOnComments(userId, itemId),
+    getUserLikesOnItem(userId, itemId),
+    getAverageItemRate(itemId),
   ]);
 
-  return { item, comments, likes: likes.map((i) => i.commentId) };
+  return {
+    item,
+    comments,
+    likes: likes.map((i) => i.commentId),
+    rate,
+    averageRate,
+  };
 }
 
 export const getItem = (itemId: number) =>

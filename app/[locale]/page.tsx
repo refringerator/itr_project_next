@@ -1,4 +1,5 @@
 import CollectionsList from "@/components/Collection/CollectionsList";
+import { defaultImage } from "@/constants/server";
 import { get5LargeCollections } from "@/utils/prisma/collections";
 
 export default async function Home() {
@@ -9,7 +10,8 @@ export default async function Home() {
     description: c.description || "",
     updatedAt: c.updatedAt,
     avatar: "",
-    href: "",
+    href: `/collections/${c.id}`,
+    coverUrl: c.coverUrl || defaultImage,
   }));
   return (
     <>
