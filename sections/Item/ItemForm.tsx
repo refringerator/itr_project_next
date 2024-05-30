@@ -1,14 +1,14 @@
 "use client";
-import { Select, Button, Form, Input } from "antd";
 
+import { Select, Button, Form, Input } from "antd";
 import type { FormProps } from "antd";
 
 import { Tag } from "@prisma/client";
 import { useState } from "react";
 import { UserCollectionType } from "@/utils/prisma/collections";
-import CustomFormField from "../../sections/Collection/CustomFormField";
+import CustomFormField from "@/sections/Collection/CustomFormField";
 import { Link } from "@/navigation";
-import dayjs from "dayjs";
+import { formatDate, parseDate } from "@/utils/helpers";
 
 export type ItemFormType = {
   title: string;
@@ -31,26 +31,6 @@ const getCustomFields = (
 ) => {
   const c = collections.find((c) => c.id === collectionId);
   return c?.customFields || [];
-};
-
-const parseDate = (initialValues: any, dateFields: string[]) => {
-  for (const [key, value] of Object.entries(initialValues)) {
-    if (dateFields.includes(key)) {
-      initialValues[key] = dayjs(value as string);
-    }
-  }
-
-  return initialValues;
-};
-
-const formatDate = (initialValues: any, dateFields: string[]) => {
-  for (const [key, value] of Object.entries(initialValues)) {
-    if (dateFields.includes(key)) {
-      initialValues[key] = (value as dayjs.Dayjs).format("YYYY-MM-DD");
-    }
-  }
-
-  return initialValues;
 };
 
 export default function ItemForm({
@@ -80,7 +60,7 @@ export default function ItemForm({
 
   return (
     <Form
-      name="basic"
+      name="item_form"
       labelCol={{ span: 8 }}
       wrapperCol={{ span: 16 }}
       style={{ maxWidth: 600 }}

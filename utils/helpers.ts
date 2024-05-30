@@ -1,6 +1,4 @@
-// import type { Tables } from "@/types_db";
-
-// type Price = Tables<"prices">;
+import dayjs from "dayjs";
 
 export const getURL = (path: string = "") => {
   // Check if NEXT_PUBLIC_SITE_URL is set and non-empty. Set this to your site URL in production env.
@@ -26,22 +24,25 @@ export const getURL = (path: string = "") => {
   return path ? `${url}/${path}` : url;
 };
 
-// export const postData = async ({
-//   url,
-//   data,
-// }: {
-//   url: string;
-//   data?: { price: Price };
-// }) => {
-//   const res = await fetch(url, {
-//     method: "POST",
-//     headers: new Headers({ "Content-Type": "application/json" }),
-//     credentials: "same-origin",
-//     body: JSON.stringify(data),
-//   });
+export const parseDate = (values: any, dateFields: string[]) => {
+  for (const [key, value] of Object.entries(values)) {
+    if (dateFields.includes(key)) {
+      values[key] = dayjs(value as string);
+    }
+  }
 
-//   return res.json();
-// };
+  return values;
+};
+
+export const formatDate = (values: any, dateFields: string[]) => {
+  for (const [key, value] of Object.entries(values)) {
+    if (dateFields.includes(key)) {
+      values[key] = (value as dayjs.Dayjs).format("YYYY-MM-DD");
+    }
+  }
+
+  return values;
+};
 
 export const toDateTime = (secs: number) => {
   var t = new Date(+0); // Unix epoch start.
