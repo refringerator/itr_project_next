@@ -68,5 +68,10 @@
   "Common": {
     "Update": "Update",
     "Create": "Create"
+  },
+  "Profile": {
+    "clickToEdit": "click to edit your name",
+    "urDisplayNameIs": "Your current display name is",
+    "uCanChangeIt": "You can change it by click on it."
   }
 }

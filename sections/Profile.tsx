@@ -7,8 +7,10 @@ import { Typography } from "antd";
 import { HighlightOutlined } from "@ant-design/icons";
 const { Text, Paragraph } = Typography;
 import SignOutButton from "@/components/SignOutButton";
+import { useTranslations } from "next-intl";
 
 export default function Profile({ username }: { username: string }) {
+  const t = useTranslations("Profile");
   const [name, setName] = useState(username);
   const supabase = createClient();
 
@@ -21,12 +23,12 @@ export default function Profile({ username }: { username: string }) {
 
   return (
     <>
-      <Text>Your current display name is </Text>
+      <Text>{t("urDisplayNameIs")} </Text>
       <Text
         strong
         editable={{
           icon: <HighlightOutlined />,
-          tooltip: "click to edit your name",
+          tooltip: t("clickToEdit"),
           onChange: onChange,
           enterIcon: null,
           triggerType: ["text", "icon"],
@@ -34,7 +36,7 @@ export default function Profile({ username }: { username: string }) {
       >
         {name}
       </Text>
-      <Paragraph>You can change it by click on it.</Paragraph>
+      <Paragraph>{t("uCanChangeIt")}</Paragraph>
 
       <SignOutButton />
     </>
