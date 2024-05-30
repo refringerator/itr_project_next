@@ -48,7 +48,7 @@ export function TheComment({ comment, liked, readOnly }: CommentProps) {
     >
       <List.Item.Meta
         avatar={<Avatar src={avatar} />}
-        title={<a href={href}>{`${t("author")} ${comment.authorId}`}</a>}
+        title={<a href={href}>{`${t("author")} ${comment.author.name}`}</a>}
         description={`${t("added")} ${comment.createdAt.toLocaleString(
           locale
         )}`}
