@@ -78,6 +78,14 @@
       "deleteConfirmDesctiption": "Вы действительно хотите удалить эту коллекцию?"
     }
   },
+  "Item": {
+    "Page": {
+      "editItem": "Редактирование элемента коллекции",
+      "orDelete": "или удалить его",
+      "deleteConfirmTitle": "Удаление элемента коллекции",
+      "deleteConfirmDesctiption": "Вы действительно хотите удалить этот элемент?"
+    }
+  },
   "Common": {
     "Update": "Обновить",
     "Create": "Создать"

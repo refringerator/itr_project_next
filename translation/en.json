@@ -78,6 +78,14 @@
       "deleteConfirmDesctiption": "Are you sure to delete this collection?"
     }
   },
+  "Item": {
+    "Page": {
+      "editItem": "Edit item",
+      "orDelete": "or delete it",
+      "deleteConfirmTitle": "Delete item",
+      "deleteConfirmDesctiption": "Are you sure to delete this item?"
+    }
+  },
   "Common": {
     "Update": "Update",
     "Create": "Create"
