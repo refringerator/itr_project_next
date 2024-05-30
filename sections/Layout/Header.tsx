@@ -2,21 +2,19 @@
 
 import { Layout, Flex, Col, Row, Button, Tooltip, Popover } from "antd";
 import { Input, theme, Avatar } from "antd";
-import { LoginOutlined, LogoutOutlined } from "@ant-design/icons";
+import { LoginOutlined } from "@ant-design/icons";
 
 import { useTranslations } from "next-intl";
 import LocaleSelector from "../../components/LocaleSelector";
 
-import { usePathname, useRouter } from "@/navigation";
+import { useRouter } from "@/navigation";
 import ThemeSwitcher from "../../components/ThemeSwitcher";
 import MainMenu from "../../components/MainMenu";
 import useDimension from "@/hooks/useDimension";
 
-import { handleRequest } from "@/utils/auth-helpers/client";
-import { getRedirectMethod } from "@/utils/auth-helpers/settings";
-import { SignOut } from "@/utils/auth-helpers/server";
 import { useContext } from "react";
 import { Context } from "@/context/context-provider";
+import SignOutButton from "@/components/SignOutButton";
 
 const headerStyle: React.CSSProperties = {
   textAlign: "end",
@@ -35,7 +33,7 @@ const Header = () => {
   const context = useContext(Context);
   const router = useRouter();
   const t = useTranslations("Header");
-  const path = usePathname();
+
   const { token } = theme.useToken();
   const showTitle = useDimension({ xs: false, sm: false, defaultValue: true });
 
@@ -81,18 +79,7 @@ const Header = () => {
               content={
                 <>
                   <Button>{t("profile")}</Button>
-                  <Button
-                    icon={<LogoutOutlined />}
-                    onClick={() => {
-                      handleRequest(
-                        { pathName: path },
-                        SignOut,
-                        getRedirectMethod() === "client" ? router : null
-                      );
-                    }}
-                  >
-                    {t("signout")}
-                  </Button>
+                  <SignOutButton />
                 </>
               }
             >

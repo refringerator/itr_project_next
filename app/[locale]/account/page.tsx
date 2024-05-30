@@ -1,4 +1,4 @@
-import Profile from "@/components/Profile";
+import Profile from "@/sections/Profile";
 import { getSupabaseUserOrRedirect } from "@/utils/auth-helpers/server";
 import { getUsername } from "@/utils/prisma/profile";
 

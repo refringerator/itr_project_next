@@ -3,19 +3,12 @@
 import { createClient } from "@/utils/supabase/client";
 import { useState } from "react";
 
-import { Button, Typography } from "antd";
-import { HighlightOutlined, LogoutOutlined } from "@ant-design/icons";
+import { Typography } from "antd";
+import { HighlightOutlined } from "@ant-design/icons";
 const { Text, Paragraph } = Typography;
-import { usePathname, useRouter } from "@/navigation";
-import { SignOut } from "@/utils/auth-helpers/server";
-import { getRedirectMethod } from "@/utils/auth-helpers/settings";
-import { handleRequest } from "@/utils/auth-helpers/client";
-import { useTranslations } from "next-intl";
+import SignOutButton from "@/components/SignOutButton";
 
 export default function Profile({ username }: { username: string }) {
-  const t = useTranslations("Header");
-  const path = usePathname();
-  const router = useRouter();
   const [name, setName] = useState(username);
   const supabase = createClient();
 
@@ -43,18 +36,7 @@ export default function Profile({ username }: { username: string }) {
       </Text>
       <Paragraph>You can change it by click on it.</Paragraph>
 
-      <Button
-        icon={<LogoutOutlined />}
-        onClick={() => {
-          handleRequest(
-            { pathName: path },
-            SignOut,
-            getRedirectMethod() === "client" ? router : null
-          );
-        }}
-      >
-        {t("signout")}
-      </Button>
+      <SignOutButton />
     </>
   );
 }
