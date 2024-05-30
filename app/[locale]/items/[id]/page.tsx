@@ -1,12 +1,11 @@
 "use server";
 
-import { Link } from "@/navigation";
+import { Tag } from "antd";
 import { addComment, setRateOnItem } from "@/app/[locale]/items/actions";
 import { Comments } from "@/components/Comment/Comments";
-import { Tag } from "antd";
 import { getItemCommentsLikes } from "@/utils/prisma/items";
 import { getSupabaseUser } from "@/utils/auth-helpers/server";
-import { redirect } from "@/navigation";
+import { redirect, Link } from "@/navigation";
 import { getErrorRedirect } from "@/utils/helpers";
 import ItemRate from "@/sections/Item/ItemRate";
 
@@ -36,6 +35,9 @@ export default async function Item({ params: { id } }: Props) {
       )
     );
 
+  const cfs = item.customValues;
+  console.log({ cfs });
+
   return (
     <>
       <h2>Item {id}</h2>
@@ -43,6 +45,14 @@ export default async function Item({ params: { id } }: Props) {
       <p>{item.author.name}</p>
       <p>{item.collection.title}</p>
       <p>{item.published ? "published" : "not published"}</p>
+      {!!item.collection.customFields.length && <p>Custom fields:</p>}
+      {item.collection.customFields.map((cf) => {
+        return (
+          <p key={cf.id}>
+            {cf.id} - {cf.title}: {cfs[`cf_${cf.id}`]}
+          </p>
+        );
+      })}
       <p>
         {averageRate._avg.rating
           ? `Average rate is ${averageRate._avg.rating}`

@@ -42,7 +42,7 @@ export const getItem = (itemId: number) =>
     where: { id: itemId },
     include: {
       author: { select: { name: true } },
-      collection: { select: { title: true } },
+      collection: { select: { title: true, customFields: true } },
       tags: { select: { id: true, title: true } },
     },
   });
