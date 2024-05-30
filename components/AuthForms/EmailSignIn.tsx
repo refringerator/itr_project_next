@@ -63,7 +63,7 @@ export default function EmailSignIn({
           loading={isSubmitting}
           disabled={disableButton}
         >
-          {t("signIn")}
+          {t("sendEmail")}
         </Button>
         {allowPassword && (
           <>

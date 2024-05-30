@@ -1,4 +1,3 @@
-import { createClient } from "@/utils/supabase/server";
 import { cookies } from "next/headers";
 import { redirect } from "@/navigation";
 import {
@@ -14,6 +13,8 @@ import EmailSignIn from "@/components/AuthForms/EmailSignIn";
 import ForgotPassword from "@/components/AuthForms/ForgotPassword";
 import UpdatePassword from "@/components/AuthForms/UpdatePassword";
 import OauthSignIn from "@/components/AuthForms/OauthSignIn";
+import { getSupabaseUser } from "@/utils/auth-helpers/server";
+import { getTranslations } from "next-intl/server";
 
 export default async function SignIn({
   params,
@@ -25,6 +26,7 @@ export default async function SignIn({
   const { allowOauth, allowEmail, allowPassword } = getAuthTypes();
   const viewTypes = getViewTypes();
   const redirectMethod = getRedirectMethod();
+  const t = await getTranslations("Auth.Page");
 
   // Declare 'viewProp' and initialize with the default value
   let viewProp: string;
@@ -40,12 +42,7 @@ export default async function SignIn({
     return redirect(`/signin/${viewProp}`);
   }
 
-  // Check if the user is already logged in and redirect to the account page if so
-  const supabase = createClient();
-
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = await getSupabaseUser();
 
   if (user && viewProp !== "update_password") {
     return redirect("/");
@@ -64,14 +61,14 @@ export default async function SignIn({
       >
         <h3 style={{ display: "flex" }}>
           {viewProp === "forgot_password"
-            ? "Reset Password"
+            ? t("resetPassword")
             : viewProp === "update_password"
-            ? "Update Password"
+            ? t("updatePassword")
             : viewProp === "signup"
-            ? "Sign Up"
+            ? t("signUp")
             : viewProp === "email_signin"
-            ? "Sign in with magic link"
-            : "Sign In"}
+            ? t("signInMagicLink")
+            : t("signIn")}
         </h3>
         {viewProp === "password_signin" && (
           <PasswordSignIn

@@ -107,6 +107,13 @@
       "thirdPartrySignin": "Вход через сторонние сервисы",
       "signUp": "Зарегистрироваться",
       "alreadyHaveAccount": "У вас уже есть аккаунт?"
+    },
+    "Page": {
+      "resetPassword": "Сброс пароля",
+      "updatePassword": "Обновление пароля",
+      "signUp": "Регистрация",
+      "signInMagicLink": "Вход с помощью волшебной ссылки",
+      "signIn": "Вход"
     }
   }
 }

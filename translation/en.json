@@ -107,6 +107,13 @@
       "thirdPartrySignin": "Third-party sign-in",
       "signUp": "Sign up",
       "alreadyHaveAccount": "Already have an account?"
+    },
+    "Page": {
+      "resetPassword": "Reset Password",
+      "updatePassword": "Update Password",
+      "signUp": "Sign Up",
+      "signInMagicLink": "Sign in with magic link",
+      "signIn": "Sign In"
     }
   }
 }
