@@ -1,13 +1,13 @@
 "use server";
 
 import ItemForm, { ItemFormType } from "@/sections/Item/ItemForm";
-import { deleteItem, updateItem } from "@/app/[locale]/items/actions";
+import { deleteItemWithCheck, updateItem } from "@/app/[locale]/items/actions";
 import { DeleteButton } from "@/components/DeleteButton";
 import { getSupabaseUserOrRedirect } from "@/utils/auth-helpers/server";
 import { getMyCollectionsTagsItem } from "@/utils/prisma/items";
 import { redirect } from "@/navigation";
 import { getTranslations } from "next-intl/server";
-import { getKeysWithDateType } from "@/utils/helpers";
+import { getErrorRedirect, getKeysWithDateType } from "@/utils/helpers";
 
 type Props = {
   params: {
@@ -20,12 +20,23 @@ export default async function EditItem({ params: { id } }: Props) {
   const t = await getTranslations("Item.Page");
   const user = await getSupabaseUserOrRedirect("/signin");
 
-  const { collections, tags, item } = await getMyCollectionsTagsItem(
+  const { collections, tags, item, userData } = await getMyCollectionsTagsItem(
     user.id,
     itemId
   );
 
   if (!item) return redirect("/items/new");
+
+  const isSuperuser = userData?.superuser || false;
+
+  if (item.authorId !== user.id && !isSuperuser)
+    return redirect(
+      getErrorRedirect(
+        `/items`,
+        "Forbidden",
+        `You are not authorized to edit item with id ${id}!`
+      )
+    );
 
   const updateItemWihtId = updateItem.bind(
     null,
@@ -41,7 +52,7 @@ export default async function EditItem({ params: { id } }: Props) {
           buttonText={t("orDelete")}
           confirmTitle={t("deleteConfirmTitle")}
           descriptionText={t("deleteConfirmDesctiption")}
-          onClick={deleteItem.bind(null, itemId)}
+          onClick={deleteItemWithCheck.bind(null, itemId)}
         />
       </h2>
       <ItemForm

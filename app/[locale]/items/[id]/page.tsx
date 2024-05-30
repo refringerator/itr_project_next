@@ -9,6 +9,7 @@ import { redirect, Link } from "@/navigation";
 import { getErrorRedirect } from "@/utils/helpers";
 import ItemRate from "@/sections/Item/ItemRate";
 import CommentForm from "@/components/CommentForm";
+// import { prisma } from "@/utils/prisma";
 
 type Props = {
   params: {
@@ -36,7 +37,8 @@ export default async function Item({ params: { id } }: Props) {
       )
     );
 
-  const cfs = item.customValues;
+  // const pri = await prisma.$queryRaw`SELECT * from auth.users;`;
+  // console.log({ pri });
 
   return (
     <>
@@ -49,7 +51,7 @@ export default async function Item({ params: { id } }: Props) {
       {item.collection.customFields.map((cf) => {
         return (
           <p key={cf.id}>
-            {cf.id} - {cf.title}: {cfs[`cf_${cf.id}`]}
+            {cf.id} - {cf.title}: {item.customValues[`cf_${cf.id}`]}
           </p>
         );
       })}

@@ -5,13 +5,19 @@ import {
   getSupabaseUser,
   getSupabaseUserOrRedirect,
 } from "@/utils/auth-helpers/server";
-import { getStatusRedirect } from "@/utils/helpers";
+import { getErrorRedirect, getStatusRedirect } from "@/utils/helpers";
 import { addComment2 } from "@/utils/prisma/comments";
-import { createNewItem, deleteItem2, updateItem2 } from "@/utils/prisma/items";
+import {
+  createNewItem,
+  deleteItem,
+  getItemUser,
+  updateItem2,
+} from "@/utils/prisma/items";
 import { setItemRate, setLike } from "@/utils/prisma/likes";
 import { pubComment } from "@/utils/supabase/s-helpers";
 
 import { redirect } from "@/navigation";
+import { getUserData } from "@/utils/prisma/profile";
 
 export async function createItem(data: ItemFormType) {
   const user = await getSupabaseUserOrRedirect("/signin");
@@ -59,15 +65,30 @@ export async function updateItem(
   );
 }
 
-export async function deleteItem(id: number) {
-  await getSupabaseUserOrRedirect("/signin");
+export async function deleteItemWithCheck(id: number) {
+  const user = await getSupabaseUserOrRedirect("/signin");
 
-  const item = await deleteItem2(id);
+  const { item, userData } = await getItemUser(user.id, id);
+
+  if (!item) return redirect("/items/");
+
+  const isSuperuser = userData?.superuser || false;
+
+  if (item.authorId !== user.id && !isSuperuser)
+    return redirect(
+      getErrorRedirect(
+        `/items`,
+        "Forbidden",
+        `You are not authorized to delete item with id ${id}!`
+      )
+    );
+
+  const deletedItem = await deleteItem(id);
 
   redirect(
     getStatusRedirect(
       `/items`,
-      `Item ${item.id} deleted!`,
+      `Item ${deletedItem.id} deleted!`,
       "You wont find it anymore"
     )
   );
