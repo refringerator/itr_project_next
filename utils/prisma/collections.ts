@@ -116,10 +116,10 @@ export const updateCollection2 = (
       isRequired: cf.isRequired || false,
     }));
 
-  console.log({ update });
-  console.log({ deleteCFs });
-  console.log({ newCFs });
-  console.log({ cover });
+  // console.log({ update });
+  // console.log({ deleteCFs });
+  // console.log({ newCFs });
+  // console.log({ cover });
 
   return prisma.collection.update({
     where: { id },

@@ -28,9 +28,8 @@ export default getRequestConfig(async ({ locale }) => {
     },
     getMessageFallback({ namespace, key, error }) {
       const path = [namespace, key].filter((part) => part != null).join(".");
-      console.log("EEEEEERRRRRRRRRRROOR");
       if (error.code === IntlErrorCode.MISSING_MESSAGE) {
-        return path + " is not yet translated";
+        return key;
       } else {
         return "Dear developer, please fix this message: " + path;
       }

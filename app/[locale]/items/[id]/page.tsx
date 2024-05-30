@@ -37,7 +37,6 @@ export default async function Item({ params: { id } }: Props) {
     );
 
   const cfs = item.customValues;
-  console.log({ cfs });
 
   return (
     <>

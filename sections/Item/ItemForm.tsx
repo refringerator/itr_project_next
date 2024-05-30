@@ -73,7 +73,7 @@ export default function ItemForm({
       style={{ maxWidth: 600 }}
       initialValues={parseDate(initialValues, dateFields)}
       onFinish={(v) => {
-        console.log(v);
+        // console.log(v);
         setLoading(true);
         onFinish && onFinish(formatDate(v, dateKeys));
       }}

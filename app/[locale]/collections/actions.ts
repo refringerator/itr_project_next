@@ -13,8 +13,6 @@ import { getTopics } from "@/utils/prisma/topics";
 import { CustomField } from "@prisma/client";
 
 export async function createCollection(data: CollectionFormFieldType) {
-  console.log({ data });
-
   const user = await getSupabaseUserOrRedirect("/signin");
 
   const collection = await createCollection2({ ...data, userId: user.id });

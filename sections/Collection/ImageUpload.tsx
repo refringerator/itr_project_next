@@ -19,8 +19,6 @@ const ImageUpload = ({ value, onChange }: ImageUploadProps) => {
   const context = useContext(Context);
   const supabase = createClient();
 
-  console.log({ value });
-
   const handleChange: UploadProps["onChange"] = ({ fileList }) => {
     onChange?.(
       fileList.map((file) => ({ ...file, url: file.response?.url || file.url }))

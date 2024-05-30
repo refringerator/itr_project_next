@@ -25,8 +25,8 @@ function Notification() {
     if (error || status) {
       api[(error ? "error" : "info") as NotificationType]({
         message: error
-          ? t(error) ?? t("defaultError")
-          : t(status) ?? t("defaultStatus"),
+          ? t(error as "defaultError") ?? t("defaultError")
+          : t(status as "defaultStatus") ?? t("defaultStatus"),
         description: error ? error_description : status_description,
       });
 
