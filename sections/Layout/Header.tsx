@@ -2,7 +2,7 @@
 
 import { Layout, Flex, Col, Row, Button, Tooltip, Popover } from "antd";
 import { theme, Avatar } from "antd";
-import { LoginOutlined } from "@ant-design/icons";
+import { LoginOutlined, MehOutlined } from "@ant-design/icons";
 
 import { useTranslations } from "next-intl";
 import LocaleSelector from "@/components/LocaleSelector";
@@ -70,10 +70,17 @@ const Header = () => {
             <Popover
               trigger="click"
               content={
-                <>
-                  <Button>{t("profile")}</Button>
+                <Flex vertical gap="small">
+                  <Button
+                    icon={<MehOutlined />}
+                    onClick={() => {
+                      router.push(`/account`);
+                    }}
+                  >
+                    {t("profile")}
+                  </Button>
                   <SignOutButton />
-                </>
+                </Flex>
               }
             >
               <Avatar
