@@ -9,6 +9,7 @@ import {
   deleteCollection2,
   updateCollection2,
 } from "@/utils/prisma/collections";
+import { getTopics } from "@/utils/prisma/topics";
 import { CustomField } from "@prisma/client";
 
 export async function createCollection(data: CollectionFormFieldType) {
@@ -57,4 +58,15 @@ export async function deleteCollection(id: number) {
       "You wont find it anymore"
     )
   );
+}
+
+export async function getTranslatedTopics(curLocale: string) {
+  const locale = curLocale === "ru" ? "ru_RU" : "en";
+
+  const topics = await getTopics();
+
+  return topics.map((topic) => ({
+    id: topic.id,
+    title: topic.translation.filter((v) => v.l === locale)[0]?.t || topic.title,
+  }));
 }
