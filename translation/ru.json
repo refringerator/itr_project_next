@@ -104,6 +104,11 @@
       "tagsLabel": "Метки",
       "tagsMessage": "Пожалуйста, выберите метки!",
       "tagsPlaceholder": "Метки"
+    },
+    "List": {
+      "deleteButton": "Удалить",
+      "deleteConfirmTitle": "Удаление элемента коллекции",
+      "deleteConfirmDesctiption": "Вы действительно хотите удалить этот элемент?"
     }
   },
   "Common": {

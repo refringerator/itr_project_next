@@ -1,11 +1,14 @@
 "use client";
 
-import React from "react";
+import React, { useMemo, useTransition } from "react";
 import { Space, Switch, Table, Tag } from "antd";
 import type { TableProps } from "antd";
 import { Item } from "@prisma/client";
 import { Link } from "@/navigation";
 import { CheckOutlined, CloseOutlined } from "@ant-design/icons";
+import { DeleteButton } from "@/components/DeleteButton";
+import { useTranslations } from "next-intl";
+import { deleteItemWithCheck } from "@/app/[locale]/items/actions";
 
 export type Row = Pick<Item, "id" | "title" | "published" | "createdAt"> & {
   tags: string[];
@@ -17,67 +20,81 @@ export type ItemListProps = {
   data: Row[];
 };
 
-const columns: TableProps<Row>["columns"] = [
-  {
-    title: "Title",
-    dataIndex: "title",
-    key: "title",
-    render: (text, record) => <Link href={`/items/${record.id}`}>{text}</Link>,
-  },
-  {
-    title: "Created at",
-    dataIndex: "createdAt",
-    key: "createdAt",
-    render: (createdAt) => <>{createdAt.toLocaleString()}</>,
-  },
-
-  {
-    title: "Tags",
-    key: "tags",
-    dataIndex: "tags",
-    render: (_, { tags }) => (
-      <>
-        {tags.map((tag) => {
-          let color =
-            tag.length > 5
-              ? tag.length > 10
-                ? "geekblue"
-                : "volcano"
-              : "green";
-
-          return (
-            <Tag color={color} key={tag}>
-              {tag.toUpperCase()}
-            </Tag>
-          );
-        })}
-      </>
-    ),
-  },
-  {
-    title: "Published",
-    dataIndex: "published",
-    key: "published",
-    render: (_, record) => (
-      <Switch
-        checkedChildren={<CheckOutlined />}
-        unCheckedChildren={<CloseOutlined />}
-        defaultChecked={record.published}
-      />
-    ),
-  },
-  {
-    title: "Action",
-    key: "action",
-    render: (_, record) => (
-      <Space size="middle">
-        <a>Edit</a>
-        <a>Delete</a>
-      </Space>
-    ),
-  },
-];
-
 export default function ItemList({ data }: ItemListProps) {
+  const t = useTranslations("Item.List");
+
+  const columns: TableProps<Row>["columns"] = useMemo(
+    () => [
+      {
+        title: "Title",
+        dataIndex: "title",
+        key: "title",
+        render: (text, record) => (
+          <Link href={`/items/${record.id}`}>{text}</Link>
+        ),
+      },
+      {
+        title: "Created at",
+        dataIndex: "createdAt",
+        key: "createdAt",
+        render: (createdAt) => <>{createdAt.toLocaleString()}</>,
+      },
+
+      {
+        title: "Tags",
+        key: "tags",
+        dataIndex: "tags",
+        render: (_, { tags }) => (
+          <>
+            {tags.map((tag) => {
+              let color =
+                tag.length > 5
+                  ? tag.length > 10
+                    ? "geekblue"
+                    : "volcano"
+                  : "green";
+
+              return (
+                <Tag color={color} key={tag}>
+                  {tag.toUpperCase()}
+                </Tag>
+              );
+            })}
+          </>
+        ),
+      },
+      {
+        title: "Published",
+        dataIndex: "published",
+        key: "published",
+        render: (_, record) => (
+          <Switch
+            checkedChildren={<CheckOutlined />}
+            unCheckedChildren={<CloseOutlined />}
+            defaultChecked={record.published}
+          />
+        ),
+      },
+      {
+        title: "Action",
+        key: "action",
+        render: (_, record) => (
+          <Space size="middle">
+            <Link href={`/items/${record.id}/edit`}>Edit</Link>
+            {/* <a>Delete</a> */}
+            <DeleteButton
+              type="link"
+              buttonText={t("deleteButton")}
+              confirmTitle={t("deleteConfirmTitle")}
+              descriptionText={t("deleteConfirmDesctiption")}
+              onClick={deleteItemWithCheck.bind(null, record.id)}
+            />
+          </Space>
+        ),
+      },
+    ],
+    [t]
+  );
+
   return <Table rowKey="id" columns={columns} dataSource={data} />;
 }

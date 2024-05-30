@@ -104,6 +104,11 @@
       "tagsLabel": "Tags",
       "tagsMessage": "Please choice tags!",
       "tagsPlaceholder": "Tags"
+    },
+    "List": {
+      "deleteButton": "Delete",
+      "deleteConfirmTitle": "Delete item",
+      "deleteConfirmDesctiption": "Are you sure to delete this item?"
     }
   },
   "Common": {
