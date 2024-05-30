@@ -24,6 +24,9 @@
   "Components": {
     "ImageUpload": {
       "clickToUpload": "Click to Upload"
+    },
+    "SearchBar": {
+      "placeholder": "input search"
     }
   },
   "Collection": {

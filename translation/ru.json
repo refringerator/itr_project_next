@@ -24,6 +24,9 @@
   "Components": {
     "ImageUpload": {
       "clickToUpload": "Выбрать изображение.."
+    },
+    "SearchBar": {
+      "placeholder": "Найти.."
     }
   },
   "Collection": {

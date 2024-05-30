@@ -1,20 +1,21 @@
 "use client";
 
 import { Layout, Flex, Col, Row, Button, Tooltip, Popover } from "antd";
-import { Input, theme, Avatar } from "antd";
+import { theme, Avatar } from "antd";
 import { LoginOutlined } from "@ant-design/icons";
 
 import { useTranslations } from "next-intl";
-import LocaleSelector from "../../components/LocaleSelector";
+import LocaleSelector from "@/components/LocaleSelector";
 
 import { useRouter } from "@/navigation";
-import ThemeSwitcher from "../../components/ThemeSwitcher";
-import MainMenu from "../../components/MainMenu";
+import ThemeSwitcher from "@/components/ThemeSwitcher";
+import MainMenu from "@/components/MainMenu";
 import useDimension from "@/hooks/useDimension";
 
 import { useContext } from "react";
 import { Context } from "@/context/context-provider";
 import SignOutButton from "@/components/SignOutButton";
+import SearchBar from "@/components/SearchBar";
 
 const headerStyle: React.CSSProperties = {
   textAlign: "end",
@@ -37,10 +38,6 @@ const Header = () => {
   const { token } = theme.useToken();
   const showTitle = useDimension({ xs: false, sm: false, defaultValue: true });
 
-  const onPressEnter = (value: string) => {
-    if (value.length > 1) router.push(`/search?q=${value}`);
-  };
-
   return (
     <Layout.Header style={headerStyle}>
       <MainMenu />
@@ -58,11 +55,7 @@ const Header = () => {
       >
         <Col flex="none">
           <Flex align="center" style={{ width: "100%" }}>
-            <Input.Search
-              placeholder="input search"
-              loading={false}
-              onSearch={onPressEnter}
-            />
+            <SearchBar />
           </Flex>
         </Col>
         <Col flex="auto" />
