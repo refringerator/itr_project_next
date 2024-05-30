@@ -1,15 +1,18 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import type { MenuProps } from "antd";
 import { Menu } from "antd";
-import Link from "next/link";
 import { useTranslations } from "next-intl";
-import { usePathname } from "@/navigation";
+import { usePathname, Link } from "@/navigation";
 import useDimension from "@/hooks/useDimension";
 
 const MainMenu: React.FC = () => {
   const pathname = usePathname();
   const t = useTranslations("Header");
   const [current, setCurrent] = useState(pathname);
+
+  useEffect(() => {
+    setCurrent(pathname);
+  }, [pathname]);
 
   const onClick: MenuProps["onClick"] = (e) => {
     setCurrent(e.key);
