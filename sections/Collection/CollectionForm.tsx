@@ -6,6 +6,7 @@ import type { FormProps } from "antd";
 import { CustomField, Topic, CustomFieldType } from "@prisma/client";
 import ImageUpload from "./ImageUpload";
 import { useTranslations } from "next-intl";
+import { useState } from "react";
 
 type PartialBy<T, K extends keyof T, D extends keyof T> = Omit<Omit<T, D>, K> &
   Partial<Pick<T, K>>;
@@ -45,8 +46,15 @@ export default function CollectionForm({
 }: CollectionFormProps) {
   const t = useTranslations("Collection.Form");
   const tc = useTranslations("Common");
+  const [loading, setLoading] = useState(false);
 
   if (topics.length === 0) return <div>{t("noTopics")}</div>;
+
+  const onFormFinish = (data: any) => {
+    setLoading(true);
+    // console.log({ data });
+    onFinish && onFinish({ ...data, cover: data.cover?.at(0)?.url || "" });
+  };
 
   const {
     title,
@@ -78,10 +86,7 @@ export default function CollectionForm({
           ]) ||
           [],
       }}
-      onFinish={(data) => {
-        console.log({ data });
-        onFinish && onFinish({ ...data, cover: data.cover?.at(0)?.url || "" });
-      }}
+      onFinish={onFormFinish}
       autoComplete="off"
     >
       <Form.Item<CollectionFormFieldType>
@@ -196,7 +201,7 @@ export default function CollectionForm({
       </Form.List>
 
       <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-        <Button type="primary" htmlType="submit">
+        <Button type="primary" htmlType="submit" loading={loading}>
           {tc(buttonText as "Update" | "Create")}
         </Button>
       </Form.Item>
