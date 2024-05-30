@@ -8,6 +8,7 @@ import { getSupabaseUser } from "@/utils/auth-helpers/server";
 import { redirect, Link } from "@/navigation";
 import { getErrorRedirect } from "@/utils/helpers";
 import ItemRate from "@/sections/Item/ItemRate";
+import CommentForm from "@/components/CommentForm";
 
 type Props = {
   params: {
@@ -78,10 +79,7 @@ export default async function Item({ params: { id } }: Props) {
         likedCommentIds={likes}
       />
 
-      <form action={addComment.bind(null, itemId)}>
-        <input type="text" name="text" />
-        <button type="submit">Add</button>
-      </form>
+      <CommentForm action={addComment.bind(null, itemId)} />
     </>
   );
 }

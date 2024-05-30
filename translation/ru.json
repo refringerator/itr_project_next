@@ -31,6 +31,11 @@
     "PopConfirm": {
       "yes": "Да",
       "no": "Нет"
+    },
+    "CommentForm": {
+      "commentPlaceholder": "Введите коментарий",
+      "buttonAdd": "Добавить",
+      "needLoginFirst": "Чтобы добавить комментарий, вам нужно сначала войти в систему"
     }
   },
   "Collection": {

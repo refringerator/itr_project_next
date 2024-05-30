@@ -73,8 +73,7 @@ export async function deleteItem(id: number) {
   );
 }
 
-export async function addComment(itemId: number, fd: FormData) {
-  const { text } = Object.fromEntries(fd) as { text: string };
+export async function addComment(itemId: number, text: string) {
   const user = await getSupabaseUserOrRedirect("/signin");
 
   const comment = await addComment2(text, itemId, user.id);

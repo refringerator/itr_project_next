@@ -31,6 +31,11 @@
     "PopConfirm": {
       "yes": "Yes",
       "no": "No"
+    },
+    "CommentForm": {
+      "commentPlaceholder": "Enter your comment",
+      "buttonAdd": "Add",
+      "needLoginFirst": "To add a comment, you must first log in"
     }
   },
   "Collection": {
