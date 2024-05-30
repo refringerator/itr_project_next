@@ -12,6 +12,7 @@ import { DeleteButton } from "@/components/DeleteButton";
 import { getSupabaseUserOrRedirect } from "@/utils/auth-helpers/server";
 import { getTopicsCollection } from "@/utils/prisma/collections";
 import { redirect } from "@/navigation";
+import { getTranslations } from "next-intl/server";
 
 type Props = {
   params: {
@@ -24,6 +25,7 @@ export default async function EditCollection({
   params: { id, locale },
 }: Props) {
   const collectionId = parseInt(id);
+  const t = await getTranslations("Collection.Page");
   await getSupabaseUserOrRedirect("/signin");
 
   const { topics, collection } = await getTopicsCollection(
@@ -41,9 +43,11 @@ export default async function EditCollection({
   return (
     <>
       <h2>
-        Edit collection
+        {t("editCollection")}
         <DeleteButton
-          buttonText="or delete it"
+          buttonText={t("orDelete")}
+          confirmTitle={t("deleteConfirmTitle")}
+          descriptionText={t("deleteConfirmDesctiption")}
           onClick={deleteCollection.bind(null, collectionId)}
         />
       </h2>

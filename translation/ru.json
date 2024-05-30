@@ -27,6 +27,10 @@
     },
     "SearchBar": {
       "placeholder": "Найти.."
+    },
+    "PopConfirm": {
+      "yes": "Да",
+      "no": "Нет"
     }
   },
   "Collection": {
@@ -66,6 +70,12 @@
         "fieldRequired": "Поле обязательное!",
         "required": "Обязательное"
       }
+    },
+    "Page": {
+      "editCollection": "Редактирование коллекции",
+      "orDelete": "или удалить ее",
+      "deleteConfirmTitle": "Удаление коллекции",
+      "deleteConfirmDesctiption": "Вы действительно хотите удалить эту коллекцию?"
     }
   },
   "Common": {

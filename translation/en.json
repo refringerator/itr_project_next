@@ -27,6 +27,10 @@
     },
     "SearchBar": {
       "placeholder": "input search"
+    },
+    "PopConfirm": {
+      "yes": "Yes",
+      "no": "No"
     }
   },
   "Collection": {
@@ -66,6 +70,12 @@
         "fieldRequired": "Field is required!",
         "required": "Required"
       }
+    },
+    "Page": {
+      "editCollection": "Edit collection",
+      "orDelete": "or delete it",
+      "deleteConfirmTitle": "Delete collection",
+      "deleteConfirmDesctiption": "Are you sure to delete this collection?"
     }
   },
   "Common": {
