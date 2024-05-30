@@ -14,7 +14,7 @@ function exhaustiveGuard(_value: never): never {
   );
 }
 
-const FormElement = ({ fieldType, ...props }: any) => {
+const FormElement = ({ fieldType, notImplementedText, ...props }: any) => {
   const type = fieldType as CustomFieldType;
 
   switch (type) {
@@ -39,7 +39,7 @@ const FormElement = ({ fieldType, ...props }: any) => {
 
     case "LINK":
     case "FILE":
-      return <div>{props.notImplementedText}</div>;
+      return <div>{notImplementedText}</div>;
 
     default:
       return exhaustiveGuard(type);
