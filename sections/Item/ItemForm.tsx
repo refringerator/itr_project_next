@@ -41,6 +41,7 @@ export default function ItemForm({
   const [fields, setFields] = useState<UserCollectionType["customFields"]>(
     getCustomFields(collections, initialValues?.collectionId || -1)
   );
+  const [laoding, setLoading] = useState(false);
 
   if (collections.length === 0)
     return (
@@ -63,10 +64,11 @@ export default function ItemForm({
       wrapperCol={{ span: 16 }}
       style={{ maxWidth: 600 }}
       initialValues={initialValues}
-      onFinish={
+      onFinish={(v) => {
         // (v) => console.log(v)
-        onFinish
-      }
+        setLoading(true);
+        onFinish && onFinish(v);
+      }}
       autoComplete="off"
     >
       <Form.Item<ItemFormType>
@@ -110,7 +112,7 @@ export default function ItemForm({
       ))}
 
       <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-        <Button type="primary" htmlType="submit">
+        <Button type="primary" htmlType="submit" loading={laoding}>
           {buttonText}
         </Button>
       </Form.Item>
