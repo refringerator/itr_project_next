@@ -79,6 +79,14 @@ const Header = () => {
                   >
                     {t("profile")}
                   </Button>
+                  <Button
+                    icon={<MehOutlined />}
+                    onClick={() => {
+                      router.push(`/my-collections/`);
+                    }}
+                  >
+                    {t("myCollections")}
+                  </Button>
                   <SignOutButton />
                 </Flex>
               }

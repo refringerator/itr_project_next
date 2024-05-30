@@ -1,17 +1,16 @@
 "use server";
 
-import { getCollections } from "@/utils/prisma/collections";
+import { getUserCollections } from "@/utils/prisma/collections";
 import { Link } from "@/navigation";
-import { getSupabaseUser } from "@/utils/auth-helpers/server";
+import { getSupabaseUserOrRedirect } from "@/utils/auth-helpers/server";
 
 export default async function Collections() {
-  const user = await getSupabaseUser();
+  const user = await getSupabaseUserOrRedirect("/collections");
 
-  const collections = await getCollections();
-
+  const { collections } = await getUserCollections(user.id);
   return (
     <>
-      {user && <Link href="/collections/new">Create new collection</Link>}
+      <Link href="/collections/new">Create new collection</Link>
       <ul>
         {collections.map((collection) => (
           <li key={collection.id}>

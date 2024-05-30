@@ -184,3 +184,9 @@ export async function getCollectionUserData(
     userData,
   };
 }
+
+export async function getUserCollections(userId: string) {
+  const [collections] = await prisma.$transaction([userCollections(userId)]);
+
+  return { collections };
+}
