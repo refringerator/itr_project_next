@@ -7,3 +7,12 @@ export const getItemTags = (itemId: number) =>
     where: { id: itemId },
     select: { tags: true },
   });
+
+export const getFreqTags = () =>
+  prisma.tag.findMany({
+    include: {
+      _count: {
+        select: { items: true },
+      },
+    },
+  });
