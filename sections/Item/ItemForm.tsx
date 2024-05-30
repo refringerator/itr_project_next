@@ -3,11 +3,12 @@ import { Select, Button, Form, Input } from "antd";
 
 import type { FormProps } from "antd";
 
-import { Collection, Tag } from "@prisma/client";
+import { Tag } from "@prisma/client";
 import { useState } from "react";
 import { UserCollectionType } from "@/utils/prisma/collections";
 import CustomFormField from "../../sections/Collection/CustomFormField";
 import { Link } from "@/navigation";
+import dayjs from "dayjs";
 
 export type ItemFormType = {
   title: string;
@@ -21,6 +22,7 @@ interface CollectionFormProps {
   tags: Tag[];
   onFinish: FormProps<ItemFormType>["onFinish"];
   initialValues?: ItemFormType;
+  dateFields?: string[];
 }
 
 const getCustomFields = (
@@ -31,12 +33,33 @@ const getCustomFields = (
   return c?.customFields || [];
 };
 
+const parseDate = (initialValues: any, dateFields: string[]) => {
+  for (const [key, value] of Object.entries(initialValues)) {
+    if (dateFields.includes(key)) {
+      initialValues[key] = dayjs(value as string);
+    }
+  }
+
+  return initialValues;
+};
+
+const formatDate = (initialValues: any, dateFields: string[]) => {
+  for (const [key, value] of Object.entries(initialValues)) {
+    if (dateFields.includes(key)) {
+      initialValues[key] = (value as dayjs.Dayjs).format("YYYY-MM-DD");
+    }
+  }
+
+  return initialValues;
+};
+
 export default function ItemForm({
   collections,
   tags,
   onFinish,
   buttonText = "Create",
   initialValues,
+  dateFields = [],
 }: CollectionFormProps) {
   const [fields, setFields] = useState<UserCollectionType["customFields"]>(
     getCustomFields(collections, initialValues?.collectionId || -1)
@@ -51,8 +74,6 @@ export default function ItemForm({
       </div>
     );
 
-  // const { title, collectionId, tagsIds } = initialValues || {};
-
   const collectionOnChange = (selectedId: number) => {
     setFields(getCustomFields(collections, selectedId));
   };
@@ -63,11 +84,11 @@ export default function ItemForm({
       labelCol={{ span: 8 }}
       wrapperCol={{ span: 16 }}
       style={{ maxWidth: 600 }}
-      initialValues={initialValues}
+      initialValues={parseDate(initialValues, dateFields)}
       onFinish={(v) => {
-        // (v) => console.log(v)
+        console.log(v);
         setLoading(true);
-        onFinish && onFinish(v);
+        onFinish && onFinish(formatDate(v, dateFields));
       }}
       autoComplete="off"
     >
