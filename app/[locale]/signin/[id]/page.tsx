@@ -99,13 +99,11 @@ export default async function SignIn({
         {viewProp === "update_password" && (
           <UpdatePassword redirectMethod={redirectMethod} />
         )}
-        {viewProp !== "update_password" &&
-          viewProp !== "signup" &&
-          allowOauth && (
-            <>
-              <OauthSignIn />
-            </>
-          )}
+        {viewProp !== "update_password" && allowOauth && (
+          <>
+            <OauthSignIn />
+          </>
+        )}
       </div>
     </>
   );

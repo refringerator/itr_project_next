@@ -9,7 +9,6 @@ import { useState } from "react";
 import { UserOutlined } from "@ant-design/icons";
 import { Button, Form, Input } from "antd";
 
-// Define prop type with allowEmail boolean
 interface ForgotPasswordProps {
   allowEmail: boolean;
   redirectMethod: string;
@@ -25,7 +24,7 @@ export default function ForgotPassword({
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const onFinish = async (e: any) => {
-    setIsSubmitting(true); // Disable the button while the request is being handled
+    setIsSubmitting(true);
     await handleRequest(
       e,
       requestPasswordUpdate,

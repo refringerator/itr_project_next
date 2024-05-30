@@ -7,9 +7,8 @@ import { useRouter } from "@/navigation";
 import { useState } from "react";
 
 import { Button, Form, Input } from "antd";
-import { UserOutlined, MailOutlined } from "@ant-design/icons";
+import { MailOutlined } from "@ant-design/icons";
 
-// Define prop type with allowPassword boolean
 interface EmailSignInProps {
   allowPassword: boolean;
   redirectMethod: string;
@@ -25,7 +24,7 @@ export default function EmailSignIn({
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const onFinish = async (e: any) => {
-    setIsSubmitting(true); // Disable the button while the request is being handled
+    setIsSubmitting(true);
     await handleRequest(
       e,
       signInWithEmail,

@@ -8,7 +8,6 @@ import { useRouter } from "@/navigation";
 import { useState } from "react";
 import { LockOutlined, MailOutlined } from "@ant-design/icons";
 
-// Define prop type with allowEmail boolean
 interface PasswordSignInProps {
   allowEmail: boolean;
   redirectMethod: string;

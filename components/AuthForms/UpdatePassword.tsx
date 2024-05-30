@@ -22,7 +22,7 @@ export default function UpdatePassword({
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = async (e: any) => {
-    setIsSubmitting(true); // Disable the button while the request is being handled
+    setIsSubmitting(true);
     await handleRequest(
       e,
       updatePassword,
@@ -37,7 +37,6 @@ export default function UpdatePassword({
       labelCol={{ span: 8 }}
       wrapperCol={{ span: 16 }}
       style={{ maxWidth: "300px" }}
-      // noValidate={true}
       autoComplete="off"
       onFinish={(e) => handleSubmit(e)}
     >
