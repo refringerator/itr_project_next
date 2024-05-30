@@ -1,8 +1,6 @@
 import createNextIntlPlugin from "next-intl/plugin";
-import createRemoveImports from "next-remove-imports";
 
 const withNextIntl = createNextIntlPlugin();
-const removeImports = createRemoveImports();
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -18,4 +16,4 @@ const nextConfig = {
   },
 };
 
-export default removeImports(withNextIntl(nextConfig));
+export default withNextIntl(nextConfig);
