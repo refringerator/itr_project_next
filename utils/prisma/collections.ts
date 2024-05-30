@@ -3,16 +3,19 @@ import { getTopics } from "./topics";
 import { CollectionFormFieldType } from "@/sections/Collection/CollectionForm";
 import { getUsedTags } from "./tags";
 import { CustomField } from "@prisma/client";
+import { getUserData } from "./profile";
 
 export async function getTopicsCollection(
   collectionId: number,
+  userId: string,
   curLocale: string
 ) {
   const locale = curLocale === "ru" ? "ru_RU" : "en";
 
-  const [topics, collection] = await prisma.$transaction([
+  const [topics, collection, userData] = await prisma.$transaction([
     getTopics(),
     getCollection(collectionId),
+    getUserData(userId),
   ]);
 
   return {
@@ -22,6 +25,7 @@ export async function getTopicsCollection(
         topic.translation.filter((v) => v.l === locale)[0]?.t || topic.title,
     })),
     collection,
+    userData,
   };
 }
 
@@ -137,7 +141,7 @@ export const updateCollection2 = (
   });
 };
 
-export const deleteCollection2 = (id: number) =>
+export const deleteCollection = (id: number) =>
   prisma.collection.delete({
     where: { id },
   });
@@ -165,3 +169,18 @@ export const get5LargeCollections = () =>
     // },
     take: 5,
   });
+
+export async function getCollectionUserData(
+  collectionId: number,
+  userId: string
+) {
+  const [collection, userData] = await prisma.$transaction([
+    getCollection(collectionId),
+    getUserData(userId),
+  ]);
+
+  return {
+    collection,
+    userData,
+  };
+}

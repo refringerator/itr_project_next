@@ -3,10 +3,12 @@
 import { redirect } from "@/navigation";
 import { CollectionFormFieldType } from "@/sections/Collection/CollectionForm";
 import { getSupabaseUserOrRedirect } from "@/utils/auth-helpers/server";
-import { getStatusRedirect } from "@/utils/helpers";
+import { getErrorRedirect, getStatusRedirect } from "@/utils/helpers";
 import {
   createCollection2,
-  deleteCollection2,
+  deleteCollection,
+  getCollectionUserData,
+  getTopicsCollection,
   updateCollection2,
 } from "@/utils/prisma/collections";
 import { getTopics } from "@/utils/prisma/topics";
@@ -44,15 +46,29 @@ export async function updateCollection(
   );
 }
 
-export async function deleteCollection(id: number) {
-  await getSupabaseUserOrRedirect("/signin");
+export async function deleteCollectionWithCheck(id: number) {
+  const user = await getSupabaseUserOrRedirect("/signin");
 
-  const collection = await deleteCollection2(id);
+  const { collection, userData } = await getCollectionUserData(id, user.id);
+
+  if (!collection) return redirect("/collections");
+
+  const isSuperuser = userData?.superuser || false;
+
+  if (collection.authorId !== user.id && !isSuperuser)
+    return redirect(
+      getErrorRedirect(
+        `/collections`,
+        "Forbidden",
+        `You are not authorized to delete collection with id ${id}!`
+      )
+    );
+  const deletedCollection = await deleteCollection(id);
 
   redirect(
     getStatusRedirect(
       `/collections`,
-      `Collection ${collection.id} deleted!`,
+      `Collection ${deletedCollection.id} deleted!`,
       "You wont find it anymore"
     )
   );

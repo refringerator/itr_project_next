@@ -17,7 +17,6 @@ import { setItemRate, setLike } from "@/utils/prisma/likes";
 import { pubComment } from "@/utils/supabase/s-helpers";
 
 import { redirect } from "@/navigation";
-import { getUserData } from "@/utils/prisma/profile";
 
 export async function createItem(data: ItemFormType) {
   const user = await getSupabaseUserOrRedirect("/signin");

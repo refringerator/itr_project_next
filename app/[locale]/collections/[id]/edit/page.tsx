@@ -5,7 +5,7 @@ import CollectionForm, {
 } from "@/sections/Collection/CollectionForm";
 import {
   updateCollection,
-  deleteCollection,
+  deleteCollectionWithCheck,
 } from "@/app/[locale]/collections/actions";
 
 import { DeleteButton } from "@/components/DeleteButton";
@@ -13,6 +13,7 @@ import { getSupabaseUserOrRedirect } from "@/utils/auth-helpers/server";
 import { getTopicsCollection } from "@/utils/prisma/collections";
 import { redirect } from "@/navigation";
 import { getTranslations } from "next-intl/server";
+import { getErrorRedirect } from "@/utils/helpers";
 
 type Props = {
   params: {
@@ -26,10 +27,11 @@ export default async function EditCollection({
 }: Props) {
   const collectionId = parseInt(id);
   const t = await getTranslations("Collection.Page");
-  await getSupabaseUserOrRedirect("/signin");
+  const user = await getSupabaseUserOrRedirect("/signin");
 
-  const { topics, collection } = await getTopicsCollection(
+  const { topics, collection, userData } = await getTopicsCollection(
     collectionId,
+    user.id,
     locale
   );
   const updateCollectionWihtId = updateCollection.bind(
@@ -40,6 +42,16 @@ export default async function EditCollection({
 
   if (!collection) return redirect("/collections/new");
 
+  const isSuperuser = userData?.superuser || false;
+
+  if (collection.authorId !== user.id && !isSuperuser)
+    return redirect(
+      getErrorRedirect(
+        `/collections`,
+        "Forbidden",
+        `You are not authorized to edit collection with id ${id}!`
+      )
+    );
   return (
     <>
       <h2>
@@ -48,7 +60,7 @@ export default async function EditCollection({
           buttonText={t("orDelete")}
           confirmTitle={t("deleteConfirmTitle")}
           descriptionText={t("deleteConfirmDesctiption")}
-          onClick={deleteCollection.bind(null, collectionId)}
+          onClick={deleteCollectionWithCheck.bind(null, collectionId)}
         />
       </h2>
       <CollectionForm
