@@ -1,5 +1,6 @@
 import { CustomField, CustomFieldType } from "@prisma/client";
 import { Form, Input, InputNumber, Checkbox, DatePicker } from "antd";
+import { useTranslations } from "next-intl";
 
 type CustomFieldProps = {
   field: Omit<CustomField, "collectionId">;
@@ -15,8 +16,6 @@ function exhaustiveGuard(_value: never): never {
 
 const FormElement = ({ fieldType, ...props }: any) => {
   const type = fieldType as CustomFieldType;
-
-  console.log(props);
 
   switch (type) {
     case "TEXT":
@@ -40,7 +39,7 @@ const FormElement = ({ fieldType, ...props }: any) => {
 
     case "LINK":
     case "FILE":
-      return <div>Not implemented yet</div>;
+      return <div>{props.notImplementedText}</div>;
 
     default:
       return exhaustiveGuard(type);
@@ -48,14 +47,18 @@ const FormElement = ({ fieldType, ...props }: any) => {
 };
 
 const CustomFormField = ({ field }: CustomFieldProps) => {
+  const t = useTranslations("Collection.Form.customField");
   return (
     <Form.Item
       label={field.title}
       name={`cf_${field.id}`}
-      rules={[{ required: field.isRequired, message: "Field is required!" }]}
+      rules={[{ required: field.isRequired, message: t("fieldRequired") }]}
       valuePropName={field.type === "BOOLEAN" ? "checked" : undefined}
     >
-      <FormElement fieldType={field.type} />
+      <FormElement
+        fieldType={field.type}
+        notImplementedText={t("notImplemented")}
+      />
     </Form.Item>
   );
 };

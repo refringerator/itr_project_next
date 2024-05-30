@@ -25,5 +25,48 @@
     "ImageUpload": {
       "clickToUpload": "Click to Upload"
     }
+  },
+  "Collection": {
+    "Form": {
+      "noTopics": "There is no topics!",
+      "customType": {
+        "integer": "Integer",
+        "boolean": "Boolean",
+        "text": "Text",
+        "date": "Date"
+      },
+      "topic": {
+        "label": "Topic",
+        "message": "Please choice topic!"
+      },
+      "title": {
+        "label": "Title",
+        "message": "Please input title!"
+      },
+      "description": {
+        "label": "Description",
+        "placeholder": "Something about collection"
+      },
+      "cover": {
+        "label": "Cover",
+        "extra": "You can add collection cover",
+        "currentFilename": "Current cover.png"
+      },
+      "customField": {
+        "addFiled": "Add custom field",
+        "fieldNamePlaceholder": "Field name",
+        "fieldNameError": "Missing field name",
+        "fieldTypeSelector": "Select type",
+        "asFilter": "Used as a filter",
+        "fieldTypeError": "Missing field type",
+        "notImplemented": "Not implemented yet",
+        "fieldRequired": "Field is required!",
+        "required": "Required"
+      }
+    }
+  },
+  "Common": {
+    "Update": "Update",
+    "Create": "Create"
   }
 }

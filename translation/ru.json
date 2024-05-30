@@ -25,5 +25,48 @@
     "ImageUpload": {
       "clickToUpload": "Выбрать изображение.."
     }
+  },
+  "Collection": {
+    "Form": {
+      "noTopics": "Нет тем/категорий для выбора!",
+      "customType": {
+        "integer": "Целое",
+        "boolean": "Логическое",
+        "text": "Текст",
+        "date": "Дата"
+      },
+      "topic": {
+        "label": "Тема",
+        "message": "Выберите тему!"
+      },
+      "title": {
+        "label": "Заголовок",
+        "message": "Введите заголовок!"
+      },
+      "description": {
+        "label": "Описание",
+        "placeholder": "Описание коллекции"
+      },
+      "cover": {
+        "label": "Обложка",
+        "extra": "Вы можете добавить обложку коллекции",
+        "currentFilename": "Текущая обложка.png"
+      },
+      "customField": {
+        "addFiled": "Добавить дополнительное поле",
+        "fieldNamePlaceholder": "Имя поля",
+        "fieldNameError": "Пропущено имя поля",
+        "fieldTypeSelector": "Выберите тип",
+        "asFilter": "Используется как фильтр",
+        "fieldTypeError": "Не заполнен тип поля",
+        "notImplemented": "Пока еще не реализовано!",
+        "fieldRequired": "Поле обязательное!",
+        "required": "Обязательное"
+      }
+    }
+  },
+  "Common": {
+    "Update": "Обновить",
+    "Create": "Создать"
   }
 }
