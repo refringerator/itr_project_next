@@ -42,7 +42,8 @@ export const formatDate = (values: any, dateFields: string[]) => {
 
   for (const [key, value] of Object.entries(values)) {
     if (dateFields.includes(key)) {
-      values[key] = (value as dayjs.Dayjs).format("YYYY-MM-DD");
+      values[key] =
+        (value && (value as dayjs.Dayjs).format("YYYY-MM-DD")) || value;
     }
   }
 
