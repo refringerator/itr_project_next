@@ -4,11 +4,13 @@ import { useSearchParams } from "next/navigation";
 import { usePathname, useRouter } from "@/navigation";
 import { useEffect } from "react";
 import { notification } from "antd";
+import { useTranslations } from "next-intl";
 
 type NotificationType = "success" | "info" | "warning" | "error";
 
 function Notification() {
   const [api, contextHolder] = notification.useNotification();
+  const t = useTranslations("Components.Notifications");
 
   const searchParams = useSearchParams();
   const pathname = usePathname();
@@ -23,8 +25,8 @@ function Notification() {
     if (error || status) {
       api[(error ? "error" : "info") as NotificationType]({
         message: error
-          ? error ?? "Hmm... Something went wrong."
-          : status ?? "Alright!",
+          ? t(error) ?? t("defaultError")
+          : t(status) ?? t("defaultStatus"),
         description: error ? error_description : status_description,
       });
 
@@ -42,7 +44,7 @@ function Notification() {
       const redirectPath = `${pathname}?${newSearchParams.toString()}`;
       router.replace(redirectPath, { scroll: false });
     }
-  }, [api, pathname, router, searchParams]);
+  }, [api, pathname, router, searchParams, t]);
 
   return <>{contextHolder}</>;
 }

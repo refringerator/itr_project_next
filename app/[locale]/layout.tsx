@@ -2,7 +2,7 @@ import "@/styles/globals.css";
 import { Suspense } from "react";
 
 import type { Metadata, Viewport } from "next";
-import { NextIntlClientProvider } from "next-intl";
+// import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 
 import { Header, Footer, Content } from "@/sections/Layout";
@@ -11,7 +11,11 @@ import { AntdRegistry } from "@ant-design/nextjs-registry";
 import { Layout } from "antd";
 import { Notification } from "@/components/Notification";
 import { createClient } from "@/utils/supabase/server";
-import { ContextProvider, AntConfigProvider } from "@/context";
+import {
+  ContextProvider,
+  AntConfigProvider,
+  NextIntlClientProvider,
+} from "@/context";
 
 export const metadata: Metadata = {
   title: "Collection management",
@@ -44,7 +48,7 @@ export default async function RootLayout({
     <html lang={locale} suppressHydrationWarning>
       <body>
         <ThemeProvider>
-          <NextIntlClientProvider messages={messages}>
+          <NextIntlClientProvider messages={messages} locale={locale}>
             <AntdRegistry>
               <AntConfigProvider>
                 <ContextProvider value={{ user: user }}>

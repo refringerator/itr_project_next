@@ -36,6 +36,10 @@
       "commentPlaceholder": "Введите коментарий",
       "buttonAdd": "Добавить",
       "needLoginFirst": "Чтобы добавить комментарий, вам нужно сначала войти в систему"
+    },
+    "Notifications": {
+      "defaultError": "Хм... Что-то пошло не так.",
+      "defaultStatus": "Хорошо!"
     }
   },
   "Collection": {

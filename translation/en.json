@@ -36,6 +36,10 @@
       "commentPlaceholder": "Enter your comment",
       "buttonAdd": "Add",
       "needLoginFirst": "To add a comment, you must first log in"
+    },
+    "Notifications": {
+      "defaultError": "Hmm... Something went wrong.",
+      "defaultStatus": "Alright!"
     }
   },
   "Collection": {
