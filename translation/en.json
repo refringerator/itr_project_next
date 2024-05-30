@@ -86,5 +86,27 @@
     "clickToEdit": "click to edit your name",
     "urDisplayNameIs": "Your current display name is",
     "uCanChangeIt": "You can change it by click on it."
+  },
+  "Auth": {
+    "Forms": {
+      "emailPlaceholder": "Email",
+      "emailMessage": "Please input your email!",
+      "passwordPlaceholder": "Password",
+      "passwordMessage": "Please input your password!",
+      "newPasswordPlaceholder": "New Password",
+      "newPasswordMessage": "New Password",
+      "confirmNewPasswordPlaceholder": "Confirm New Password",
+      "confirmNewPasswordMessage": "Confirm New Password",
+      "signIn": "Sign in",
+      "sendEmail": "Send Email",
+      "updatePassword": "Update Password",
+      "signInEmailPassword": "Sign in with email and password",
+      "dontHaveAccountSignUp": "Don't have an account? Sign up",
+      "signMagicLink": "Sign in via magic link",
+      "forgotPassword": "Forgot your password?",
+      "thirdPartrySignin": "Third-party sign-in",
+      "signUp": "Sign up",
+      "alreadyHaveAccount": "Already have an account?"
+    }
   }
 }

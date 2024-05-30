@@ -5,6 +5,8 @@ import { updatePassword } from "@/utils/auth-helpers/server";
 import { handleRequest } from "@/utils/auth-helpers/client";
 import { useRouter } from "@/navigation";
 import React, { useState } from "react";
+import { useTranslations } from "next-intl";
+import { LockOutlined } from "@ant-design/icons";
 
 interface UpdatePasswordProps {
   redirectMethod: string;
@@ -19,6 +21,7 @@ export default function UpdatePassword({
   redirectMethod,
 }: UpdatePasswordProps) {
   const router = useRouter();
+  const t = useTranslations("Auth.Forms");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = async (e: any) => {
@@ -41,24 +44,28 @@ export default function UpdatePassword({
       onFinish={(e) => handleSubmit(e)}
     >
       <Form.Item<FieldType>
-        label="New Password"
         name="password"
-        rules={[{ required: true, message: "New Password" }]}
+        rules={[{ required: true, message: t("newPasswordMessage") }]}
       >
-        <Input.Password />
+        <Input.Password
+          prefix={<LockOutlined />}
+          placeholder={t("newPasswordPlaceholder")}
+        />
       </Form.Item>
 
       <Form.Item<FieldType>
-        label="Confirm New Password"
         name="passwordConfirm"
-        rules={[{ required: true, message: "Confirm New Password" }]}
+        rules={[{ required: true, message: t("confirmNewPasswordMessage") }]}
       >
-        <Input.Password />
+        <Input.Password
+          prefix={<LockOutlined />}
+          placeholder={t("confirmNewPasswordPlaceholder")}
+        />
       </Form.Item>
 
       <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
         <Button type="primary" htmlType="submit" loading={isSubmitting}>
-          Update Password
+          {t("updatePassword")}
         </Button>
       </Form.Item>
     </Form>

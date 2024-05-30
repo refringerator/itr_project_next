@@ -86,5 +86,27 @@
     "clickToEdit": "Кликни для редактирования имени",
     "urDisplayNameIs": "На сайте все вас видят как",
     "uCanChangeIt": "Вы можете сменить отображаемое имя кликнув на него"
+  },
+  "Auth": {
+    "Forms": {
+      "emailPlaceholder": "Электронная почта",
+      "emailMessage": "Введите свою почту!",
+      "passwordPlaceholder": "Пароль",
+      "passwordMessage": "Пожалуйста, введите свой пароль!",
+      "newPasswordPlaceholder": "Новый пароль",
+      "newPasswordMessage": "Новый пароль",
+      "confirmNewPasswordPlaceholder": "Подтверждение нового пароля",
+      "confirmNewPasswordMessage": "Подтверждение нового пароля",
+      "signIn": "Войти",
+      "sendEmail": "Отправить письмо",
+      "updatePassword": "Обновить пароль",
+      "signInEmailPassword": "Войти с помощью почты и пароля",
+      "dontHaveAccountSignUp": "У вас нет учетной записи? Зарегистрируйтесь",
+      "signMagicLink": "Войти по волшебной ссылке",
+      "forgotPassword": "Забыли пароль?",
+      "thirdPartrySignin": "Вход через сторонние сервисы",
+      "signUp": "Зарегистрироваться",
+      "alreadyHaveAccount": "У вас уже есть аккаунт?"
+    }
   }
 }
