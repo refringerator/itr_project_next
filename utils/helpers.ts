@@ -1,3 +1,4 @@
+import { CustomField } from "@prisma/client";
 import dayjs from "dayjs";
 
 export const getURL = (path: string = "") => {
@@ -25,6 +26,8 @@ export const getURL = (path: string = "") => {
 };
 
 export const parseDate = (values: any, dateFields: string[]) => {
+  if (!values) return values;
+
   for (const [key, value] of Object.entries(values)) {
     if (dateFields.includes(key)) {
       values[key] = dayjs(value as string);
@@ -35,6 +38,8 @@ export const parseDate = (values: any, dateFields: string[]) => {
 };
 
 export const formatDate = (values: any, dateFields: string[]) => {
+  if (!values) return values;
+
   for (const [key, value] of Object.entries(values)) {
     if (dateFields.includes(key)) {
       values[key] = (value as dayjs.Dayjs).format("YYYY-MM-DD");
@@ -49,6 +54,9 @@ export const toDateTime = (secs: number) => {
   t.setSeconds(secs);
   return t;
 };
+
+export const getKeysWithDateType = (cfs: CustomField[]) =>
+  cfs.filter((cf) => cf.type === "DATE").map((cf) => `cf_${cf.id}`);
 
 export const calculateTrialEndUnixTimestamp = (
   trialPeriodDays: number | null | undefined

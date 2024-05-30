@@ -84,6 +84,17 @@
       "orDelete": "или удалить его",
       "deleteConfirmTitle": "Удаление элемента коллекции",
       "deleteConfirmDesctiption": "Вы действительно хотите удалить этот элемент?"
+    },
+    "Form": {
+      "thereIsNoCollections": "Еще нет коллекций! Вы можете",
+      "createNew": "создайте новую",
+      "titleLabel": "Название",
+      "titleMessage": "Пожалуйста, введите название!",
+      "collectionLabel": "Коллекция",
+      "collectionMessage": "Пожалуйста, выберите коллекцию!",
+      "tagsLabel": "Метки",
+      "tagsMessage": "Пожалуйста, выберите метки!",
+      "tagsPlaceholder": "Метки"
     }
   },
   "Common": {

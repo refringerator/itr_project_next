@@ -7,6 +7,7 @@ import { getSupabaseUserOrRedirect } from "@/utils/auth-helpers/server";
 import { getMyCollectionsTagsItem } from "@/utils/prisma/items";
 import { redirect } from "@/navigation";
 import { getTranslations } from "next-intl/server";
+import { getKeysWithDateType } from "@/utils/helpers";
 
 type Props = {
   params: {
@@ -32,11 +33,6 @@ export default async function EditItem({ params: { id } }: Props) {
     item.tags.map((t) => t.title)
   );
 
-  const dateTypes = item.collection.customFields
-    .filter((cf) => cf.type === "DATE")
-    .map((cf) => `cf_${cf.id}`);
-  const customValues = { ...item.customValues };
-
   return (
     <>
       <h2>
@@ -52,11 +48,11 @@ export default async function EditItem({ params: { id } }: Props) {
         collections={collections}
         tags={tags}
         onFinish={updateItemWihtId}
-        dateFields={dateTypes}
+        dateFields={getKeysWithDateType(item.collection.customFields)}
         initialValues={
           {
             ...item,
-            ...customValues,
+            ...item.customValues,
             tagsIds: item.tags.map((el) => el.title),
           } as ItemFormType
         }

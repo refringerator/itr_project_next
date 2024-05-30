@@ -84,6 +84,17 @@
       "orDelete": "or delete it",
       "deleteConfirmTitle": "Delete item",
       "deleteConfirmDesctiption": "Are you sure to delete this item?"
+    },
+    "Form": {
+      "thereIsNoCollections": "There is no collections! You can",
+      "createNew": "create a new one",
+      "titleLabel": "Title",
+      "titleMessage": "Please input title!",
+      "collectionLabel": "Collection",
+      "collectionMessage": "Please choice collection!",
+      "tagsLabel": "Tags",
+      "tagsMessage": "Please choice tags!",
+      "tagsPlaceholder": "Tags"
     }
   },
   "Common": {
