@@ -1,11 +1,12 @@
 "use client";
-import { Collection } from "@prisma/client";
+
 import CollectionCard from "./CollectionCard";
 import { Col, Row } from "antd";
 import useDimension from "@/hooks/useDimension";
+import { CollectionCardType } from "@/utils/prisma/collections";
 
 type CollectionCardList = {
-  collections: Collection[];
+  collections: (Omit<CollectionCardType, "coverUrl"> & { coverUrl: string })[];
 };
 
 export default function CollectionCardList({
@@ -25,7 +26,7 @@ export default function CollectionCardList({
         if (index >= (count as number)) return null;
         return (
           <Col key={c.id} xs={18} sm={16} md={12} lg={10} xl={8} xxl={5}>
-            <CollectionCard name={c.title} />
+            <CollectionCard collection={c} />
           </Col>
         );
       })}

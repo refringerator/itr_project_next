@@ -159,6 +159,10 @@ export type UserCollectionType = NonNullable<
   Awaited<ReturnType<typeof getUserCollectionsTagsCFs>>["collections"][0]
 >;
 
+export type CollectionCardType = NonNullable<
+  Awaited<ReturnType<typeof getLargeCollections>>[0]
+>;
+
 export const getLargeCollections = (count = 5) =>
   prisma.collection.findMany({
     include: {
