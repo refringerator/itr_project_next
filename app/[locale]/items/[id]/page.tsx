@@ -37,9 +37,6 @@ export default async function Item({ params: { id } }: Props) {
       )
     );
 
-  // const pri = await prisma.$queryRaw`SELECT * from auth.users;`;
-  // console.log({ pri });
-
   return (
     <>
       <h2>Item {id}</h2>

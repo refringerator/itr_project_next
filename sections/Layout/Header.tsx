@@ -2,7 +2,11 @@
 
 import { Layout, Flex, Col, Row, Button, Tooltip, Popover, Grid } from "antd";
 import { theme, Avatar } from "antd";
-import { LoginOutlined, MehOutlined } from "@ant-design/icons";
+import {
+  AppstoreOutlined,
+  LoginOutlined,
+  MehOutlined,
+} from "@ant-design/icons";
 
 import { useTranslations } from "next-intl";
 import LocaleSelector from "@/components/LocaleSelector";
@@ -92,7 +96,7 @@ const Header = () => {
                     {t("profile")}
                   </Button>
                   <Button
-                    icon={<MehOutlined />}
+                    icon={<AppstoreOutlined />}
                     onClick={() => {
                       router.push(`/my-collections/`);
                     }}

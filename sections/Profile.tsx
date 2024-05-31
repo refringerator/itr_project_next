@@ -22,7 +22,7 @@ export default function Profile({ username }: { username: string }) {
   };
 
   return (
-    <>
+    <div style={{ display: "block" }}>
       <Text>{t("urDisplayNameIs")} </Text>
       <Text
         strong
@@ -39,6 +39,6 @@ export default function Profile({ username }: { username: string }) {
       <Paragraph>{t("uCanChangeIt")}</Paragraph>
 
       <SignOutButton />
-    </>
+    </div>
   );
 }

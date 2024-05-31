@@ -18,9 +18,10 @@ export type ItemsList = Row[];
 
 export type ItemListProps = {
   data: Row[];
+  showActions: boolean;
 };
 
-export default function ItemList({ data }: ItemListProps) {
+export default function ItemList({ data, showActions }: ItemListProps) {
   const t = useTranslations("Item.List");
 
   const columns: TableProps<Row>["columns"] = useMemo(
@@ -69,6 +70,7 @@ export default function ItemList({ data }: ItemListProps) {
         key: "published",
         render: (_, record) => (
           <Switch
+            disabled={!showActions}
             checkedChildren={<CheckOutlined />}
             unCheckedChildren={<CloseOutlined />}
             defaultChecked={record.published}
@@ -78,10 +80,10 @@ export default function ItemList({ data }: ItemListProps) {
       {
         title: "Action",
         key: "action",
-        render: (_, record) => (
+        hidden: !showActions,
+        render: (_, record: any) => (
           <Space size="middle">
             <Link href={`/items/${record.id}/edit`}>Edit</Link>
-            {/* <a>Delete</a> */}
             <DeleteButton
               type="link"
               buttonText={t("deleteButton")}
@@ -91,9 +93,10 @@ export default function ItemList({ data }: ItemListProps) {
             />
           </Space>
         ),
+        dataIndex: "",
       },
     ],
-    [t]
+    [showActions, t]
   );
 
   return <Table rowKey="id" columns={columns} dataSource={data} />;

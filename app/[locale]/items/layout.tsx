@@ -4,7 +4,7 @@ export default function ItemsLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div>
+    <div style={{ width: "100%" }}>
       <h1>ITEMS</h1>
       {children}
     </div>
