@@ -116,7 +116,7 @@ export default function ItemList({
           dataIndex: "",
         },
       ].flat(),
-    [customFields, showActions, t]
+    [customFields, setPublishItem, showActions, t]
   );
 
   console.log({ columns });
