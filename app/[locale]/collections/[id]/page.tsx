@@ -9,6 +9,7 @@ import { defaultImage } from "@/constants/server";
 import { Col, Flex, Row, Space } from "antd";
 import { getSupabaseUser } from "@/utils/auth-helpers/server";
 import { CustomField } from "@prisma/client";
+import Markdown from "react-markdown";
 
 type Props = {
   params: {
@@ -60,8 +61,6 @@ export default async function Collection({ params: { id } }: Props) {
               {collection.topic.title}
             </p>
             <p>{collection.published ? "Published" : "Not published"}</p>
-            <h4>Description:</h4>
-            <p>{collection.description}</p>
           </Flex>
         </Col>
         <Col flex={2}>
@@ -75,6 +74,9 @@ export default async function Collection({ params: { id } }: Props) {
           />
         </Col>
       </Row>
+      <h4>Description:</h4>
+      <Markdown>{collection.description}</Markdown>
+
       <TheCollection
         items={items}
         showActions={!!user}
