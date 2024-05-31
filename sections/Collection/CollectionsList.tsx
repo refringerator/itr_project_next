@@ -4,6 +4,7 @@ import React from "react";
 import { Avatar, List } from "antd";
 import Image from "next/image";
 import { CollectionCardWithCoverAndCFs } from "@/utils/prisma/collections";
+import Markdown from "react-markdown";
 
 export type CollectionListProps = {
   data: CollectionCardWithCoverAndCFs[];
@@ -25,12 +26,12 @@ const CollectionsList = ({ data }: CollectionListProps) => {
       //     pageSize: 5,
       //   }}
       dataSource={data}
-      renderItem={(item) => (
+      renderItem={(collection) => (
         <List.Item
-          key={item.title}
+          key={collection.title}
           extra={
             <Image
-              src={item.coverUrl}
+              src={collection.coverUrl}
               style={{ objectFit: "contain" }}
               width="225"
               height="225"
@@ -43,19 +44,21 @@ const CollectionsList = ({ data }: CollectionListProps) => {
             avatar={
               showAuthor && (
                 <Avatar
-                  src={`https://api.dicebear.com/7.x/miniavs/svg?seed=${item.authorId}`}
+                  src={`https://api.dicebear.com/7.x/miniavs/svg?seed=${collection.authorId}`}
                 />
               )
             }
-            title={<a href={`/collections/${item.id}`}>{item.title}</a>}
+            title={
+              <a href={`/collections/${collection.id}`}>{collection.title}</a>
+            }
             description={
               showFields && (
                 <>
-                  <p>Topic: {item.topic.title}</p>
-                  <p>Items: {item._count.items}</p>
+                  <p>Topic: {collection.topic.title}</p>
+                  <p>Items: {collection._count.items}</p>
                   <p>
                     Custom fields:
-                    {item.customFields
+                    {collection.customFields
                       .map((cf) => `${cf.title} (${cf.type})`)
                       .join(", ")}
                   </p>
@@ -63,7 +66,7 @@ const CollectionsList = ({ data }: CollectionListProps) => {
               )
             }
           />
-          {item.description}
+          <Markdown>{collection.description}</Markdown>
         </List.Item>
       )}
     />

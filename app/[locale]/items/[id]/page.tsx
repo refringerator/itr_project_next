@@ -47,7 +47,10 @@ export default async function Item({ params: { id } }: Props) {
         <b>Author:</b> {item.author.name}
       </p>
       <p>
-        <b>Collection:</b> {item.collection.title}
+        <b>Collection:</b>{" "}
+        <Link href={`/collections/${item.collectionId}`}>
+          {item.collection.title}
+        </Link>
       </p>
       <p>{item.published ? "published" : "not published"}</p>
       {!!item.collection.customFields.length && <p>Custom fields:</p>}
