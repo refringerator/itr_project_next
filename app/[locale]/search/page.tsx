@@ -1,6 +1,6 @@
 "use client";
 import { useSearchParams } from "next/navigation";
-import SearchPage from "@/components/SearchPage";
+import SearchPage from "@/sections/SearchPage";
 import { search } from "./actions";
 import { useEffect, useState } from "react";
 

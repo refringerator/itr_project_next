@@ -5,11 +5,13 @@ import type { FormProps } from "antd";
 
 import { CustomField, Topic, CustomFieldType } from "@prisma/client";
 import ImageUpload from "./ImageUpload";
+import { useTranslations } from "next-intl";
+import { useState } from "react";
 
 type PartialBy<T, K extends keyof T, D extends keyof T> = Omit<Omit<T, D>, K> &
   Partial<Pick<T, K>>;
 
-export type FieldType = {
+export type CollectionFormFieldType = {
   title: string;
   description?: string;
   topicId: number;
@@ -25,8 +27,8 @@ type customType = {
 interface CollectionFormProps {
   buttonText?: string;
   topics: Omit<Topic, "translation">[];
-  onFinish: FormProps<FieldType>["onFinish"];
-  initialValues?: FieldType;
+  onFinish: FormProps<CollectionFormFieldType>["onFinish"];
+  initialValues?: CollectionFormFieldType;
 }
 
 const customTypes: customType[] = [
@@ -42,41 +44,63 @@ export default function CollectionForm({
   buttonText = "Create",
   initialValues,
 }: CollectionFormProps) {
-  if (topics.length === 0) return <div>There is no topics!</div>;
+  const t = useTranslations("Collection.Form");
+  const tc = useTranslations("Common");
+  const [loading, setLoading] = useState(false);
+
+  if (topics.length === 0) return <div>{t("noTopics")}</div>;
+
+  const onFormFinish = (data: any) => {
+    setLoading(true);
+    // console.log({ data });
+    onFinish && onFinish({ ...data, cover: data.cover?.at(0)?.url || "" });
+  };
 
   const {
     title,
     description = "",
     topicId,
     customFields,
+    cover,
   } = initialValues || {};
 
   return (
     <Form
-      name="basic"
+      name="collection"
       labelCol={{ span: 8 }}
       wrapperCol={{ span: 16 }}
       style={{ maxWidth: 600 }}
-      initialValues={{ title, topicId, description }}
-      onFinish={(data) => {
-        console.log({ data });
-        onFinish &&
-          onFinish({ ...data, cover: data.cover?.at(0)?.response.url || "" });
+      initialValues={{
+        title,
+        topicId,
+        description,
+        cover:
+          (cover && [
+            {
+              uid: cover,
+              name: t("cover.currentFilename"),
+              status: "done",
+              url: cover,
+              thumbUrl: cover,
+            },
+          ]) ||
+          [],
       }}
+      onFinish={onFormFinish}
       autoComplete="off"
     >
-      <Form.Item<FieldType>
-        label="Title"
+      <Form.Item<CollectionFormFieldType>
+        label={t("title.label")}
         name="title"
-        rules={[{ required: true, message: "Please input title!" }]}
+        rules={[{ required: true, message: t("title.message") }]}
       >
         <Input />
       </Form.Item>
 
       <Form.Item
-        label="Topic"
+        label={t("topic.label")}
         name="topicId"
-        rules={[{ required: true, message: "Please choice topic!" }]}
+        rules={[{ required: true, message: t("topic.message") }]}
       >
         <Select>
           {topics.map((topic) => (
@@ -87,20 +111,17 @@ export default function CollectionForm({
         </Select>
       </Form.Item>
 
-      <Form.Item<FieldType> label="Description" name="description">
+      <Form.Item<CollectionFormFieldType>
+        label={t("description.label")}
+        name="description"
+      >
         <Input.TextArea
-          placeholder="Something about collection"
+          placeholder={t("description.placeholder")}
           autoSize={{ minRows: 2, maxRows: 6 }}
         />
       </Form.Item>
 
-      <Form.Item
-        name="cover"
-        label="Cover"
-        // valuePropName="fileList"
-        // getValueFromEvent={normFile}
-        // extra="longgggggggggggggggggggggggggggggggggg"
-      >
+      <Form.Item name="cover" label={t("cover.label")} extra={t("cover.extra")}>
         <ImageUpload />
       </Form.Item>
 
@@ -119,16 +140,26 @@ export default function CollectionForm({
                 <Form.Item
                   {...restField}
                   name={[name, "title"]}
-                  rules={[{ required: true, message: "Missing field name" }]}
+                  rules={[
+                    {
+                      required: true,
+                      message: t("customField.fieldNameError"),
+                    },
+                  ]}
                 >
-                  <Input placeholder="Field name" />
+                  <Input placeholder={t("customField.fieldNamePlaceholder")} />
                 </Form.Item>
                 <Form.Item
                   {...restField}
                   name={[name, "type"]}
-                  rules={[{ required: true, message: "Missing field type" }]}
+                  rules={[
+                    {
+                      required: true,
+                      message: t("customField.fieldTypeError"),
+                    },
+                  ]}
                 >
-                  <Select placeholder="Select type">
+                  <Select placeholder={t("customField.fieldTypeSelector")}>
                     {customTypes.map((ct) => (
                       <Select.Option key={ct.key} value={ct.key}>
                         {ct.value}
@@ -142,13 +173,7 @@ export default function CollectionForm({
                   name={[name, "isRequired"]}
                   valuePropName="checked"
                 >
-                  <Checkbox
-                  // value={false}
-                  // defaultChecked={false}
-                  // checked={false}
-                  >
-                    Required
-                  </Checkbox>
+                  <Checkbox>{t("customField.required")}</Checkbox>
                 </Form.Item>
                 <Form.Item
                   noStyle
@@ -156,7 +181,7 @@ export default function CollectionForm({
                   name={[name, "isFilter"]}
                   valuePropName="checked"
                 >
-                  <Checkbox>Used as a filter</Checkbox>
+                  <Checkbox>{t("customField.asFilter")}</Checkbox>
                 </Form.Item>
                 <MinusCircleOutlined onClick={() => remove(name)} />
               </Space>
@@ -168,7 +193,7 @@ export default function CollectionForm({
                 block
                 icon={<PlusOutlined />}
               >
-                Add custom field
+                {t("customField.addFiled")}
               </Button>
             </Form.Item>
           </>
@@ -176,8 +201,8 @@ export default function CollectionForm({
       </Form.List>
 
       <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-        <Button type="primary" htmlType="submit">
-          {buttonText}
+        <Button type="primary" htmlType="submit" loading={loading}>
+          {tc(buttonText as "Update" | "Create")}
         </Button>
       </Form.Item>
     </Form>

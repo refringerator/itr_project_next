@@ -1,14 +1,15 @@
 "use server";
 
-import { Link } from "@/navigation";
+import { Tag } from "antd";
 import { addComment, setRateOnItem } from "@/app/[locale]/items/actions";
 import { Comments } from "@/components/Comment/Comments";
-import { Tag } from "antd";
 import { getItemCommentsLikes } from "@/utils/prisma/items";
 import { getSupabaseUser } from "@/utils/auth-helpers/server";
-import { redirect } from "@/navigation";
+import { redirect, Link } from "@/navigation";
 import { getErrorRedirect } from "@/utils/helpers";
-import ItemRate from "@/components/Item/ItemRate";
+import ItemRate from "@/sections/Item/ItemRate";
+import CommentForm from "@/components/CommentForm";
+// import { prisma } from "@/utils/prisma";
 
 type Props = {
   params: {
@@ -39,10 +40,24 @@ export default async function Item({ params: { id } }: Props) {
   return (
     <>
       <h2>Item {id}</h2>
-      <p>{item.title}</p>
-      <p>{item.author.name}</p>
-      <p>{item.collection.title}</p>
+      <p>
+        <b>Title:</b> {item.title}
+      </p>
+      <p>
+        <b>Author:</b> {item.author.name}
+      </p>
+      <p>
+        <b>Collection:</b> {item.collection.title}
+      </p>
       <p>{item.published ? "published" : "not published"}</p>
+      {!!item.collection.customFields.length && <p>Custom fields:</p>}
+      {item.collection.customFields.map((cf) => {
+        return (
+          <p key={cf.id}>
+            {cf.id} - {cf.title}: {item.customValues[`cf_${cf.id}`]}
+          </p>
+        );
+      })}
       <p>
         {averageRate._avg.rating
           ? `Average rate is ${averageRate._avg.rating}`
@@ -68,10 +83,7 @@ export default async function Item({ params: { id } }: Props) {
         likedCommentIds={likes}
       />
 
-      <form action={addComment.bind(null, itemId)}>
-        <input type="text" name="text" />
-        <button type="submit">Add</button>
-      </form>
+      <CommentForm action={addComment.bind(null, itemId)} />
     </>
   );
 }

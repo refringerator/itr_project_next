@@ -1,15 +1,21 @@
-import type { Metadata, Viewport } from "next";
 import "@/styles/globals.css";
-import { Header, Footer, Content } from "@/components/Layout";
+import { Suspense } from "react";
+
+import type { Metadata, Viewport } from "next";
+// import { NextIntlClientProvider } from "next-intl";
+import { getMessages } from "next-intl/server";
+
+import { Header, Footer, Content } from "@/sections/Layout";
+import { ThemeProvider } from "next-themes";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
 import { Layout } from "antd";
-import { Suspense } from "react";
-import { Notification } from "@/components/Notification/Notification";
+import { Notification } from "@/components/Notification";
 import { createClient } from "@/utils/supabase/server";
-import { NextIntlClientProvider } from "next-intl";
-import { getMessages } from "next-intl/server";
-import AntConfigProvider from "@/components/Layout/AntConfigProvider";
-import { ThemeProvider } from "next-themes";
+import {
+  ContextProvider,
+  AntConfigProvider,
+  NextIntlClientProvider,
+} from "@/context";
 
 export const metadata: Metadata = {
   title: "Collection management",
@@ -42,17 +48,19 @@ export default async function RootLayout({
     <html lang={locale} suppressHydrationWarning>
       <body>
         <ThemeProvider>
-          <NextIntlClientProvider messages={messages}>
+          <NextIntlClientProvider messages={messages} locale={locale}>
             <AntdRegistry>
               <AntConfigProvider>
-                <Layout>
-                  <Header user={user} />
-                  <Content>{children}</Content>
-                  <Footer />
-                </Layout>
-                <Suspense>
-                  <Notification />
-                </Suspense>
+                <ContextProvider value={{ user: user }}>
+                  <Layout>
+                    <Header />
+                    <Content>{children}</Content>
+                    <Footer />
+                  </Layout>
+                  <Suspense>
+                    <Notification />
+                  </Suspense>
+                </ContextProvider>
               </AntConfigProvider>
             </AntdRegistry>
           </NextIntlClientProvider>

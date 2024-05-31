@@ -70,9 +70,9 @@ model Comment {
   createdAt DateTime        @default(now())
   text      String
   itemId    Int
-  item      Item            @relation(fields: [itemId], references: [id])
+  item      Item            @relation(fields: [itemId], references: [id], onDelete: Cascade)
   authorId  String          @db.Uuid
-  author    User            @relation(fields: [authorId], references: [id])
+  author    User            @relation(fields: [authorId], references: [id], onDelete: SetDefault)
   likes     LikeOnComment[]
 }
 
@@ -89,9 +89,9 @@ model LikeOnComment {
 
 model LikeOnItem {
   userId    String   @db.Uuid
-  user      User     @relation(fields: [userId], references: [id])
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   itemId    Int
-  item      Item     @relation(fields: [itemId], references: [id])
+  item      Item     @relation(fields: [itemId], references: [id], onDelete: Cascade)
   rating    Int
   createdAt DateTime @default(now())
 

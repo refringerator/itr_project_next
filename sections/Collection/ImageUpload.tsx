@@ -1,10 +1,13 @@
 "use client";
 
-// import React, { useEffect, useState } from "react";
 import { UploadOutlined } from "@ant-design/icons";
 import type { UploadFile, UploadProps } from "antd";
 import { Button, Upload } from "antd";
 import { createClient } from "@/utils/supabase/client";
+import { collectionBucketName } from "@/constants";
+import { useContext } from "react";
+import { Context } from "@/context/context-provider";
+import { useTranslations } from "next-intl";
 
 interface ImageUploadProps {
   value?: UploadFile[];
@@ -12,12 +15,14 @@ interface ImageUploadProps {
 }
 
 const ImageUpload = ({ value, onChange }: ImageUploadProps) => {
+  const t = useTranslations("Components.ImageUpload");
+  const context = useContext(Context);
   const supabase = createClient();
 
-  const handleChange: UploadProps["onChange"] = ({ fileList, file }) => {
-    console.log("Aliyun OSS:", fileList);
-    console.log({ file });
-    onChange?.([...fileList]);
+  const handleChange: UploadProps["onChange"] = ({ fileList }) => {
+    onChange?.(
+      fileList.map((file) => ({ ...file, url: file.response?.url || file.url }))
+    );
   };
 
   const onRemove = (file: UploadFile) => {
@@ -28,39 +33,11 @@ const ImageUpload = ({ value, onChange }: ImageUploadProps) => {
     }
   };
 
-  const getExtraData: UploadProps["data"] = (file) => ({
-    key: file.url,
-    // OSSAccessKeyId: OSSData?.accessId,
-    // policy: OSSData?.policy,
-    // Signature: OSSData?.signature,
-  });
-
-  const beforeUpload: UploadProps["beforeUpload"] = async (file) => {
-    console.log("beforeUpload", { file });
-    // if (!OSSData) return false;
-
-    // const expire = Number(OSSData.expire) * 1000;
-
-    // if (expire < Date.now()) {
-    //   await init();
-    // }
-
-    const suffix = file.name.slice(file.name.lastIndexOf("."));
-    const filename = Date.now() + suffix;
-    // @ts-ignore
-    file.url = filename;
-
-    return file;
-  };
-
   const uploadProps: UploadProps = {
     name: "file",
     fileList: value,
-    // action: OSSData?.host,
     onChange: handleChange,
     onRemove,
-    // data: getExtraData,
-    // beforeUpload,
   };
 
   return (
@@ -71,12 +48,12 @@ const ImageUpload = ({ value, onChange }: ImageUploadProps) => {
       customRequest={async ({ file, onError, onSuccess }) => {
         const rcFile = file as File;
 
-        const uid = 123;
+        const uid = context?.user?.id || "";
         const fileExt = rcFile.name.split(".").pop();
         const fileUrl = `${uid}-${Math.random()}.${fileExt}`;
 
         const { error } = await supabase.storage
-          .from("collection")
+          .from(collectionBucketName)
           .upload(fileUrl, file, {
             cacheControl: "3600",
             upsert: true,
@@ -86,13 +63,13 @@ const ImageUpload = ({ value, onChange }: ImageUploadProps) => {
           return onError?.(error);
         }
         const { data } = await supabase.storage
-          .from("collection")
+          .from(collectionBucketName)
           .getPublicUrl(fileUrl);
 
-        onSuccess?.({ url: data?.publicUrl }, new XMLHttpRequest());
+        onSuccess?.({ url: data?.publicUrl });
       }}
     >
-      <Button icon={<UploadOutlined />}>Click to Upload</Button>
+      <Button icon={<UploadOutlined />}>{t("clickToUpload")}</Button>
     </Upload>
   );
 };

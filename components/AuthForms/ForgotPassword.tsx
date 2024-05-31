@@ -6,10 +6,10 @@ import { handleRequest } from "@/utils/auth-helpers/client";
 import { useRouter } from "@/navigation";
 import { useState } from "react";
 
-import { UserOutlined } from "@ant-design/icons";
+import { MailOutlined } from "@ant-design/icons";
 import { Button, Form, Input } from "antd";
+import { useTranslations } from "next-intl";
 
-// Define prop type with allowEmail boolean
 interface ForgotPasswordProps {
   allowEmail: boolean;
   redirectMethod: string;
@@ -21,11 +21,12 @@ export default function ForgotPassword({
   redirectMethod,
   disableButton,
 }: ForgotPasswordProps) {
+  const t = useTranslations("Auth.Forms");
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const onFinish = async (e: any) => {
-    setIsSubmitting(true); // Disable the button while the request is being handled
+    setIsSubmitting(true);
     await handleRequest(
       e,
       requestPasswordUpdate,
@@ -47,12 +48,12 @@ export default function ForgotPassword({
         rules={[
           {
             required: true,
-            message: "Please input your email!",
+            message: t("emailMessage"),
             type: "email",
           },
         ]}
       >
-        <Input prefix={<UserOutlined />} placeholder="Email" />
+        <Input prefix={<MailOutlined />} placeholder={t("emailPlaceholder")} />
       </Form.Item>
 
       <Form.Item>
@@ -62,20 +63,18 @@ export default function ForgotPassword({
           loading={isSubmitting}
           disabled={disableButton}
         >
-          Send Email
+          {t("sendEmail")}
         </Button>
         <p>
-          <Link href="/signin/password_signin">
-            Sign in with email and password
-          </Link>
+          <Link href="/signin/password_signin">{t("signInEmailPassword")}</Link>
         </p>
         {allowEmail && (
           <p>
-            <Link href="/signin/email_signin">Sign in via magic link</Link>
+            <Link href="/signin/email_signin">{t("signMagicLink")}</Link>
           </p>
         )}
         <p>
-          <Link href="/signin/signup">Don&apos;t have an account? Sign up</Link>
+          <Link href="/signin/signup">{t("dontHaveAccountSignUp")}</Link>
         </p>
       </Form.Item>
     </Form>

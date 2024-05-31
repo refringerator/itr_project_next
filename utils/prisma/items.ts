@@ -6,27 +6,31 @@ import {
   getUserLikesOnComments,
   getUserLikesOnItem,
 } from "./likes";
-import { ItemFormType } from "@/components/Item/ItemForm";
+import { ItemFormType } from "@/sections/Item/ItemForm";
 import { getComments } from "./comments";
+import { getUserData } from "./profile";
 
 export async function getMyCollectionsTagsItem(userId: string, itemId: number) {
-  const [collections, tags, item] = await prisma.$transaction([
+  const [collections, tags, item, userData] = await prisma.$transaction([
     userCollections(userId),
     getUsedTags(),
     getItem(itemId),
+    getUserData(userId),
   ]);
 
-  return { collections, tags, item };
+  return { collections, tags, item, userData };
 }
 
 export async function getItemCommentsLikes(userId: string, itemId: number) {
-  const [item, comments, likes, rate, averageRate] = await prisma.$transaction([
-    getItem(itemId),
-    getComments(itemId),
-    getUserLikesOnComments(userId, itemId),
-    getUserLikesOnItem(userId, itemId),
-    getAverageItemRate(itemId),
-  ]);
+  const [item, comments, likes, rate, averageRate, userData] =
+    await prisma.$transaction([
+      getItem(itemId),
+      getComments(itemId),
+      getUserLikesOnComments(userId, itemId),
+      getUserLikesOnItem(userId, itemId),
+      getAverageItemRate(itemId),
+      getUserData(userId),
+    ]);
 
   return {
     item,
@@ -34,6 +38,7 @@ export async function getItemCommentsLikes(userId: string, itemId: number) {
     likes: likes.map((i) => i.commentId),
     rate,
     averageRate,
+    userData,
   };
 }
 
@@ -42,7 +47,7 @@ export const getItem = (itemId: number) =>
     where: { id: itemId },
     include: {
       author: { select: { name: true } },
-      collection: { select: { title: true } },
+      collection: { select: { title: true, customFields: true } },
       tags: { select: { id: true, title: true } },
     },
   });
@@ -94,7 +99,16 @@ export const updateItem2 = (
 
 export const getItems = () => prisma.item.findMany();
 
-export const deleteItem2 = (itemId: number) =>
+export const deleteItem = (itemId: number) =>
   prisma.item.delete({
     where: { id: itemId },
   });
+
+export async function getItemUser(userId: string, itemId: number) {
+  const [item, userData] = await prisma.$transaction([
+    getItem(itemId),
+    getUserData(userId),
+  ]);
+
+  return { item, userData };
+}

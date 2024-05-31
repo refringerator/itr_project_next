@@ -4,6 +4,7 @@ import { signInWithOAuth } from "@/utils/auth-helpers/client";
 import { GithubOutlined, GoogleOutlined } from "@ant-design/icons";
 import { type Provider } from "@supabase/supabase-js";
 import { Button, Flex, Typography } from "antd";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 type OAuthProviders = {
@@ -27,6 +28,7 @@ const oAuthProviders: OAuthProviders[] = [
 
 export default function OauthSignIn() {
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const t = useTranslations("Auth.Forms");
 
   const handleSubmit = (provider: Provider) => {
     setIsSubmitting(true);
@@ -35,7 +37,7 @@ export default function OauthSignIn() {
 
   return (
     <>
-      <Typography.Text>Third-party sign-in</Typography.Text>
+      <Typography.Text>{t("thirdPartrySignin")}</Typography.Text>
       <Flex style={{ maxWidth: "300px" }} gap="middle" vertical={false}>
         {oAuthProviders.map((provider) => (
           <Button

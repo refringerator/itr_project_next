@@ -7,9 +7,9 @@ import { useRouter } from "@/navigation";
 import { useState } from "react";
 
 import { Button, Form, Input } from "antd";
-import { UserOutlined, MailOutlined } from "@ant-design/icons";
+import { MailOutlined } from "@ant-design/icons";
+import { useTranslations } from "next-intl";
 
-// Define prop type with allowPassword boolean
 interface EmailSignInProps {
   allowPassword: boolean;
   redirectMethod: string;
@@ -21,11 +21,12 @@ export default function EmailSignIn({
   redirectMethod,
   disableButton,
 }: EmailSignInProps) {
+  const t = useTranslations("Auth.Forms");
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const onFinish = async (e: any) => {
-    setIsSubmitting(true); // Disable the button while the request is being handled
+    setIsSubmitting(true);
     await handleRequest(
       e,
       signInWithEmail,
@@ -47,12 +48,12 @@ export default function EmailSignIn({
         rules={[
           {
             required: true,
-            message: "Please input your email!",
+            message: t("emailMessage"),
             type: "email",
           },
         ]}
       >
-        <Input prefix={<MailOutlined />} placeholder="Email" />
+        <Input prefix={<MailOutlined />} placeholder={t("emailPlaceholder")} />
       </Form.Item>
 
       <Form.Item>
@@ -62,19 +63,17 @@ export default function EmailSignIn({
           loading={isSubmitting}
           disabled={disableButton}
         >
-          Sign in
+          {t("sendEmail")}
         </Button>
         {allowPassword && (
           <>
             <p>
               <Link href="/signin/password_signin">
-                Sign in with email and password
+                {t("signInEmailPassword")}
               </Link>
             </p>
             <p>
-              <Link href="/signin/signup">
-                Don&apos;t have an account? Sign up
-              </Link>
+              <Link href="/signin/signup">{t("dontHaveAccountSignUp")}</Link>
             </p>
           </>
         )}

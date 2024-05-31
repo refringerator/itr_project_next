@@ -1,15 +1,21 @@
 import { prisma } from "@/utils/prisma";
 import { getTopics } from "./topics";
-import { FieldType } from "@/components/Collection/CollectionForm";
+import { CollectionFormFieldType } from "@/sections/Collection/CollectionForm";
 import { getUsedTags } from "./tags";
 import { CustomField } from "@prisma/client";
+import { getUserData } from "./profile";
 
-export async function getTopicsCollection(collectionId: number) {
-  const locale = "ru_RU";
+export async function getTopicsCollection(
+  collectionId: number,
+  userId: string,
+  curLocale: string
+) {
+  const locale = curLocale === "ru" ? "ru_RU" : "en";
 
-  const [topics, collection] = await prisma.$transaction([
+  const [topics, collection, userData] = await prisma.$transaction([
     getTopics(),
     getCollection(collectionId),
+    getUserData(userId),
   ]);
 
   return {
@@ -19,6 +25,7 @@ export async function getTopicsCollection(collectionId: number) {
         topic.translation.filter((v) => v.l === locale)[0]?.t || topic.title,
     })),
     collection,
+    userData,
   };
 }
 
@@ -35,6 +42,7 @@ export const getCollection = (collectionId: number) =>
           published: true,
           tags: true,
           createdAt: true,
+          customValues: true,
         },
       },
       customFields: {
@@ -55,10 +63,26 @@ export const userCollections = (userId: string) =>
     include: { customFields: true },
   });
 
-export const getCollections = () => prisma.collection.findMany();
+export const getCollectionsWithCFs = (userId: string = "") => {
+  const where = userId !== "" ? { where: { authorId: userId } } : undefined;
 
-export const createCollection2 = (data: FieldType & { userId: string }) => {
-  const { title, topicId, description, userId, customFields } = data;
+  return prisma.collection.findMany({
+    include: {
+      author: true,
+      topic: true,
+      customFields: true,
+      _count: {
+        select: { items: true },
+      },
+    },
+    ...where,
+  });
+};
+
+export const createCollection2 = (
+  data: CollectionFormFieldType & { userId: string }
+) => {
+  const { title, topicId, description, userId, customFields, cover } = data;
 
   const cfs = customFields?.map((cf) => ({
     ...cf,
@@ -76,6 +100,7 @@ export const createCollection2 = (data: FieldType & { userId: string }) => {
     data: {
       title,
       topicId,
+      coverUrl: cover || "",
       description,
       authorId: userId,
       customFields: customFields2,
@@ -86,7 +111,7 @@ export const createCollection2 = (data: FieldType & { userId: string }) => {
 export const updateCollection2 = (
   id: number,
   oldCFs: Omit<CustomField, "collectionId">[] | undefined,
-  data: FieldType
+  data: CollectionFormFieldType
 ) => {
   const { title, topicId, description, customFields, cover } = data;
 
@@ -110,10 +135,10 @@ export const updateCollection2 = (
       isRequired: cf.isRequired || false,
     }));
 
-  console.log({ update });
-  console.log({ deleteCFs });
-  console.log({ newCFs });
-  console.log({ cover });
+  // console.log({ update });
+  // console.log({ deleteCFs });
+  // console.log({ newCFs });
+  // console.log({ cover });
 
   return prisma.collection.update({
     where: { id },
@@ -131,7 +156,7 @@ export const updateCollection2 = (
   });
 };
 
-export const deleteCollection2 = (id: number) =>
+export const deleteCollection = (id: number) =>
   prisma.collection.delete({
     where: { id },
   });
@@ -149,13 +174,56 @@ export type UserCollectionType = NonNullable<
   Awaited<ReturnType<typeof getUserCollectionsTagsCFs>>["collections"][0]
 >;
 
-export const get5LargeCollections = () =>
+export type CollectionCardType = NonNullable<
+  Awaited<ReturnType<typeof getLargeCollections>>[0]
+>;
+
+export const getLargeCollections = (count = 5) =>
   prisma.collection.findMany({
     include: {
       author: true,
     },
+    orderBy: {
+      items: {
+        _count: "desc",
+      },
+    },
     // where: {
     //   published: true,
     // },
-    take: 5,
+    take: count,
   });
+
+export async function getCollectionUserData(
+  collectionId: number,
+  userId: string
+) {
+  const [collection, userData] = await prisma.$transaction([
+    getCollection(collectionId),
+    getUserData(userId),
+  ]);
+
+  return {
+    collection,
+    userData,
+  };
+}
+
+export async function getUserCollectionsWithCFs(userId: string) {
+  return getCollectionsWithCFs(userId);
+}
+
+export type CollectionCardWithCover = Omit<CollectionCardType, "coverUrl"> & {
+  coverUrl: string;
+};
+
+export type CollectionsWithCFsType = NonNullable<
+  Awaited<ReturnType<typeof getCollectionsWithCFs>>[0]
+>;
+
+export type CollectionCardWithCoverAndCFs = Omit<
+  CollectionsWithCFsType,
+  "coverUrl"
+> & {
+  coverUrl: string;
+};

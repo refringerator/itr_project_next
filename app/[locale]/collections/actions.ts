@@ -1,19 +1,20 @@
 "use server";
 
 import { redirect } from "@/navigation";
-import { FieldType } from "@/components/Collection/CollectionForm";
+import { CollectionFormFieldType } from "@/sections/Collection/CollectionForm";
 import { getSupabaseUserOrRedirect } from "@/utils/auth-helpers/server";
-import { getStatusRedirect } from "@/utils/helpers";
+import { getErrorRedirect, getStatusRedirect } from "@/utils/helpers";
 import {
   createCollection2,
-  deleteCollection2,
+  deleteCollection,
+  getCollectionUserData,
+  getTopicsCollection,
   updateCollection2,
 } from "@/utils/prisma/collections";
+import { getTopics } from "@/utils/prisma/topics";
 import { CustomField } from "@prisma/client";
 
-export async function createCollection(data: FieldType) {
-  console.log({ data });
-
+export async function createCollection(data: CollectionFormFieldType) {
   const user = await getSupabaseUserOrRedirect("/signin");
 
   const collection = await createCollection2({ ...data, userId: user.id });
@@ -30,7 +31,7 @@ export async function createCollection(data: FieldType) {
 export async function updateCollection(
   id: number,
   oldCFs: Omit<CustomField, "collectionId">[] | undefined,
-  data: FieldType
+  data: CollectionFormFieldType
 ) {
   await getSupabaseUserOrRedirect("/signin");
 
@@ -45,16 +46,41 @@ export async function updateCollection(
   );
 }
 
-export async function deleteCollection(id: number) {
-  await getSupabaseUserOrRedirect("/signin");
+export async function deleteCollectionWithCheck(id: number) {
+  const user = await getSupabaseUserOrRedirect("/signin");
 
-  const collection = await deleteCollection2(id);
+  const { collection, userData } = await getCollectionUserData(id, user.id);
+
+  if (!collection) return redirect("/collections");
+
+  const isSuperuser = userData?.superuser || false;
+
+  if (collection.authorId !== user.id && !isSuperuser)
+    return redirect(
+      getErrorRedirect(
+        `/collections`,
+        "Forbidden",
+        `You are not authorized to delete collection with id ${id}!`
+      )
+    );
+  const deletedCollection = await deleteCollection(id);
 
   redirect(
     getStatusRedirect(
       `/collections`,
-      `Collection ${collection.id} deleted!`,
+      `Collection ${deletedCollection.id} deleted!`,
       "You wont find it anymore"
     )
   );
+}
+
+export async function getTranslatedTopics(curLocale: string) {
+  const locale = curLocale === "ru" ? "ru_RU" : "en";
+
+  const topics = await getTopics();
+
+  return topics.map((topic) => ({
+    id: topic.id,
+    title: topic.translation.filter((v) => v.l === locale)[0]?.t || topic.title,
+  }));
 }

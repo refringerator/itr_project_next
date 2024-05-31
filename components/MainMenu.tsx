@@ -1,15 +1,18 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import type { MenuProps } from "antd";
 import { Menu } from "antd";
-import Link from "next/link";
 import { useTranslations } from "next-intl";
-import { usePathname } from "@/navigation";
+import { usePathname, Link } from "@/navigation";
 import useDimension from "@/hooks/useDimension";
 
 const MainMenu: React.FC = () => {
   const pathname = usePathname();
   const t = useTranslations("Header");
   const [current, setCurrent] = useState(pathname);
+
+  useEffect(() => {
+    setCurrent(pathname);
+  }, [pathname]);
 
   const onClick: MenuProps["onClick"] = (e) => {
     setCurrent(e.key);
@@ -18,6 +21,9 @@ const MainMenu: React.FC = () => {
   const style = useDimension({
     defaultValue: { flex: "1 1 auto", width: "60%" },
     xs: { width: "50px" },
+    sm: { width: "150px" },
+    md: { width: "300px" },
+    lg: { width: "500px" },
   });
 
   const menuItems = [
@@ -37,7 +43,7 @@ const MainMenu: React.FC = () => {
 
   return (
     <Menu
-      style={{ ...style, minWidth: 0, flex: "auto" }}
+      style={{ ...(style as Object), minWidth: 0, flex: "auto" }}
       onClick={onClick}
       selectedKeys={[current]}
       mode="horizontal"

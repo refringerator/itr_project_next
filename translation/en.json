@@ -5,7 +5,8 @@
     "items": "Items",
     "signout": "Sign out",
     "signin": "Sign In",
-    "profile": "My Profile"
+    "profile": "My Profile",
+    "myCollections": "My collections"
   },
   "Footer": {
     "created_by": "Created by"
@@ -20,5 +21,133 @@
     "added": "Added",
     "author": "Author",
     "likes": "{count, plural, =0 {no likes} =1 {one like} other {# likes}}"
+  },
+  "Components": {
+    "ImageUpload": {
+      "clickToUpload": "Click to Upload"
+    },
+    "SearchBar": {
+      "placeholder": "input search"
+    },
+    "PopConfirm": {
+      "yes": "Yes",
+      "no": "No"
+    },
+    "CommentForm": {
+      "commentPlaceholder": "Enter your comment",
+      "buttonAdd": "Add",
+      "needLoginFirst": "To add a comment, you must first log in"
+    },
+    "Notifications": {
+      "defaultError": "Hmm... Something went wrong.",
+      "defaultStatus": "Alright!"
+    }
+  },
+  "Collection": {
+    "Form": {
+      "noTopics": "There is no topics!",
+      "customType": {
+        "integer": "Integer",
+        "boolean": "Boolean",
+        "text": "Text",
+        "date": "Date"
+      },
+      "topic": {
+        "label": "Topic",
+        "message": "Please choice topic!"
+      },
+      "title": {
+        "label": "Title",
+        "message": "Please input title!"
+      },
+      "description": {
+        "label": "Description",
+        "placeholder": "Something about collection"
+      },
+      "cover": {
+        "label": "Cover",
+        "extra": "You can add collection cover",
+        "currentFilename": "Current cover.png"
+      },
+      "customField": {
+        "addFiled": "Add custom field",
+        "fieldNamePlaceholder": "Field name",
+        "fieldNameError": "Missing field name",
+        "fieldTypeSelector": "Select type",
+        "asFilter": "Used as a filter",
+        "fieldTypeError": "Missing field type",
+        "notImplemented": "Not implemented yet",
+        "fieldRequired": "Field is required!",
+        "required": "Required"
+      }
+    },
+    "Page": {
+      "editCollection": "Edit collection",
+      "orDelete": "or delete it",
+      "deleteConfirmTitle": "Delete collection",
+      "deleteConfirmDesctiption": "Are you sure to delete this collection?"
+    }
+  },
+  "Item": {
+    "Page": {
+      "editItem": "Edit item",
+      "orDelete": "or delete it",
+      "deleteConfirmTitle": "Delete item",
+      "deleteConfirmDesctiption": "Are you sure to delete this item?"
+    },
+    "Form": {
+      "thereIsNoCollections": "There is no collections! You can",
+      "createNew": "create a new one",
+      "titleLabel": "Title",
+      "titleMessage": "Please input title!",
+      "collectionLabel": "Collection",
+      "collectionMessage": "Please choice collection!",
+      "tagsLabel": "Tags",
+      "tagsMessage": "Please choice tags!",
+      "tagsPlaceholder": "Tags"
+    },
+    "List": {
+      "deleteButton": "Delete",
+      "deleteConfirmTitle": "Delete item",
+      "deleteConfirmDesctiption": "Are you sure to delete this item?"
+    }
+  },
+  "Common": {
+    "Update": "Update",
+    "Create": "Create"
+  },
+  "Profile": {
+    "clickToEdit": "click to edit your name",
+    "urDisplayNameIs": "Your current display name is",
+    "uCanChangeIt": "You can change it by click on it."
+  },
+  "Auth": {
+    "Forms": {
+      "emailPlaceholder": "Email",
+      "emailMessage": "Please input your email!",
+      "passwordPlaceholder": "Password",
+      "passwordMessage": "Please input your password!",
+      "newPasswordPlaceholder": "New Password",
+      "newPasswordMessage": "New Password",
+      "confirmNewPasswordPlaceholder": "Confirm New Password",
+      "confirmNewPasswordMessage": "Confirm New Password",
+      "signIn": "Sign in",
+      "sendEmail": "Send Email",
+      "updatePassword": "Update Password",
+      "signInEmailPassword": "Sign in with email and password",
+      "dontHaveAccountSignUp": "Don't have an account? Sign up",
+      "signMagicLink": "Sign in via magic link",
+      "forgotPassword": "Forgot your password?",
+      "thirdPartrySignin": "Third-party sign-in",
+      "signUp": "Sign up",
+      "alreadyHaveAccount": "Already have an account?"
+    },
+    "Page": {
+      "resetPassword": "Reset Password",
+      "updatePassword": "Update Password",
+      "signUp": "Sign Up",
+      "signInMagicLink": "Sign in with magic link",
+      "signIn": "Sign In"
+    }
   }
 }

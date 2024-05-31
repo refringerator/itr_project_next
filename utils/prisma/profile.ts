@@ -1,4 +1,4 @@
 import { prisma } from "@/utils/prisma";
 
-export const getUsername = (userId: string) =>
+export const getUserData = (userId: string) =>
   prisma.user.findUnique({ where: { id: userId } });

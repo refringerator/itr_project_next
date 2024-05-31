@@ -76,7 +76,7 @@ test("test", async ({ page }) => {
     page.getByRole("button", { name: "or delete it" })
   ).toBeVisible();
   await page.getByRole("button", { name: "or delete it" }).click();
-
+  await page.getByRole("button", { name: "Yes" }).click(); // popconfirm
   // Check delete
   await expect(page.getByText(/Collection .+? deleted!/)).toBeVisible();
   // TODO: run on empty db and check existing by title

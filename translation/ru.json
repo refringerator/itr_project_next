@@ -20,5 +20,133 @@
     "added": "Добавлено",
     "author": "Коментатор",
     "likes": "{count, plural, =0 {нет одобрений} =1 {одно одобрение} few {# одобрения} many {# одобрений} other {# одобрений}}"
+  },
+  "Components": {
+    "ImageUpload": {
+      "clickToUpload": "Выбрать изображение.."
+    },
+    "SearchBar": {
+      "placeholder": "Найти.."
+    },
+    "PopConfirm": {
+      "yes": "Да",
+      "no": "Нет"
+    },
+    "CommentForm": {
+      "commentPlaceholder": "Введите коментарий",
+      "buttonAdd": "Добавить",
+      "needLoginFirst": "Чтобы добавить комментарий, вам нужно сначала войти в систему"
+    },
+    "Notifications": {
+      "defaultError": "Хм... Что-то пошло не так.",
+      "defaultStatus": "Хорошо!"
+    }
+  },
+  "Collection": {
+    "Form": {
+      "noTopics": "Нет тем/категорий для выбора!",
+      "customType": {
+        "integer": "Целое",
+        "boolean": "Логическое",
+        "text": "Текст",
+        "date": "Дата"
+      },
+      "topic": {
+        "label": "Тема",
+        "message": "Выберите тему!"
+      },
+      "title": {
+        "label": "Заголовок",
+        "message": "Введите заголовок!"
+      },
+      "description": {
+        "label": "Описание",
+        "placeholder": "Описание коллекции"
+      },
+      "cover": {
+        "label": "Обложка",
+        "extra": "Вы можете добавить обложку коллекции",
+        "currentFilename": "Текущая обложка.png"
+      },
+      "customField": {
+        "addFiled": "Добавить дополнительное поле",
+        "fieldNamePlaceholder": "Имя поля",
+        "fieldNameError": "Пропущено имя поля",
+        "fieldTypeSelector": "Выберите тип",
+        "asFilter": "Используется как фильтр",
+        "fieldTypeError": "Не заполнен тип поля",
+        "notImplemented": "Пока еще не реализовано!",
+        "fieldRequired": "Поле обязательное!",
+        "required": "Обязательное"
+      }
+    },
+    "Page": {
+      "editCollection": "Редактирование коллекции",
+      "orDelete": "или удалить ее",
+      "deleteConfirmTitle": "Удаление коллекции",
+      "deleteConfirmDesctiption": "Вы действительно хотите удалить эту коллекцию?"
+    }
+  },
+  "Item": {
+    "Page": {
+      "editItem": "Редактирование элемента коллекции",
+      "orDelete": "или удалить его",
+      "deleteConfirmTitle": "Удаление элемента коллекции",
+      "deleteConfirmDesctiption": "Вы действительно хотите удалить этот элемент?"
+    },
+    "Form": {
+      "thereIsNoCollections": "Еще нет коллекций! Вы можете",
+      "createNew": "создайте новую",
+      "titleLabel": "Название",
+      "titleMessage": "Пожалуйста, введите название!",
+      "collectionLabel": "Коллекция",
+      "collectionMessage": "Пожалуйста, выберите коллекцию!",
+      "tagsLabel": "Метки",
+      "tagsMessage": "Пожалуйста, выберите метки!",
+      "tagsPlaceholder": "Метки"
+    },
+    "List": {
+      "deleteButton": "Удалить",
+      "deleteConfirmTitle": "Удаление элемента коллекции",
+      "deleteConfirmDesctiption": "Вы действительно хотите удалить этот элемент?"
+    }
+  },
+  "Common": {
+    "Update": "Обновить",
+    "Create": "Создать"
+  },
+  "Profile": {
+    "clickToEdit": "Кликни для редактирования имени",
+    "urDisplayNameIs": "На сайте все вас видят как",
+    "uCanChangeIt": "Вы можете сменить отображаемое имя кликнув на него"
+  },
+  "Auth": {
+    "Forms": {
+      "emailPlaceholder": "Электронная почта",
+      "emailMessage": "Введите свою почту!",
+      "passwordPlaceholder": "Пароль",
+      "passwordMessage": "Пожалуйста, введите свой пароль!",
+      "newPasswordPlaceholder": "Новый пароль",
+      "newPasswordMessage": "Новый пароль",
+      "confirmNewPasswordPlaceholder": "Подтверждение нового пароля",
+      "confirmNewPasswordMessage": "Подтверждение нового пароля",
+      "signIn": "Войти",
+      "sendEmail": "Отправить письмо",
+      "updatePassword": "Обновить пароль",
+      "signInEmailPassword": "Войти с помощью почты и пароля",
+      "dontHaveAccountSignUp": "У вас нет учетной записи? Зарегистрируйтесь",
+      "signMagicLink": "Войти по волшебной ссылке",
+      "forgotPassword": "Забыли пароль?",
+      "thirdPartrySignin": "Вход через сторонние сервисы",
+      "signUp": "Зарегистрироваться",
+      "alreadyHaveAccount": "У вас уже есть аккаунт?"
+    },
+    "Page": {
+      "resetPassword": "Сброс пароля",
+      "updatePassword": "Обновление пароля",
+      "signUp": "Регистрация",
+      "signInMagicLink": "Вход с помощью волшебной ссылки",
+      "signIn": "Вход"
+    }
   }
 }

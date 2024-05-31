@@ -7,8 +7,8 @@ import { handleRequest } from "@/utils/auth-helpers/client";
 import { useRouter } from "@/navigation";
 import { useState } from "react";
 import { LockOutlined, MailOutlined } from "@ant-design/icons";
+import { useTranslations } from "next-intl";
 
-// Define prop type with allowEmail boolean
 interface PasswordSignInProps {
   allowEmail: boolean;
   redirectMethod: string;
@@ -24,6 +24,7 @@ export default function PasswordSignIn({
   redirectMethod,
 }: PasswordSignInProps) {
   const router = useRouter();
+  const t = useTranslations("Auth.Forms");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = async (data: FieldType) => {
@@ -39,8 +40,6 @@ export default function PasswordSignIn({
   return (
     <Form
       name="password_signin"
-      // labelCol={{ span: 8 }}
-      // wrapperCol={{ span: 16 }}
       style={{ maxWidth: "300px" }}
       autoComplete="off"
       onFinish={(e) => handleSubmit(e)}
@@ -50,34 +49,37 @@ export default function PasswordSignIn({
         rules={[
           {
             required: true,
-            message: "Please input your email!",
+            message: t("emailMessage"),
             type: "email",
           },
         ]}
       >
-        <Input prefix={<MailOutlined />} placeholder="Email" />
+        <Input prefix={<MailOutlined />} placeholder={t("emailPlaceholder")} />
       </Form.Item>
       <Form.Item<FieldType>
         name="password"
-        rules={[{ required: true, message: "Please input your password!" }]}
+        rules={[{ required: true, message: t("passwordMessage") }]}
       >
-        <Input.Password prefix={<LockOutlined />} placeholder="Password" />
+        <Input.Password
+          prefix={<LockOutlined />}
+          placeholder={t("passwordPlaceholder")}
+        />
       </Form.Item>
 
       <Form.Item>
         <Button type="primary" htmlType="submit" loading={isSubmitting}>
-          Sign in
+          {t("signIn")}
         </Button>
         <p>
-          <Link href="/signin/forgot_password">Forgot your password?</Link>
+          <Link href="/signin/forgot_password">{t("forgotPassword")}</Link>
         </p>
         {allowEmail && (
           <p>
-            <Link href="/signin/email_signin">Sign in via magic link</Link>
+            <Link href="/signin/email_signin">{t("signMagicLink")}</Link>
           </p>
         )}
         <p>
-          <Link href="/signin/signup">Don&apos;t have an account? Sign up</Link>
+          <Link href="/signin/signup">{t("dontHaveAccountSignUp")}</Link>
         </p>
       </Form.Item>
     </Form>

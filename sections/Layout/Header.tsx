@@ -1,24 +1,25 @@
 "use client";
 
-import { Layout, Flex, Col, Row, Button, Tooltip, Popover } from "antd";
-import { Input, theme, Avatar } from "antd";
-import { LoginOutlined, LogoutOutlined } from "@ant-design/icons";
+import { Layout, Flex, Col, Row, Button, Tooltip, Popover, Grid } from "antd";
+import { theme, Avatar } from "antd";
+import {
+  AppstoreOutlined,
+  LoginOutlined,
+  MehOutlined,
+} from "@ant-design/icons";
 
 import { useTranslations } from "next-intl";
-import LocaleSelector from "../LocaleSelector";
+import LocaleSelector from "@/components/LocaleSelector";
 
-import { usePathname, useRouter } from "@/navigation";
-import ThemeSwitcher from "../ThemeSwitcher";
-import MainMenu from "../MainMenu";
+import { useRouter } from "@/navigation";
+import ThemeSwitcher from "@/components/ThemeSwitcher";
+import MainMenu from "@/components/MainMenu";
 import useDimension from "@/hooks/useDimension";
 
-import { handleRequest } from "@/utils/auth-helpers/client";
-import { getRedirectMethod } from "@/utils/auth-helpers/settings";
-import { SignOut } from "@/utils/auth-helpers/server";
-
-interface HeaderProps {
-  user?: any;
-}
+import { useContext, useEffect } from "react";
+import { Context } from "@/context/context-provider";
+import SignOutButton from "@/components/SignOutButton";
+import SearchBar from "@/components/SearchBar";
 
 const headerStyle: React.CSSProperties = {
   textAlign: "end",
@@ -33,16 +34,25 @@ const headerStyle: React.CSSProperties = {
   zIndex: 10,
 };
 
-const Header = ({ user }: HeaderProps) => {
+const Header = () => {
+  const context = useContext(Context);
   const router = useRouter();
   const t = useTranslations("Header");
-  const path = usePathname();
-  const { token } = theme.useToken();
-  const showTitle = useDimension({ xs: false, sm: false, defaultValue: true });
 
-  const onPressEnter = (value: string) => {
-    if (value.length > 1) router.push(`/search?q=${value}`);
-  };
+  const { token } = theme.useToken();
+  // const showTitle = useDimension({
+  //   xs: true,
+  //   sm: true,
+  //   lg: true,
+  //   md: true,
+  //   xl: true,
+  //   xxl: true,
+  // });
+  const screens = Grid.useBreakpoint();
+
+  useEffect(() => {
+    console.table(screens);
+  }, [screens]);
 
   return (
     <Layout.Header style={headerStyle}>
@@ -61,11 +71,7 @@ const Header = ({ user }: HeaderProps) => {
       >
         <Col flex="none">
           <Flex align="center" style={{ width: "100%" }}>
-            <Input.Search
-              placeholder="input search"
-              loading={false}
-              onSearch={onPressEnter}
-            />
+            <SearchBar />
           </Flex>
         </Col>
         <Col flex="auto" />
@@ -76,25 +82,29 @@ const Header = ({ user }: HeaderProps) => {
           <LocaleSelector />
         </Col>
         <Col flex="none">
-          {user ? (
+          {context?.user ? (
             <Popover
               trigger="click"
               content={
-                <>
-                  <Button>{t("profile")}</Button>
+                <Flex vertical gap="small">
                   <Button
-                    icon={<LogoutOutlined />}
+                    icon={<MehOutlined />}
                     onClick={() => {
-                      handleRequest(
-                        { pathName: path },
-                        SignOut,
-                        getRedirectMethod() === "client" ? router : null
-                      );
+                      router.push(`/account`);
                     }}
                   >
-                    {t("signout")}
+                    {t("profile")}
                   </Button>
-                </>
+                  <Button
+                    icon={<AppstoreOutlined />}
+                    onClick={() => {
+                      router.push(`/my-collections/`);
+                    }}
+                  >
+                    {t("myCollections")}
+                  </Button>
+                  <SignOutButton />
+                </Flex>
               }
             >
               <Avatar
@@ -103,7 +113,7 @@ const Header = ({ user }: HeaderProps) => {
                   backgroundColor: "rgba(0,0,0,0.20)",
                 }}
                 size={42}
-                src={`https://api.dicebear.com/7.x/miniavs/svg?seed=${user.id}`}
+                src={`https://api.dicebear.com/7.x/miniavs/svg?seed=${context.user.id}`}
               />
             </Popover>
           ) : (

@@ -3,7 +3,7 @@ import { useMemo } from "react";
 const { useBreakpoint } = Grid;
 
 type DimensionKey = Breakpoint | "defaultValue";
-export type DimensionProps = Partial<Record<DimensionKey, Object>>;
+export type DimensionProps = Partial<Record<DimensionKey, Object | number>>;
 
 const useDimension = (params: DimensionProps) => {
   const screens = useBreakpoint();

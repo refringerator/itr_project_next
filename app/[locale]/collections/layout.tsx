@@ -1,12 +1,14 @@
+import { Flex } from "antd";
+
 export default function CollectionsLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <div>
+    <Flex vertical>
       <h1>COLLECTIONS</h1>
       {children}
-    </div>
+    </Flex>
   );
 }
