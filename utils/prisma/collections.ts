@@ -62,8 +62,10 @@ export const userCollections = (userId: string) =>
     include: { customFields: true },
   });
 
-export const getCollectionsWithCFs = () =>
-  prisma.collection.findMany({
+export const getCollectionsWithCFs = (userId: string = "") => {
+  const where = userId !== "" ? { where: { authorId: userId } } : undefined;
+
+  return prisma.collection.findMany({
     include: {
       author: true,
       topic: true,
@@ -72,7 +74,9 @@ export const getCollectionsWithCFs = () =>
         select: { items: true },
       },
     },
+    ...where,
   });
+};
 
 export const createCollection2 = (
   data: CollectionFormFieldType & { userId: string }
@@ -204,10 +208,8 @@ export async function getCollectionUserData(
   };
 }
 
-export async function getUserCollections(userId: string) {
-  const [collections] = await prisma.$transaction([userCollections(userId)]);
-
-  return { collections };
+export async function getUserCollectionsWithCFs(userId: string) {
+  return getCollectionsWithCFs(userId);
 }
 
 export type CollectionCardWithCover = Omit<CollectionCardType, "coverUrl"> & {
