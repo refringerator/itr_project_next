@@ -9,7 +9,7 @@ import { redirect, Link } from "@/navigation";
 import { getErrorRedirect } from "@/utils/helpers";
 import ItemRate from "@/sections/Item/ItemRate";
 import CommentForm from "@/components/CommentForm";
-// import { prisma } from "@/utils/prisma";
+import Markdown from "react-markdown";
 
 type Props = {
   params: {
@@ -54,7 +54,12 @@ export default async function Item({ params: { id } }: Props) {
       {item.collection.customFields.map((cf) => {
         return (
           <p key={cf.id}>
-            {cf.id} - {cf.title}: {item.customValues[`cf_${cf.id}`]}
+            {cf.id} - {cf.title}:{" "}
+            {cf.type === "LONGTEXT" ? (
+              <Markdown>{item.customValues[`cf_${cf.id}`] as string}</Markdown>
+            ) : (
+              item.customValues[`cf_${cf.id}`]
+            )}
           </p>
         );
       })}
