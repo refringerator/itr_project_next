@@ -159,7 +159,7 @@ export type UserCollectionType = NonNullable<
   Awaited<ReturnType<typeof getUserCollectionsTagsCFs>>["collections"][0]
 >;
 
-export const get5LargeCollections = () =>
+export const getLargeCollections = (count = 5) =>
   prisma.collection.findMany({
     include: {
       author: true,
@@ -167,7 +167,7 @@ export const get5LargeCollections = () =>
     // where: {
     //   published: true,
     // },
-    take: 5,
+    take: count,
   });
 
 export async function getCollectionUserData(

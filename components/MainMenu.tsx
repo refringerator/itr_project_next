@@ -21,6 +21,9 @@ const MainMenu: React.FC = () => {
   const style = useDimension({
     defaultValue: { flex: "1 1 auto", width: "60%" },
     xs: { width: "50px" },
+    sm: { width: "150px" },
+    md: { width: "300px" },
+    lg: { width: "500px" },
   });
 
   const menuItems = [
@@ -40,7 +43,7 @@ const MainMenu: React.FC = () => {
 
   return (
     <Menu
-      style={{ ...style, minWidth: 0, flex: "auto" }}
+      style={{ ...(style as Object), minWidth: 0, flex: "auto" }}
       onClick={onClick}
       selectedKeys={[current]}
       mode="horizontal"
