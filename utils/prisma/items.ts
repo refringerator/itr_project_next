@@ -122,3 +122,9 @@ export async function getItemUser(userId: string, itemId: number) {
 
   return { item, userData };
 }
+
+export const setPublishItem = (itemId: number, isPublished: boolean) =>
+  prisma.item.update({
+    data: { published: isPublished },
+    where: { id: itemId },
+  });

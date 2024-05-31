@@ -1,3 +1,4 @@
+import { setPublishItemWithCheck } from "@/app/[locale]/items/actions";
 import ItemList, { ItemsList } from "@/sections/Item/ItemList";
 import { CustomField } from "@prisma/client";
 
@@ -18,6 +19,7 @@ export default function TheCollection({
         data={items}
         showActions={showActions}
         customFields={customFields}
+        setPublishItem={setPublishItemWithCheck}
       />
     </>
   );
