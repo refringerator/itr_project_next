@@ -53,7 +53,7 @@ export const getItem = (itemId: number) =>
   });
 
 export const createNewItem = (data: ItemFormType & { userId: string }) => {
-  const { title, collectionId, userId } = data;
+  const { title, collectionId, userId, tagsIds } = data;
 
   let json = Object.fromEntries(
     Object.entries(data).filter(([key]) => key.startsWith("cf_"))
@@ -65,6 +65,16 @@ export const createNewItem = (data: ItemFormType & { userId: string }) => {
       collectionId,
       authorId: userId,
       customValues: json as PrismaJson.CustomValuesType,
+      tags: {
+        connectOrCreate: tagsIds.map((tag) => ({
+          where: {
+            title: tag,
+          },
+          create: {
+            title: tag,
+          },
+        })),
+      },
     },
   });
 };
