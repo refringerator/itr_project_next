@@ -42,6 +42,7 @@ export const getCollection = (collectionId: number) =>
           published: true,
           tags: true,
           createdAt: true,
+          customValues: true,
         },
       },
       customFields: {
