@@ -17,6 +17,7 @@
     "supabase:generate-types": "npx supabase gen types typescript --local --schema public > types_db.ts",
     "supabase:generate-migration": "npx supabase db diff | npx supabase migration new",
     "supabase:generate-seed": "npx supabase db dump --data-only -f supabase/seed.sql",
+    "supabase:generate-seed-local": "npx supabase db dump --local --data-only -f supabase/seed.sql",
     "supabase:db-reset": "npx supabase db reset",
     "supabase:push": "npx supabase push",
     "supabase:pull": "npx supabase pull",
@@ -44,6 +45,7 @@
     "prisma-json-types-generator": "^3.0.4",
     "react": "^18",
     "react-dom": "^18",
+    "react-markdown": "^9.0.1",
     "server-only": "^0.0.1"
   },
   "devDependencies": {

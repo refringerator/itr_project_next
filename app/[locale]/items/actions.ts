@@ -11,6 +11,7 @@ import {
   createNewItem,
   deleteItem,
   getItemUser,
+  setPublishItem,
   updateItem2,
 } from "@/utils/prisma/items";
 import { setItemRate, setLike } from "@/utils/prisma/likes";
@@ -118,4 +119,21 @@ export async function setRateOnItem(itemId: number, rating: number) {
   }
 
   await setItemRate(user.id, itemId, rating);
+}
+
+export async function setPublishItemWithCheck(
+  itemId: number,
+  isPublished: boolean
+) {
+  const user = await getSupabaseUserOrRedirect("/signin");
+
+  const { item, userData } = await getItemUser(user.id, itemId);
+
+  if (!item) return;
+
+  const isSuperuser = userData?.superuser || false;
+
+  if (item.authorId !== user.id && !isSuperuser) return;
+
+  await setPublishItem(itemId, isPublished);
 }

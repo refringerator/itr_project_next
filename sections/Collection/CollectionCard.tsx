@@ -3,7 +3,7 @@
 import { CollectionCardWithCover } from "@/utils/prisma/collections";
 import { EditOutlined, EllipsisOutlined } from "@ant-design/icons";
 import Image from "next/image";
-import { Avatar, Card } from "antd";
+import { Avatar, Card, Typography } from "antd";
 import { useRouter } from "@/navigation";
 const { Meta } = Card;
 
@@ -46,7 +46,11 @@ export default function CollectionCard({ collection }: CollectionCardProps) {
           />
         }
         title={collection.author.name}
-        description={collection.description}
+        description={
+          <Typography.Paragraph ellipsis={{ rows: 4, expandable: false }}>
+            {collection.description}
+          </Typography.Paragraph>
+        }
       />
     </Card>
   );

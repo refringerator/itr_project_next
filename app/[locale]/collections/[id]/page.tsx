@@ -6,9 +6,10 @@ import { redirect } from "@/navigation";
 import Image from "next/image";
 import TheCollection from "@/sections/Collection/TheCollection";
 import { defaultImage } from "@/constants/server";
-import { Col, Flex, Row } from "antd";
+import { Col, Flex, Row, Space } from "antd";
 import { getSupabaseUser } from "@/utils/auth-helpers/server";
 import { CustomField } from "@prisma/client";
+import Markdown from "react-markdown";
 
 type Props = {
   params: {
@@ -47,7 +48,10 @@ export default async function Collection({ params: { id } }: Props) {
         <Col flex={6}>
           <Flex vertical justify="flex-start">
             <h2>{collection.title}</h2>
-            <Link href={`/collections/${id}/edit`}>Edit</Link>
+            <Space>
+              <Link href={`/collections/${id}/edit`}>Edit</Link>
+              <Link href={`/items/new?collectionId=${id}`}>Add item</Link>
+            </Space>
             <p>
               <b>Author: </b>
               {collection.author.name}
@@ -57,8 +61,6 @@ export default async function Collection({ params: { id } }: Props) {
               {collection.topic.title}
             </p>
             <p>{collection.published ? "Published" : "Not published"}</p>
-            <h4>Description:</h4>
-            <p>{collection.description}</p>
           </Flex>
         </Col>
         <Col flex={2}>
@@ -72,6 +74,9 @@ export default async function Collection({ params: { id } }: Props) {
           />
         </Col>
       </Row>
+      <h4>Description:</h4>
+      <Markdown>{collection.description}</Markdown>
+
       <TheCollection
         items={items}
         showActions={!!user}

@@ -20,12 +20,14 @@ export type ItemListProps = {
   data: Row[];
   showActions: boolean;
   customFields: CustomField[];
+  setPublishItem: (itemId: number, isPublished: boolean) => void;
 };
 
 export default function ItemList({
   data,
   showActions,
   customFields,
+  setPublishItem,
 }: ItemListProps) {
   const t = useTranslations("Item.List");
 
@@ -91,6 +93,7 @@ export default function ItemList({
               checkedChildren={<CheckOutlined />}
               unCheckedChildren={<CloseOutlined />}
               defaultChecked={record.published}
+              onChange={async (v) => await setPublishItem(record.id, v)}
             />
           ),
         },
@@ -113,7 +116,7 @@ export default function ItemList({
           dataIndex: "",
         },
       ].flat(),
-    [customFields, showActions, t]
+    [customFields, setPublishItem, showActions, t]
   );
 
   console.log({ columns });

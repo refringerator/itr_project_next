@@ -35,6 +35,7 @@ const customTypes: customType[] = [
   { key: "INT", value: "Integer" },
   { key: "BOOLEAN", value: "Boolean" },
   { key: "TEXT", value: "Text" },
+  { key: "LONGTEXT", value: "Long Text" },
   { key: "DATE", value: "Date" },
 ];
 
