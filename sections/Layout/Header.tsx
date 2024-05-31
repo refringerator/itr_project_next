@@ -14,9 +14,8 @@ import LocaleSelector from "@/components/LocaleSelector";
 import { useRouter } from "@/navigation";
 import ThemeSwitcher from "@/components/ThemeSwitcher";
 import MainMenu from "@/components/MainMenu";
-import useDimension from "@/hooks/useDimension";
 
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { Context } from "@/context/context-provider";
 import SignOutButton from "@/components/SignOutButton";
 import SearchBar from "@/components/SearchBar";
@@ -40,19 +39,6 @@ const Header = () => {
   const t = useTranslations("Header");
 
   const { token } = theme.useToken();
-  // const showTitle = useDimension({
-  //   xs: true,
-  //   sm: true,
-  //   lg: true,
-  //   md: true,
-  //   xl: true,
-  //   xxl: true,
-  // });
-  const screens = Grid.useBreakpoint();
-
-  useEffect(() => {
-    console.table(screens);
-  }, [screens]);
 
   return (
     <Layout.Header style={headerStyle}>

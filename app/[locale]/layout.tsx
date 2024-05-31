@@ -20,6 +20,7 @@ import {
 export const metadata: Metadata = {
   title: "Collection management",
   description: "Full-stack Web-app for personal collection management",
+  icons: { icon: "/favicon.ico" },
 };
 
 export const viewport: Viewport = {

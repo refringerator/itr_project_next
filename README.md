@@ -41,7 +41,7 @@ TBD
 1. [How to Build a Fullstack App with Next.js, Prisma, and Vercel Postgres](https://vercel.com/guides/nextjs-prisma-postgres)
 2. supabase + vercel integration [example 1](https://github.com/vercel/next.js/tree/canary/examples/with-supabase), [exqample 2 full](https://github.com/vercel/nextjs-subscription-payments)
 3. [i18n routing](https://github.com/vercel/next.js/tree/canary/examples/app-dir-i18n-routing), [i18n-next-intl](https://github.com/amannn/next-intl/tree/main/examples/example-app-router)
-4. supabase + prisma [v1](https://docs-rog1zs1kv-supabase.vercel.app/docs/guides/integrations/prisma), [v2 prisma docs](https://www.prisma.io/d ocs/orm/overview/databases/supabase), [v3 supabase docs](https://supabase.com/partners/integrations/prisma), [v4 prisma example](https://github.com/prisma/prisma-examples/tree/latest/databases/postgresql-supabase)
+4. supabase + prisma [v1](https://docs-rog1zs1kv-supabase.vercel.app/docs/guides/integrations/prisma), [v2 prisma docs](https://www.prisma.io/docs/orm/overview/databases/supabase), [v3 supabase docs](https://supabase.com/partners/integrations/prisma), [v4 prisma example](https://github.com/prisma/prisma-examples/tree/latest/databases/postgresql-supabase)
 5. storage [sup](https://supabase.com/docs/guides/getting-started/tutorials/with-nextjs)
 6. supabase [discussions](https://github.com/orgs/supabase/discussions?discussions_q=is%3Aopen+nextjs+)
 7. examples https://www.restack.io/docs/supabase-knowledge-next-auth-supabase-example
