@@ -66,7 +66,7 @@ export const createNewItem = (data: ItemFormType & { userId: string }) => {
       authorId: userId,
       customValues: json as PrismaJson.CustomValuesType,
       tags: {
-        connectOrCreate: tagsIds.map((tag) => ({
+        connectOrCreate: (tagsIds || []).map((tag) => ({
           where: {
             title: tag,
           },
