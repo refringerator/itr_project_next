@@ -34,13 +34,13 @@ export default async function Collection({ params: { id } }: Props) {
       ...cfs
         .map((k) => [k, i.customValues[k]])
         .reduce((acc, [key, val]) => {
-          acc[key] = val;
+          const k = key as string;
+          acc[k] = val;
           return acc;
-        }, {}),
+        }, {} as Record<any, any>),
     },
-    df: i.customValues,
   }));
-  // console.log(items);
+
   return (
     <>
       <Row>

@@ -19,7 +19,7 @@ export type ItemsList = Row[];
 export type ItemListProps = {
   data: Row[];
   showActions: boolean;
-  customFields?: CustomField[];
+  customFields: CustomField[];
 };
 
 export default function ItemList({
@@ -38,7 +38,7 @@ export default function ItemList({
           title: "Title",
           dataIndex: "title",
           key: "title",
-          render: (text, record) => (
+          render: (text: any, record: any) => (
             <Link href={`/items/${record.id}`}>{text}</Link>
           ),
         },
@@ -46,16 +46,16 @@ export default function ItemList({
           title: "Created at",
           dataIndex: "createdAt",
           key: "createdAt",
-          render: (createdAt) => <>{createdAt.toLocaleString()}</>,
+          render: (createdAt: any) => <>{createdAt.toLocaleString()}</>,
         },
 
         {
           title: "Tags",
           key: "tags",
           dataIndex: "tags",
-          render: (_, { tags }) => (
+          render: (_: any, { tags }: any) => (
             <>
-              {tags.map((tag) => {
+              {tags.map((tag: any) => {
                 let color =
                   tag.length > 5
                     ? tag.length > 10
@@ -85,7 +85,7 @@ export default function ItemList({
           title: "Published",
           dataIndex: "published",
           key: "published",
-          render: (_, record) => (
+          render: (_: any, record: any) => (
             <Switch
               disabled={!showActions}
               checkedChildren={<CheckOutlined />}
@@ -98,7 +98,7 @@ export default function ItemList({
           title: "Action",
           key: "action",
           hidden: !showActions,
-          render: (_, record: any) => (
+          render: (_: any, record: any) => (
             <Space size="middle">
               <Link href={`/items/${record.id}/edit`}>Edit</Link>
               <DeleteButton
