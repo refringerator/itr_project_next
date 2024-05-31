@@ -6,6 +6,7 @@ import { redirect } from "@/navigation";
 import Image from "next/image";
 import TheCollection from "@/sections/Collection/TheCollection";
 import { defaultImage } from "@/constants/server";
+import { Col, Flex, Row } from "antd";
 
 type Props = {
   params: {
@@ -28,18 +29,35 @@ export default async function Collection({ params: { id } }: Props) {
 
   return (
     <>
-      <h2>{collection.title}</h2>
-      <Link href={`/collections/${id}/edit`}>Edit</Link>
-      <p>{collection.author.name}</p>
-      <p>{collection.topic.title}</p>
-      <p>p: {collection.published}</p>
-      <p>d: {collection.description}</p>
-      <Image
-        src={collection.coverUrl || defaultImage}
-        width={500}
-        height={500}
-        alt="Picture of the author"
-      />
+      <Row>
+        <Col flex={6}>
+          <Flex vertical justify="flex-start">
+            <h2>{collection.title}</h2>
+            <Link href={`/collections/${id}/edit`}>Edit</Link>
+            <p>
+              <b>Author: </b>
+              {collection.author.name}
+            </p>
+            <p>
+              <b>Topic: </b>
+              {collection.topic.title}
+            </p>
+            <p>{collection.published ? "Published" : "Not published"}</p>
+            <h4>Description:</h4>
+            <p>{collection.description}</p>
+          </Flex>
+        </Col>
+        <Col flex={2}>
+          <Image
+            src={collection.coverUrl || defaultImage}
+            style={{ objectFit: "contain" }}
+            width="350"
+            height="350"
+            fill={false}
+            alt="Picture of the author"
+          />
+        </Col>
+      </Row>
       <TheCollection items={items} />
     </>
   );
