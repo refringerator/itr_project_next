@@ -40,9 +40,15 @@ export default async function Item({ params: { id } }: Props) {
   return (
     <>
       <h2>Item {id}</h2>
-      <p>{item.title}</p>
-      <p>{item.author.name}</p>
-      <p>{item.collection.title}</p>
+      <p>
+        <b>Title:</b> {item.title}
+      </p>
+      <p>
+        <b>Author:</b> {item.author.name}
+      </p>
+      <p>
+        <b>Collection:</b> {item.collection.title}
+      </p>
       <p>{item.published ? "published" : "not published"}</p>
       {!!item.collection.customFields.length && <p>Custom fields:</p>}
       {item.collection.customFields.map((cf) => {
