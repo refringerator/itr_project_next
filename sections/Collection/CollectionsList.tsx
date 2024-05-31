@@ -3,18 +3,10 @@
 import React from "react";
 import { Avatar, List } from "antd";
 import Image from "next/image";
-
-export type CollectionData = {
-  title: string;
-  description: string;
-  updatedAt: Date;
-  avatar: string;
-  href: string;
-  coverUrl: string;
-};
+import { CollectionCardWithCoverAndCFs } from "@/utils/prisma/collections";
 
 export type CollectionListProps = {
-  data: CollectionData[];
+  data: CollectionCardWithCoverAndCFs[];
 };
 
 const CollectionsList = ({ data }: CollectionListProps) => {
@@ -39,16 +31,37 @@ const CollectionsList = ({ data }: CollectionListProps) => {
           extra={
             <Image
               src={item.coverUrl}
-              width={150}
-              height={150}
+              style={{ objectFit: "contain" }}
+              width="225"
+              height="225"
+              fill={false}
               alt="Picture of the collection"
             />
           }
         >
           <List.Item.Meta
-            avatar={showAuthor && <Avatar src={item.avatar} />}
-            title={<a href={item.href}>{item.title}</a>}
-            description={showFields && item.description}
+            avatar={
+              showAuthor && (
+                <Avatar
+                  src={`https://api.dicebear.com/7.x/miniavs/svg?seed=${item.authorId}`}
+                />
+              )
+            }
+            title={<a href={`/collections/${item.id}`}>{item.title}</a>}
+            description={
+              showFields && (
+                <>
+                  <p>Topic: {item.topic.title}</p>
+                  <p>Items: {item._count.items}</p>
+                  <p>
+                    Custom fields:
+                    {item.customFields
+                      .map((cf) => `${cf.title} (${cf.type})`)
+                      .join(", ")}
+                  </p>
+                </>
+              )
+            }
           />
           {item.description}
         </List.Item>

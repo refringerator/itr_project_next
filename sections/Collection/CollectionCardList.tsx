@@ -3,10 +3,10 @@
 import CollectionCard from "./CollectionCard";
 import { Col, Row } from "antd";
 import useDimension from "@/hooks/useDimension";
-import { CollectionCardType } from "@/utils/prisma/collections";
+import { CollectionCardWithCover } from "@/utils/prisma/collections";
 
 type CollectionCardList = {
-  collections: (Omit<CollectionCardType, "coverUrl"> & { coverUrl: string })[];
+  collections: CollectionCardWithCover[];
 };
 
 export default function CollectionCardList({

@@ -1,6 +1,6 @@
 "use client";
 
-import { CollectionCardType } from "@/utils/prisma/collections";
+import { CollectionCardWithCover } from "@/utils/prisma/collections";
 import { EditOutlined, EllipsisOutlined } from "@ant-design/icons";
 import Image from "next/image";
 import { Avatar, Card } from "antd";
@@ -8,7 +8,7 @@ import { useRouter } from "@/navigation";
 const { Meta } = Card;
 
 type CollectionCardProps = {
-  collection: Omit<CollectionCardType, "coverUrl"> & { coverUrl: string };
+  collection: CollectionCardWithCover;
 };
 
 export default function CollectionCard({ collection }: CollectionCardProps) {

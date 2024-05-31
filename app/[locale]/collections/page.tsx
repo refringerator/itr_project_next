@@ -1,26 +1,24 @@
 "use server";
 
-import { getCollections } from "@/utils/prisma/collections";
+import { getCollectionsWithCFs } from "@/utils/prisma/collections";
 import { Link } from "@/navigation";
 import { getSupabaseUser } from "@/utils/auth-helpers/server";
+import CollectionsList from "@/sections/Collection/CollectionsList";
+import { defaultImage } from "@/constants/server";
 
 export default async function Collections() {
   const user = await getSupabaseUser();
 
-  const collections = await getCollections();
+  const collections = await getCollectionsWithCFs();
+  const data = collections.map((c) => ({
+    ...c,
+    coverUrl: c.coverUrl || defaultImage,
+  }));
 
   return (
     <>
       {user && <Link href="/collections/new">Create new collection</Link>}
-      <ul>
-        {collections.map((collection) => (
-          <li key={collection.id}>
-            <Link href={`/collections/${collection.id}`}>
-              {collection.title}
-            </Link>
-          </li>
-        ))}
-      </ul>
+      <CollectionsList data={data} />
     </>
   );
 }

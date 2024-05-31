@@ -62,7 +62,17 @@ export const userCollections = (userId: string) =>
     include: { customFields: true },
   });
 
-export const getCollections = () => prisma.collection.findMany();
+export const getCollectionsWithCFs = () =>
+  prisma.collection.findMany({
+    include: {
+      author: true,
+      topic: true,
+      customFields: true,
+      _count: {
+        select: { items: true },
+      },
+    },
+  });
 
 export const createCollection2 = (
   data: CollectionFormFieldType & { userId: string }
@@ -168,6 +178,11 @@ export const getLargeCollections = (count = 5) =>
     include: {
       author: true,
     },
+    orderBy: {
+      items: {
+        _count: "desc",
+      },
+    },
     // where: {
     //   published: true,
     // },
@@ -194,3 +209,18 @@ export async function getUserCollections(userId: string) {
 
   return { collections };
 }
+
+export type CollectionCardWithCover = Omit<CollectionCardType, "coverUrl"> & {
+  coverUrl: string;
+};
+
+export type CollectionsWithCFsType = NonNullable<
+  Awaited<ReturnType<typeof getCollectionsWithCFs>>[0]
+>;
+
+export type CollectionCardWithCoverAndCFs = Omit<
+  CollectionsWithCFsType,
+  "coverUrl"
+> & {
+  coverUrl: string;
+};

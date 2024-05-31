@@ -1,4 +1,4 @@
-import { Col, Row } from "antd";
+import { Flex } from "antd";
 
 export default function CollectionsLayout({
   children,
@@ -6,11 +6,9 @@ export default function CollectionsLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <Row justify="space-around" gutter={[12, 12]}>
-      <Col span={24}>
-        <h1>COLLECTIONS</h1>
-      </Col>
-      <Col span={24}>{children}</Col>
-    </Row>
+    <Flex vertical>
+      <h1>COLLECTIONS</h1>
+      {children}
+    </Flex>
   );
 }
