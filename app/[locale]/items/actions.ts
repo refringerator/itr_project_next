@@ -11,6 +11,7 @@ import {
   createNewItem,
   deleteItem,
   getItemUser,
+  getMyCollectionsTagsItem,
   setPublishItem,
   updateItem2,
 } from "@/utils/prisma/items";
@@ -136,4 +137,25 @@ export async function setPublishItemWithCheck(
   if (item.authorId !== user.id && !isSuperuser) return;
 
   await setPublishItem(itemId, isPublished);
+}
+
+export async function getUsersCollectionsTagsItem(itemId: number) {
+  const user = await getSupabaseUserOrRedirect("/signin");
+
+  const { item, userData } = await getItemUser(user.id, itemId);
+
+  if (!item) return redirect("/items/new");
+
+  const isSuperuser = userData?.superuser || false;
+
+  if (item.authorId !== user.id && !isSuperuser)
+    return redirect(
+      getErrorRedirect(
+        `/items`,
+        "Forbidden",
+        `You are not authorized to edit item with id ${itemId}!`
+      )
+    );
+
+  return await getMyCollectionsTagsItem(item.authorId, itemId);
 }

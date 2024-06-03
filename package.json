@@ -37,16 +37,21 @@
     "@visx/scale": "^3.5.0",
     "@visx/text": "^3.3.0",
     "@visx/wordcloud": "^3.3.0",
+    "algoliasearch": "^4.23.3",
     "antd": "^5.17.1",
     "deepmerge": "^4.3.1",
+    "instantsearch.css": "^8.2.0",
     "next": "14.2.3",
     "next-intl": "^3.14.0",
     "next-themes": "^0.3.0",
     "prisma-json-types-generator": "^3.0.4",
     "react": "^18",
     "react-dom": "^18",
+    "react-instantsearch": "^7.10.0",
+    "react-instantsearch-nextjs": "^0.3.0",
     "react-markdown": "^9.0.1",
-    "server-only": "^0.0.1"
+    "server-only": "^0.0.1",
+    "typesense-instantsearch-adapter": "^2.8.0"
   },
   "devDependencies": {
     "@playwright/test": "^1.44.0",

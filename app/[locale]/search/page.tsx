@@ -1,22 +1,6 @@
 "use client";
-import { useSearchParams } from "next/navigation";
-import SearchPage from "@/sections/SearchPage";
-import { search } from "./actions";
-import { useEffect, useState } from "react";
+import SearchPage from "@/sections/Search/SearchPage";
 
 export default function Search() {
-  const searchParams = useSearchParams();
-  const searchString = searchParams.get("q") || "";
-
-  const [result, setResult] = useState<string[]>([]);
-
-  useEffect(() => {
-    const res = async () => {
-      const wow = await search(searchString);
-      setResult(wow);
-    };
-    res();
-  }, [searchString]);
-
-  return <SearchPage result={result} search={searchString} />;
+  return <SearchPage />;
 }
