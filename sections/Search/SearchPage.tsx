@@ -1,10 +1,6 @@
-interface SearchProps {
-  search?: string;
-  result?: string[];
-}
-
 import "instantsearch.css/themes/satellite.css";
-
+import "./search-page.css";
+import { Col, Divider, Row, Typography } from "antd";
 import { Flex } from "antd";
 import {
   SearchBox,
@@ -12,16 +8,17 @@ import {
   Pagination,
   Configure,
   RefinementList,
-  SortBy,
 } from "react-instantsearch";
 import { InstantSearchNext } from "react-instantsearch-nextjs";
 
 interface Porps {
   hit: any;
 }
+
 export const Hit = ({ hit }: Porps) => {
+  console.log({ hit });
   // {id, name, updated_at, objectID, _snippetResult, _highlightResult, _rawTypesenseHit, __position}
-  return <div>{hit.name}</div>;
+  return <div>{hit.title}</div>;
 };
 
 import TypesenseInstantsearchAdapter from "typesense-instantsearch-adapter";
@@ -38,36 +35,44 @@ const tAdapter = new TypesenseInstantsearchAdapter({
     ],
   },
   additionalSearchParameters: {
-    query_by: "name",
+    query_by: "search_text",
   },
 });
 
-export default function SearchPage({ search }: SearchProps) {
+export default function SearchPage() {
   return (
-    <Flex vertical>
-      <h4>SEARCH</h4>
-      <InstantSearchNext
-        routing
-        indexName="items"
-        searchClient={tAdapter.searchClient}
-      >
-        <Configure hitsPerPage={6} />
-        {/* <SortBy
-          items={[
-            { label: "1", value: "items" },
-            { label: "Created (asc)", value: "items_created_at_asc" },
-            { label: "Created (desc)", value: "items_created_at_desc" },
-          ]}
-        /> */}
-        <SearchBox />
-        <RefinementList attribute="tags" />
-        <RefinementList attribute="author" />
-        <RefinementList attribute="topic" />
-        <Hits
-        // hitComponent={Hit}
-        />
-        <Pagination />
-      </InstantSearchNext>
+    <Flex vertical style={{ width: "100%" }}>
+      <Typography.Title level={3}>SEARCH</Typography.Title>
+      <Divider />
+      <Row justify="center">
+        <InstantSearchNext
+          routing
+          indexName="items"
+          searchClient={tAdapter.searchClient}
+        >
+          <Col span={4}>
+            <Flex vertical>
+              <Divider orientation="left">Tags</Divider>
+              <RefinementList attribute="tags" />
+              <Divider orientation="left">Authors</Divider>
+              <RefinementList attribute="author" />
+              <Divider orientation="left">Topics</Divider>
+              <RefinementList attribute="topic" />
+            </Flex>
+          </Col>
+          <Col span={1}></Col>
+          <Col span={16}>
+            <Flex vertical>
+              <Configure hitsPerPage={6} />
+
+              <SearchBox />
+              <Hits hitComponent={Hit} />
+
+              <Pagination />
+            </Flex>
+          </Col>
+        </InstantSearchNext>
+      </Row>
     </Flex>
   );
 }
