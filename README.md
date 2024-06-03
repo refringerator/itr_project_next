@@ -17,7 +17,7 @@
 5. s3 like storage (supabase)
 6. realtime (supabase)
 7. auth (supabase)
-8. fulltext search (postgres ext.)
+8. fulltext search (Algolia React InstantSearch widgets)
 9. ant design
 10. playwright
 
@@ -35,6 +35,7 @@ TBD
 2. Update db schema with `npm run prisma:db-push`
 3. Before deployment create supabase migrations with `npm run supabase:generate-migration {migration_name}`
 4. Push db changes to production env (mb `npm run supabase:push`)
+5. In PG trigger with [pg_net](https://github.com/supabase/pg_net) change API key and host url!
 
 ### Resources
 
@@ -47,6 +48,8 @@ TBD
 7. examples https://www.restack.io/docs/supabase-knowledge-next-auth-supabase-example
 8. supabase cicd [gh app](https://github.com/marketplace/actions/supabase-cli-action), [docs](https://supabase.com/docs/guides/functions/cicd-workflow)
 9. [playwright](https://playwright.dev/docs/intro), [next doc](https://nextjs.org/docs/pages/building-your-application/testing/playwright), [prisma](https://www.prisma.io/blog/testing-series-4-OVXtDis201)
+10. [Syncing Supabase with Typesense](https://typesense.org/docs/guide/supabase-full-text-search.html#step-1-configuring-supabase)
+11. [React InstantSearch widgets](https://www.algolia.com/doc/guides/building-search-ui/widgets/showcase/react/)
 
 ### Demo
 
