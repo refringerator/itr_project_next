@@ -5,6 +5,8 @@ import { getFreqTags } from "@/utils/prisma/tags";
 import CollectionCardList from "@/sections/Collection/CollectionCardList";
 import { Flex } from "antd";
 
+export const dynamic = "force-dynamic";
+
 export default async function Home() {
   const collections = await getLargeCollections(8);
   const tags = await getFreqTags();

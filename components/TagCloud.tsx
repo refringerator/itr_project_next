@@ -55,6 +55,8 @@ export default function TagCloud({
 }: WordcloudProps) {
   const router = useRouter();
 
+  console.log({ words });
+
   const fontSizeSetter = (datum: WordData) => fontScale(datum.value);
 
   const fontScale = scaleLog({
