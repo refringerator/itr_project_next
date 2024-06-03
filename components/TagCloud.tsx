@@ -72,7 +72,7 @@ export default function TagCloud({
               fontSize={w.size}
               fontFamily={w.font}
               onClick={() => {
-                router.push(`/search?q=${w.text}`);
+                router.push(`/search?items[refinementList][tags][0]=${w.text}`);
               }}
             >
               {w.text}

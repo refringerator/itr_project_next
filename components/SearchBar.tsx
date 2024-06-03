@@ -7,7 +7,7 @@ export default function SearchBar() {
   const t = useTranslations("Components.SearchBar");
 
   const onPressEnter = (value: string) => {
-    if (value.length > 1) router.push(`/search?q=${value}`);
+    if (value.length > 1) router.push(`/search?items[query]=${value}`);
   };
 
   return (
