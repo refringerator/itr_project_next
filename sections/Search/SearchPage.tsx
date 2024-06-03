@@ -24,21 +24,16 @@ export const Hit = ({ hit }: Porps) => {
   return <div>{hit.name}</div>;
 };
 
-export const Pag = ({ hit }: Porps) => {
-  // {id, name, updated_at, objectID, _snippetResult, _highlightResult, _rawTypesenseHit, __position}
-  return <div>{hit.name}</div>;
-};
-
 import TypesenseInstantsearchAdapter from "typesense-instantsearch-adapter";
 
 const tAdapter = new TypesenseInstantsearchAdapter({
   server: {
-    apiKey: "2oGo8T3CPUNewlfUuyD8LnASrjP7Hg8u",
+    apiKey: process.env.NEXT_PUBLIC_SEARCH_API_KEY!,
     nodes: [
       {
-        host: "localhost",
-        port: 8108,
-        protocol: "http",
+        host: process.env.NEXT_PUBLIC_SEARCH_HOST!,
+        port: parseInt(process.env.NEXT_PUBLIC_SEARCH_PORT!),
+        protocol: process.env.NEXT_PUBLIC_SEARCH_PROTOCOL!,
       },
     ],
   },
