@@ -1,5 +1,5 @@
 interface SearchProps {
-  search: string;
+  search?: string;
   result?: string[];
 }
 
@@ -51,7 +51,11 @@ export default function SearchPage({ search }: SearchProps) {
   return (
     <Flex vertical>
       <h4>SEARCH</h4>
-      <InstantSearchNext indexName="items" searchClient={tAdapter.searchClient}>
+      <InstantSearchNext
+        routing
+        indexName="items"
+        searchClient={tAdapter.searchClient}
+      >
         <Configure hitsPerPage={6} />
         <SortBy
           items={[
