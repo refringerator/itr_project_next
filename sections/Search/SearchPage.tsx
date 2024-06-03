@@ -1,7 +1,6 @@
 import "instantsearch.css/themes/satellite.css";
 import "./search-page.css";
-import { Col, Divider, Row, Typography } from "antd";
-import { Flex } from "antd";
+import { Col, Divider, Row, Typography, Flex } from "antd";
 import {
   SearchBox,
   Hits,
@@ -10,18 +9,27 @@ import {
   RefinementList,
 } from "react-instantsearch";
 import { InstantSearchNext } from "react-instantsearch-nextjs";
+import TypesenseInstantsearchAdapter from "typesense-instantsearch-adapter";
+import { Link } from "@/navigation";
 
 interface Porps {
   hit: any;
 }
 
 export const Hit = ({ hit }: Porps) => {
-  console.log({ hit });
-  // {id, name, updated_at, objectID, _snippetResult, _highlightResult, _rawTypesenseHit, __position}
-  return <div>{hit.title}</div>;
+  return (
+    <div>
+      <Link href={`/items/${hit.id}`}>{hit.title}</Link>
+      <p>
+        <Typography.Text>
+          Author: {hit.author}, topic: {hit.topic}
+        </Typography.Text>
+      </p>
+      <Typography.Text>Collection: </Typography.Text>
+      <Link href={`/items/${hit.collection_id}`}>{hit.collection}</Link>
+    </div>
+  );
 };
-
-import TypesenseInstantsearchAdapter from "typesense-instantsearch-adapter";
 
 const tAdapter = new TypesenseInstantsearchAdapter({
   server: {
