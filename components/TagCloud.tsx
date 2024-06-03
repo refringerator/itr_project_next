@@ -22,27 +22,11 @@ export interface WordData {
 
 const colors = ["#143059", "#2F6B9A", "#82a6c2"];
 
-// function wordFreq(text: string): WordData[] {
-//   const words: string[] = text.replace(/\./g, "").split(/\s/);
-//   const freqMap: Record<string, number> = {};
-
-//   for (const w of words) {
-//     if (!freqMap[w]) freqMap[w] = 0;
-//     freqMap[w] += 1;
-//   }
-//   return Object.keys(freqMap).map((word) => ({
-//     text: word,
-//     value: freqMap[word],
-//   }));
-// }
-
 function getRotationDegree() {
   const rand = Math.random();
   const degree = rand > 0.5 ? 60 : -60;
   return rand * degree;
 }
-
-// const words = wordFreq("a b c d");
 
 const fixedValueGenerator = () => 0.5;
 
@@ -54,8 +38,6 @@ export default function TagCloud({
   spiralType = "archimedean",
 }: WordcloudProps) {
   const router = useRouter();
-
-  console.log({ words });
 
   const fontSizeSetter = (datum: WordData) => fontScale(datum.value);
 
@@ -70,7 +52,7 @@ export default function TagCloud({
   return (
     <div className="wordcloud">
       <Wordcloud
-        words={words}
+        words={[...words.map((w) => ({ ...w }))]}
         width={width}
         height={height}
         fontSize={fontSizeSetter}
