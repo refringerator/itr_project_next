@@ -52,13 +52,13 @@ export default function SearchPage({ search }: SearchProps) {
         searchClient={tAdapter.searchClient}
       >
         <Configure hitsPerPage={6} />
-        <SortBy
+        {/* <SortBy
           items={[
             { label: "1", value: "items" },
             { label: "Created (asc)", value: "items_created_at_asc" },
             { label: "Created (desc)", value: "items_created_at_desc" },
           ]}
-        />
+        /> */}
         <SearchBox />
         <RefinementList attribute="tags" />
         <RefinementList attribute="author" />
