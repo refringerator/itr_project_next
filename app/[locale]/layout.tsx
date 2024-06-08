@@ -16,6 +16,8 @@ import {
   AntConfigProvider,
   NextIntlClientProvider,
 } from "@/context";
+import UserHelper from "@/components/UserHelper";
+import { createRequest } from "@/utils/jira/server";
 
 export const metadata: Metadata = {
   title: "Collection management",
@@ -61,6 +63,7 @@ export default async function RootLayout({
                   <Suspense>
                     <Notification />
                   </Suspense>
+                  <UserHelper />
                 </ContextProvider>
               </AntConfigProvider>
             </AntdRegistry>
