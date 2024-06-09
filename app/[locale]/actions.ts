@@ -1,9 +1,11 @@
 "use server";
 
+import { getSupabaseUserOrRedirect } from "@/utils/auth-helpers/server";
 import {
   createCustomer,
   createRequest,
   getCustomerAccoundId,
+  getIssues,
 } from "@/utils/jira/server";
 import { getUserData, setUserJiraId } from "@/utils/prisma/profile";
 
@@ -23,4 +25,13 @@ export async function createCustomerRequest(userId: string, userEmail: string) {
   }
   if (!jiraUserId) return;
   return await createRequest(jiraUserId);
+}
+
+export async function getUserIssues() {
+  const user = await getSupabaseUserOrRedirect("/");
+  const userData = await getUserData(user.id);
+
+  if (!userData?.jiraUserId) return undefined;
+
+  return await getIssues(userData.jiraUserId);
 }

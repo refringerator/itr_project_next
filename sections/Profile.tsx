@@ -8,6 +8,7 @@ import { HighlightOutlined } from "@ant-design/icons";
 const { Text, Paragraph } = Typography;
 import SignOutButton from "@/components/SignOutButton";
 import { useTranslations } from "next-intl";
+import IssuesList from "@/components/IssuesList";
 
 export default function Profile({ username }: { username: string }) {
   const t = useTranslations("Profile");
@@ -39,6 +40,8 @@ export default function Profile({ username }: { username: string }) {
       <Paragraph>{t("uCanChangeIt")}</Paragraph>
 
       <SignOutButton />
+
+      <IssuesList />
     </div>
   );
 }

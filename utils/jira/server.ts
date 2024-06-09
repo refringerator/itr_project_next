@@ -83,3 +83,21 @@ export const getCustomerAccoundId = async (email: string) => {
 
   return acc?.accountId || null;
 };
+
+export const getIssues = async (accountId: string) => {
+  const response = await fetch(
+    `${jiraUrl}/rest/api/3/search?fields=status,summary,environment,issuetype,updated,created&jql=reporter = "${accountId}"`,
+    {
+      method: "GET",
+      headers: {
+        Authorization: `Basic ${jiraAuthHeader}`,
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    }
+  );
+
+  console.log("getIssues", response.status, response.statusText);
+
+  return await response.json();
+};
