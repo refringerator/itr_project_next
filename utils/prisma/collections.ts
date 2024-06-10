@@ -227,3 +227,15 @@ export type CollectionCardWithCoverAndCFs = Omit<
 > & {
   coverUrl: string;
 };
+
+export const userCollectionsWithItemCount = (userId: string) =>
+  prisma.collection.findMany({
+    where: { authorId: userId },
+    include: {
+      topic: true,
+      author: true,
+      _count: {
+        select: { items: true },
+      },
+    },
+  });

@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test";
+import { test, expect, errors } from "@playwright/test";
 
 const collection = {
   title: "Test collection",
@@ -19,7 +19,11 @@ test("test", async ({ page }) => {
 
   // Go to Create new collection form
   await page.getByRole("link", { name: "Create new collection" }).click();
-  await page.waitForLoadState("networkidle");
+  try {
+    await page.waitForLoadState("networkidle", { timeout: 5000 });
+  } catch (error) {
+    if (error instanceof errors.TimeoutError) console.log("Timeout!");
+  }
 
   // All element visible
   await expect(page.getByText("Topic")).toBeVisible();

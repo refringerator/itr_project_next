@@ -25,6 +25,7 @@ model User {
   comments     Comment[]
   starredItems LikeOnItem[]
   jiraUserId   String?
+  apiToken     String?
 }
 
 model Collection {
