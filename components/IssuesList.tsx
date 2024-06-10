@@ -15,6 +15,7 @@ interface DataType {
   issuetype: string;
   created: string;
   updated: string;
+  priority: string;
 }
 
 const IssuesList: React.FC = () => {
@@ -26,8 +27,6 @@ const IssuesList: React.FC = () => {
       const res: any = await getUserIssues();
       if (!res) return;
 
-      // console.log({ issues });
-
       setData(
         (res.issues as any).map((i: any) => ({
           key: i.key,
@@ -35,6 +34,7 @@ const IssuesList: React.FC = () => {
           issuetype: i.fields.issuetype.name,
           created: i.fields.created,
           updated: i.fields.updated,
+          priority: i.fields.priority.name,
         }))
       );
     };
@@ -74,6 +74,11 @@ const IssuesList: React.FC = () => {
         dataIndex: "updated",
         key: "updated",
         render: (text) => new Date(text).toLocaleString(locale),
+      },
+      {
+        title: "Priority",
+        dataIndex: "priority",
+        key: "priority",
       },
       {
         title: "Type",

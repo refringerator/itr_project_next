@@ -1,17 +1,23 @@
 import "server-only";
 
 import fetch from "node-fetch";
-import { jiraAuthHeader, jiraServicedeskId, jiraUrl } from "@/constants/server";
+import {
+  jiraAuthHeader,
+  jiraServicedeskId,
+  jiraUrl,
+  requestTypeSupport,
+} from "@/constants/server";
+import { FormValues } from "@/components/UserHelper";
 
-export const createRequest = async (jiraUserId: string) => {
+export const createRequest = async (jiraUserId: string, values: FormValues) => {
   const bodyData = {
     raiseOnBehalfOf: jiraUserId,
-    requestTypeId: "6",
+    requestTypeId: requestTypeSupport,
     serviceDeskId: jiraServicedeskId,
     isAdfRequest: false,
     requestFieldValues: {
-      description: "I need a new *mouse* for my Mac",
-      summary: "Request JSD help via REST",
+      description: values.description,
+      summary: values.title,
     },
     form: {
       "1": {
@@ -86,7 +92,7 @@ export const getCustomerAccoundId = async (email: string) => {
 
 export const getIssues = async (accountId: string) => {
   const response = await fetch(
-    `${jiraUrl}/rest/api/3/search?fields=status,summary,environment,issuetype,updated,created&jql=reporter = "${accountId}"`,
+    `${jiraUrl}/rest/api/3/search?fields=status,summary,environment,issuetype,updated,created,priority&jql=reporter = "${accountId}"`,
     {
       method: "GET",
       headers: {
