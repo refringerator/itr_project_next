@@ -7,6 +7,7 @@ import { Divider, Typography } from "antd";
 import { HighlightOutlined } from "@ant-design/icons";
 const { Text, Paragraph } = Typography;
 import SignOutButton from "@/components/SignOutButton";
+import UserToken from "@/components/UserToken";
 import { useTranslations } from "next-intl";
 import IssuesList from "@/components/IssuesList";
 
@@ -39,6 +40,7 @@ export default function Profile({ username }: { username: string }) {
       </Text>
       <Paragraph>{t("uCanChangeIt")}</Paragraph>
 
+      <UserToken />
       <SignOutButton />
 
       <Divider>Created requests</Divider>
