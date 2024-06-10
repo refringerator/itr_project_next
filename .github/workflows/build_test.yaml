@@ -11,6 +11,9 @@ jobs:
       STORAGE_HOST: "127.0.0.1"
       STORAGE_PORT: "54321"
       STORAGE_PROTOCOL: "http"
+      NEXT_PUBLIC_JIRA_URL: ""
+      JIRA_AUTH_HEADER: ""
+      JIRA_SERVICEDESK_ID: ""
 
     strategy:
       matrix:

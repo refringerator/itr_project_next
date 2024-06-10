@@ -87,6 +87,8 @@ export const getCustomerAccoundId = async (email: string) => {
 };
 
 export const getIssues = async (accountId: string) => {
+  if (jiraAuthHeader === "" || jiraUrl === "") return [];
+
   const response = await fetch(
     `${jiraUrl}/rest/api/3/search?fields=status,summary,environment,issuetype,updated,created,priority&jql=reporter = "${accountId}"`,
     {
