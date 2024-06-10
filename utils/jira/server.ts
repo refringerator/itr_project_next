@@ -39,7 +39,10 @@ export const createRequest = async (jiraUserId: string, values: FormValues) => {
   });
 
   console.log("createRequest", response.status, response.statusText);
-  //   const t = await response.text();
+  if (response.status != 201) {
+    const t = await response.text();
+    console.log("createRequest response", t);
+  }
 
   return response.status;
 };
@@ -54,7 +57,7 @@ export const createCustomer = async (email: string, displayName: string) => {
     },
     body: JSON.stringify({ email, displayName }),
   });
-  console.log("getCustomerAccoundId", response.status, response.statusText);
+  console.log("createCustomer", response.status, response.statusText);
 
   const data = await response.json();
 
