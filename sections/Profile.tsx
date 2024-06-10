@@ -3,7 +3,7 @@
 import { createClient } from "@/utils/supabase/client";
 import { useState } from "react";
 
-import { Typography } from "antd";
+import { Divider, Typography } from "antd";
 import { HighlightOutlined } from "@ant-design/icons";
 const { Text, Paragraph } = Typography;
 import SignOutButton from "@/components/SignOutButton";
@@ -41,6 +41,7 @@ export default function Profile({ username }: { username: string }) {
 
       <SignOutButton />
 
+      <Divider>Created requests</Divider>
       <IssuesList />
     </div>
   );
