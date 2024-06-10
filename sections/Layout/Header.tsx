@@ -95,7 +95,7 @@ const Header = () => {
                   >
                     {t("myCollections")}
                   </Button>
-                  <SignOutButton />
+                  <SignOutButton onClick={() => setClicked(false)} />
                 </Flex>
               }
             >
