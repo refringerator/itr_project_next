@@ -1,3 +1,4 @@
+import { defaultImage } from "@/constants/server";
 import { allCollectionsWithItemCount } from "@/utils/prisma/collections";
 import { getUsersByToken } from "@/utils/prisma/profile";
 
@@ -20,6 +21,7 @@ export async function GET(request: Request) {
     topic: c.topic.title,
     description: c.description,
     itemsCount: c._count.items,
+    image: c.coverUrl || `${process.env.NEXT_PUBLIC_SITE_URL}/${defaultImage}`,
   }));
 
   return Response.json({ data });
