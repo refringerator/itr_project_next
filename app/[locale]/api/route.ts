@@ -22,6 +22,7 @@ export async function GET(request: Request) {
     description: c.description,
     itemsCount: c._count.items,
     image: c.coverUrl || `${process.env.NEXT_PUBLIC_SITE_URL}/${defaultImage}`,
+    url: `${process.env.NEXT_PUBLIC_SITE_URL}/collections/${c.id}`,
   }));
 
   return Response.json({ data });
