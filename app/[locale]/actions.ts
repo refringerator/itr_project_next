@@ -1,5 +1,6 @@
 "use server";
 
+import { FormValues } from "@/components/UserHelper";
 import { getSupabaseUserOrRedirect } from "@/utils/auth-helpers/server";
 import {
   createCustomer,
@@ -7,9 +8,15 @@ import {
   getCustomerAccoundId,
   getIssues,
 } from "@/utils/jira/server";
+import { getCollection } from "@/utils/prisma/collections";
+import { getItem } from "@/utils/prisma/items";
 import { getUserData, setUserJiraId } from "@/utils/prisma/profile";
 
-export async function createCustomerRequest(userId: string, userEmail: string) {
+export async function createCustomerRequest(
+  userId: string,
+  userEmail: string,
+  values: FormValues
+) {
   if (!userId) return;
 
   const userData = await getUserData(userId);
@@ -24,7 +31,19 @@ export async function createCustomerRequest(userId: string, userEmail: string) {
     if (jiraUserId) await setUserJiraId(userId, jiraUserId);
   }
   if (!jiraUserId) return;
-  return await createRequest(jiraUserId);
+
+  let collection = "";
+  if (values.collectionId) {
+    const res = await getCollection(parseInt(values.collectionId));
+    if (res) collection = res.title;
+  } else if (values.itemId) {
+    const res = await getItem(parseInt(values.itemId));
+    if (res) collection = res.collection.title;
+  }
+
+  const v = { ...values, collection: collection };
+
+  return await createRequest(jiraUserId, v);
 }
 
 export async function getUserIssues() {

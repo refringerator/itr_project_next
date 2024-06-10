@@ -3,8 +3,10 @@ import "server-only";
 import fetch from "node-fetch";
 import {
   jiraAuthHeader,
+  jiraCollectionField,
   jiraServicedeskId,
   jiraUrl,
+  jiraUrlField,
   requestTypeSupport,
 } from "@/constants/server";
 import { FormValues } from "@/components/UserHelper";
@@ -18,18 +20,11 @@ export const createRequest = async (jiraUserId: string, values: FormValues) => {
     requestFieldValues: {
       description: values.description,
       summary: values.title,
-    },
-    form: {
-      "1": {
-        text: "Answer to a text form field",
+      priority: {
+        name: values.priority,
       },
-      "2": {
-        date: "2023-07-06",
-      },
-      "3": {
-        time: "14:35",
-      },
-      "4": { choices: ["5"] },
+      [jiraCollectionField]: values.collection,
+      [jiraUrlField]: values.url,
     },
   };
 
@@ -44,8 +39,9 @@ export const createRequest = async (jiraUserId: string, values: FormValues) => {
   });
 
   console.log("createRequest", response.status, response.statusText);
+  //   const t = await response.text();
 
-  return await response.text();
+  return response.status;
 };
 
 export const createCustomer = async (email: string, displayName: string) => {
