@@ -1,4 +1,4 @@
-import { userCollectionsWithItemCount } from "@/utils/prisma/collections";
+import { allCollectionsWithItemCount } from "@/utils/prisma/collections";
 import { getUsersByToken } from "@/utils/prisma/profile";
 
 export async function GET(request: Request) {
@@ -11,7 +11,7 @@ export async function GET(request: Request) {
   const users = await getUsersByToken(token);
   if (users.length === 0) return new Response("Invalid token", { status: 400 });
 
-  const collectons = await userCollectionsWithItemCount(users[0].id);
+  const collectons = await allCollectionsWithItemCount();
 
   const data = collectons.map((c) => ({
     id: c.id,

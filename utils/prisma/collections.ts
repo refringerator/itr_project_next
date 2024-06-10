@@ -239,3 +239,14 @@ export const userCollectionsWithItemCount = (userId: string) =>
       },
     },
   });
+
+export const allCollectionsWithItemCount = () =>
+  prisma.collection.findMany({
+    include: {
+      topic: true,
+      author: true,
+      _count: {
+        select: { items: true },
+      },
+    },
+  });
