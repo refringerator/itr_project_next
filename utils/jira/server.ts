@@ -65,8 +65,9 @@ export const createCustomer = async (email: string, displayName: string) => {
 };
 
 export const getCustomerAccoundId = async (email: string) => {
+  const searchParams = new URLSearchParams({ query: email });
   const response = await fetch(
-    `${jiraUrl}/rest/servicedeskapi/servicedesk/${jiraServicedeskId}/customer?query=${email}`,
+    `${jiraUrl}/rest/servicedeskapi/servicedesk/${jiraServicedeskId}/customer?${searchParams.toString()}`,
     {
       method: "GET",
       headers: {
