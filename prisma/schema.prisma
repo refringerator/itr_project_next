@@ -24,6 +24,7 @@ model User {
   likes        LikeOnComment[]
   comments     Comment[]
   starredItems LikeOnItem[]
+  jiraUserId   String?
 }
 
 model Collection {

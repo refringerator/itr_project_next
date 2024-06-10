@@ -15,7 +15,7 @@ import { useRouter } from "@/navigation";
 import ThemeSwitcher from "@/components/ThemeSwitcher";
 import MainMenu from "@/components/MainMenu";
 
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { Context } from "@/context/context-provider";
 import SignOutButton from "@/components/SignOutButton";
 import SearchBar from "@/components/SearchBar";
@@ -37,6 +37,8 @@ const Header = () => {
   const context = useContext(Context);
   const router = useRouter();
   const t = useTranslations("Header");
+
+  const [clicked, setClicked] = useState(false);
 
   const { token } = theme.useToken();
 
@@ -71,11 +73,14 @@ const Header = () => {
           {context?.user ? (
             <Popover
               trigger="click"
+              open={clicked}
+              onOpenChange={() => setClicked((s) => !s)}
               content={
                 <Flex vertical gap="small">
                   <Button
                     icon={<MehOutlined />}
                     onClick={() => {
+                      setClicked(false);
                       router.push(`/account`);
                     }}
                   >
@@ -84,12 +89,13 @@ const Header = () => {
                   <Button
                     icon={<AppstoreOutlined />}
                     onClick={() => {
+                      setClicked(false);
                       router.push(`/my-collections/`);
                     }}
                   >
                     {t("myCollections")}
                   </Button>
-                  <SignOutButton />
+                  <SignOutButton onClick={() => setClicked(false)} />
                 </Flex>
               }
             >

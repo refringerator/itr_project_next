@@ -144,3 +144,34 @@ INSERT INTO "public"."_ItemToTag" ("A", "B") VALUES
 	(19, 3),
 	(21, 12),
 	(22, 1);
+
+
+
+CREATE OR REPLACE FUNCTION reset_sequence_to_max_id(seq_name text, tbl_name text, id_col text)
+RETURNS void AS $$
+DECLARE
+    max_id int;
+    sql_command text;
+BEGIN
+    -- Dynamically construct the SQL query to find the maximum ID
+    sql_command := 'SELECT COALESCE(MAX(' || id_col || '), 0) + 1 FROM ' || tbl_name;
+
+    -- Execute the constructed SQL query and store the result in max_id
+    EXECUTE sql_command INTO max_id;
+
+    -- Dynamically construct the ALTER SEQUENCE command
+    sql_command := 'ALTER SEQUENCE ' || seq_name || ' RESTART WITH ' || max_id;
+
+    -- Execute the constructed ALTER SEQUENCE command
+    EXECUTE sql_command;
+END;
+$$ LANGUAGE plpgsql;
+
+select reset_sequence_to_max_id('"Collection_id_seq"', '"Collection"', 'id');
+select reset_sequence_to_max_id('"Comment_id_seq"', '"Comment"', 'id');
+select reset_sequence_to_max_id('"Item_id_seq"', '"Item"', 'id');
+select reset_sequence_to_max_id('"Tag_id_seq"', '"Tag"', 'id');
+select reset_sequence_to_max_id('"Topic_id_seq"', '"Topic"', 'id');
+select reset_sequence_to_max_id('"CustomField_id_seq"', '"CustomField"', 'id');
+
+DROP FUNCTION reset_sequence_to_max_id(text, text, text);

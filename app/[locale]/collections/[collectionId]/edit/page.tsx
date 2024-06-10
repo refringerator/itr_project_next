@@ -17,13 +17,13 @@ import { getErrorRedirect } from "@/utils/helpers";
 
 type Props = {
   params: {
-    id: string;
+    collectionId: string;
     locale: string;
   };
 };
 
 export default async function EditCollection({
-  params: { id, locale },
+  params: { collectionId: id, locale },
 }: Props) {
   const collectionId = parseInt(id);
   const t = await getTranslations("Collection.Page");

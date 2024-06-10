@@ -13,11 +13,11 @@ import Markdown from "react-markdown";
 
 type Props = {
   params: {
-    id: string;
+    itemId: string;
   };
 };
 
-export default async function Item({ params: { id } }: Props) {
+export default async function Item({ params: { itemId: id } }: Props) {
   const itemId = parseInt(id);
 
   const user = await getSupabaseUser();

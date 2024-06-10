@@ -12,12 +12,14 @@ test("test", async ({ page }) => {
 
   // Go to collections
   await page.getByRole("link", { name: "Collections" }).click();
+
   await expect(
     page.getByRole("link", { name: "Create new collection" })
   ).toBeVisible();
 
   // Go to Create new collection form
   await page.getByRole("link", { name: "Create new collection" }).click();
+  await page.waitForLoadState("networkidle");
 
   // All element visible
   await expect(page.getByText("Topic")).toBeVisible();

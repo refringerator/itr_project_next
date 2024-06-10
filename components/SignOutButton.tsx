@@ -6,7 +6,7 @@ import { LogoutOutlined } from "@ant-design/icons";
 import { Button } from "antd";
 import { useTranslations } from "next-intl";
 
-function SignOutButton() {
+function SignOutButton({ onClick }: { onClick?: () => void }) {
   const path = usePathname();
   const router = useRouter();
   const t = useTranslations("Header");
@@ -15,6 +15,7 @@ function SignOutButton() {
     <Button
       icon={<LogoutOutlined />}
       onClick={() => {
+        onClick && onClick();
         handleRequest(
           { pathName: path },
           SignOut,

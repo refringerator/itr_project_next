@@ -13,11 +13,11 @@ import { getKeysWithDateType } from "@/utils/helpers";
 
 type Props = {
   params: {
-    id: string;
+    itemId: string;
   };
 };
 
-export default async function EditItem({ params: { id } }: Props) {
+export default async function EditItem({ params: { itemId: id } }: Props) {
   const itemId = parseInt(id);
   const t = await getTranslations("Item.Page");
 
