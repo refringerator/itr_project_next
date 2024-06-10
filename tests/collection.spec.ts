@@ -19,7 +19,7 @@ test("test", async ({ page }) => {
 
   // Go to Create new collection form
   await page.getByRole("link", { name: "Create new collection" }).click();
-  // await page.waitForLoadState("networkidle");
+  await page.waitForLoadState();
 
   // All element visible
   await expect(page.getByText("Topic")).toBeVisible();
