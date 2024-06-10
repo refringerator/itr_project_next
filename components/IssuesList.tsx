@@ -18,6 +18,8 @@ interface DataType {
   priority: string;
 }
 
+const pageSize = 5;
+
 const IssuesList: React.FC = () => {
   const [data, setData] = useState([]);
   const { locale } = useParams();
@@ -34,7 +36,7 @@ const IssuesList: React.FC = () => {
           issuetype: i.fields.issuetype.name,
           created: i.fields.created,
           updated: i.fields.updated,
-          priority: i.fields.priority.name,
+          priority: i.fields.priority?.name || "",
         }))
       );
     };
@@ -107,7 +109,7 @@ const IssuesList: React.FC = () => {
   return (
     <Table
       columns={columns}
-      pagination={{ position: ["none", "bottomCenter"] }}
+      pagination={{ position: ["none", "bottomCenter"], pageSize: pageSize }}
       dataSource={data}
     />
   );

@@ -9,7 +9,7 @@ export default async function Account() {
   const userName = (await getUserData(user.id))?.name || "Hidden name";
 
   return (
-    <Flex vertical>
+    <Flex vertical style={{ width: "100%" }}>
       <h1>Profile page</h1>
       <Profile username={userName} />
     </Flex>
